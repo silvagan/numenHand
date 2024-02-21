@@ -17,8 +17,8 @@ func _process(delta):
 
 func spawn_ball():
 	randomize()
-	location.x = randf_range(-10, 10)
-	location.z = randf_range(-10, 10)
+	location.x = randf_range(-50, 50)
+	location.z = randf_range(-50, 50)
 	location.y = randf_range(5, 20)
 	var instance = ball.instantiate()
 	instance.set_position(location)

@@ -8,7 +8,7 @@ albedo_color = Color(0.556863, 0.556863, 0.556863, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_7uirj"]
 material = SubResource("StandardMaterial3D_imyth")
 
-[node name="Ball" type="RigidBody3D" groups=["balls"]]
+[node name="Ball" type="RigidBody3D" groups=["food"]]
 max_contacts_reported = 100
 contact_monitor = true
 
