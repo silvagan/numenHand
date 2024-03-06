@@ -82,6 +82,9 @@ func generating_nav_mesh():
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
+	$".".add_child($MeshInstance3D)
+	$".".bake_navigation_mesh()
+	
 	
 	var navMesh = NavigationMesh.new()
 	navMesh.create_from_mesh($MeshInstance3D.mesh)

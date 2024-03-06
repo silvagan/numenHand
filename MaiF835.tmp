@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://ohnc23h86fm7"]
+
+[ext_resource type="Script" path="res://MainScene.gd" id="1_r5ocb"]
+[ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://Character/CharacterMain.tscn" id="5_64jpk"]
+[ext_resource type="PackedScene" uid="uid://bab84aiqartcu" path="res://Camera/camera_3d.tscn" id="5_mcpj8"]
+[ext_resource type="PackedScene" uid="uid://bhqtahcree8ju" path="res://Camera/spawner.tscn" id="6_p2lvb"]
+[ext_resource type="PackedScene" uid="uid://cq2qm20jlkj68" path="res://Ball/Ball.tscn" id="6_qhxmi"]
+[ext_resource type="PackedScene" uid="uid://dlethjugcp3lm" path="res://Procedural Generation/navigation_region_3d.tscn" id="8_8mkv1"]
+
+[sub_resource type="Environment" id="Environment_4vcr7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uorvg"]
+noise_type = 3
+frequency = 0.0076
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xgy38"]
+noise_type = 0
+frequency = 0.335
+fractal_octaves = 10
+
+[node name="MainScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.0271511, -0.026598)
+script = ExtResource("1_r5ocb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4vcr7")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.757929, -4.17533e-07, 0.652337, 0.580397, -0.456508, 0.674344, 0.297797, 0.889719, 0.346001, 27.5828, 16.8026, -23.3874)
+shadow_enabled = true
+directional_shadow_max_distance = 34.6
+
+[node name="NavigationRegion3D" parent="." instance=ExtResource("8_8mkv1")]
+size = 100
+subdivide = 60
+amplitude = 10
+noise = SubResource("FastNoiseLite_uorvg")
+rock_noise = SubResource("FastNoiseLite_xgy38")
+
+[node name="FoodSpawnTimer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[node name="CharacterMain" parent="." instance=ExtResource("5_64jpk")]
+transform = Transform3D(0.993427, 0, 0.114469, 0, 1, 0, -0.114469, 0, 0.993427, -0.08815, 9.84542, 0.0101569)
+
+[node name="Ball" parent="." instance=ExtResource("6_qhxmi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4698, 11.3201, -3.70822)
+
+[node name="Ball2" parent="." instance=ExtResource("6_qhxmi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4698, 10.9538, 4.85335)
+
+[node name="Ball3" parent="." instance=ExtResource("6_qhxmi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00448, 12.0256, 4.85335)
+
+[node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
+far = 475.28
+
+[node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
+
+[connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]

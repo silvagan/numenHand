@@ -13,6 +13,7 @@ var head_movement_speed = 0.5
 var bonus = 1
 var memory = []
 var objective = "idle"
+var right = false
 
 @onready var bar = $HealthBar3D
 
@@ -66,9 +67,11 @@ func _physics_process(delta):
 				go_to(destination, "default")
 			else:
 				destination = get_random_location(5, 50)
-				go_to(destination, "default")
-				syncing_head_body = true
-				bonus = 5
+				print(get_point_on_map(destination, 1).distance_to(destination))
+				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
+					go_to(destination, "default")
+					syncing_head_body = true
+					bonus = 5
 		"urgent explore":
 			var visible_ob = $Head/VisionCones.get_overlapping_bodies()
 			if(contains_food(visible_ob)):
@@ -80,9 +83,11 @@ func _physics_process(delta):
 				go_to(destination, "default")
 			else:
 				destination = get_random_location(5, 10)
-				go_to(destination, "default")
-				syncing_head_body = true
-				bonus = 8
+				print(get_point_on_map(destination, 1).distance_to(destination))
+				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
+					go_to(destination, "default")
+					syncing_head_body = true
+					bonus = 5
 	
 	
 func go_to(location, head_movement_mode):
@@ -110,6 +115,19 @@ func update_objective():
 		return "find food"
 	else:
 		return "explore"
+
+
+func get_point_on_map(target_point: Vector3, min_dist_from_edge: float) -> Vector3:
+	var map := get_world_3d().navigation_map
+	var closest_point := NavigationServer3D.map_get_closest_point(map, target_point)
+	var delta := closest_point - target_point
+	var is_on_map = delta.is_zero_approx()  # Answer to original question!
+	if not is_on_map and min_dist_from_edge > 0:
+		# Wasn't on the map, so push in from edge. If you have thin sections on
+		# your navmesh, this could push it back off the navmesh!
+		delta = delta.normalized()
+		closest_point += delta * min_dist_from_edge
+	return closest_point
 
 func get_random_location(speed, distance):
 	movement_speed = speed
@@ -254,11 +272,16 @@ func is_visible_from_view(target):
 			return false
 
 func look_around():
-	#print(abs($Head.rotation_degrees.y-$Body.rotation_degrees.y))
-	if(int(abs($Head.rotation_degrees.y-$Body.rotation_degrees.y)) % 360 > 90):
+	var angle = int(abs($Head.rotation_degrees.y-$Body.rotation_degrees.y)) % 360
+	if(angle > 90 && right == false):
+		print(angle)
 		head_movement_speed *= -1
-	$Head.rotation_degrees.y += head_movement_speed
-	if ($Head.rotation_degrees.x < -15):
+		right = true
+	if(angle < 90):
+		right = false
+	$Head.rotation_degrees.y += head_movement_speed	
+		
+	if($Head.rotation_degrees.x < -15):
 		$Head.rotation_degrees.x += 0.5
 
 func turn_head_left():

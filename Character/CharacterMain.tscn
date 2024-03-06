@@ -93,7 +93,7 @@ mesh = SubResource("CylinderMesh_r1jwc")
 skeleton = NodePath("../..")
 
 [node name="Tick" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 autostart = true
 
 [node name="HealthBar3D" parent="." instance=ExtResource("4_swnpx")]
