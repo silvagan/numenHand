@@ -43,7 +43,6 @@ func generating_mesh(a):
 		
 		for i in vertices.size():
 			var vertex = vertices[i]
-			print(vertex)
 			vertices[i].y = noise.get_noise_2d(vertex.x,vertex.z) * amplitude
 			tree_cords = abs(snapped(tree_noise.get_noise_2d(vertex.x,vertex.z),0.01))
 			

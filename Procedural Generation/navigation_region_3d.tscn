@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://dlethjugcp3lm"]
+
+[ext_resource type="Script" path="res://Procedural Generation/Nav_mesh_generation.gd" id="1_lpssh"]
+[ext_resource type="Shader" path="res://Procedural Generation/terrain_color.gdshader" id="2_tta2a"]
+[ext_resource type="Texture2D" uid="uid://b53oqcjwrxach" path="res://Procedural Generation/Textures/grass.jpg" id="3_huarg"]
+[ext_resource type="Texture2D" uid="uid://72iecbhk11hw" path="res://Procedural Generation/Textures/rock.jpg" id="4_tilnj"]
+[ext_resource type="Texture2D" uid="uid://cx02sm0jh1fc8" path="res://Procedural Generation/Textures/sand.jpg" id="5_3k3m4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ityis"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnehk"]
+render_priority = 0
+shader = ExtResource("2_tta2a")
+shader_parameter/min_rock_slope = 0.5
+shader_parameter/max_grass_slope = 0.9
+shader_parameter/min_rockgrass_height = -8.0
+shader_parameter/max_sand_height = -6.0
+shader_parameter/terrain_grass = ExtResource("3_huarg")
+shader_parameter/terrain_rock = ExtResource("4_tilnj")
+shader_parameter/terrain_sand = ExtResource("5_3k3m4")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D"]
+script = ExtResource("1_lpssh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_ityis")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_qnehk")

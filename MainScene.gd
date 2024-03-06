@@ -12,3 +12,9 @@ func _process(delta):
 	#if Input.is_action_pressed("num 7"):
 		#$NavigationRegion.bake_navigation_mesh()
 	pass
+#to avoid new terrain generation cliping through and falling
+func _input(event):
+	if event is InputEventKey:
+		if event.is_action_pressed("Generate_map"):
+			$CharacterMain.position.y += 5
+	

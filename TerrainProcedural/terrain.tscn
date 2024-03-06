@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://TerrainProcedural/Terrain.gd" id="1_ywcsf"]
 [ext_resource type="Texture2D" uid="uid://c43d8beve0hcl" path="res://TerrainProcedural/Textures/grass.jpg" id="3_56khg"]
-[ext_resource type="Shader" path="res://TerrainProcedural/terrain_color.gdshader" id="3_oqsnh"]
+[ext_resource type="Shader" path="res://Procedural Generation/terrain_color.gdshader" id="3_oqsnh"]
 [ext_resource type="Texture2D" uid="uid://cmi82s1esgilo" path="res://TerrainProcedural/Textures/rock.jpg" id="4_fya8w"]
 [ext_resource type="Texture2D" uid="uid://75l2hnffvb5o" path="res://TerrainProcedural/Textures/sand.jpg" id="5_6hipa"]
 [ext_resource type="PackedScene" uid="uid://b5y0q5dw3q8ak" path="res://TerrainProcedural/tree.tscn" id="7_8jlph"]
