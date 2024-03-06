@@ -33,7 +33,8 @@ func _input(event):
 				rock.scale.x = randf_range(1,2)
 				add_child(rock)
 
-func _ready():
+func _ready():	
+	$".".navigation_mesh = NavigationMesh.new()
 	generating_nav_mesh()
 
 func generating_nav_mesh():
@@ -82,10 +83,7 @@ func generating_nav_mesh():
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
+	
 	$".".add_child($MeshInstance3D)
 	$".".bake_navigation_mesh()
 	
-	
-	var navMesh = NavigationMesh.new()
-	navMesh.create_from_mesh($MeshInstance3D.mesh)
-	$".".navigation_mesh = navMesh
