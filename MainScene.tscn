@@ -53,9 +53,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4698, 10.9538, 4.85335)
 [node name="Ball3" parent="." instance=ExtResource("6_qhxmi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00448, 12.0256, 4.85335)
 
-[node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
-far = 475.28
-
 [node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
+
+[node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
+transform = Transform3D(-1, 7.7118e-08, -4.11772e-08, 0, 0.471012, 0.882127, 8.74228e-08, 0.882127, -0.471012, -0.0428782, 15.0133, -4.9689)
 
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]

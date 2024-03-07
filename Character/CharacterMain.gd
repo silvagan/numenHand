@@ -22,7 +22,10 @@ func _ready():
 	#has_target = true
 	pass
 
+
+
 func _physics_process(delta):
+	
 	objective = update_objective()
 	update_needs_visuals()
 	
@@ -69,9 +72,9 @@ func _physics_process(delta):
 				destination = get_random_location(5, 50)
 				print(get_point_on_map(destination, 1).distance_to(destination))
 				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
-					go_to(destination, "default")
 					syncing_head_body = true
 					bonus = 5
+					go_to(destination, "default")
 		"urgent explore":
 			var visible_ob = $Head/VisionCones.get_overlapping_bodies()
 			if(contains_food(visible_ob)):
@@ -85,9 +88,9 @@ func _physics_process(delta):
 				destination = get_random_location(5, 10)
 				print(get_point_on_map(destination, 1).distance_to(destination))
 				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
-					go_to(destination, "default")
 					syncing_head_body = true
 					bonus = 5
+					go_to(destination, "default")
 	
 	
 func go_to(location, head_movement_mode):
@@ -273,11 +276,13 @@ func is_visible_from_view(target):
 
 func look_around():
 	var angle = int(abs($Head.rotation_degrees.y-$Body.rotation_degrees.y)) % 360
-	if(angle > 90 && right == false):
+	############################################################ 90 -> 60
+	if(angle > 60 && right == false):
 		print(angle)
 		head_movement_speed *= -1
 		right = true
-	if(angle < 90):
+	############################################################ 90 -> 60
+	if(angle < 60):
 		right = false
 	$Head.rotation_degrees.y += head_movement_speed	
 		
@@ -321,7 +326,8 @@ func sync_head_with_body():
 		sync_head_body(1)
 
 func sync_head_body(bonus):	
-	rotate_head_vertical(-45)
+	############################################################-45 -> -25
+	rotate_head_vertical(-25)
 		
 	var turn_left = turn_head_left()
 	if (round($Head.rotation_degrees.y) != round($Body.rotation_degrees.y)):
@@ -339,7 +345,9 @@ func sync_head_body(bonus):
 			#head_movement_speed = -0.5
 		else:
 			pass
-	elif (round($Head.rotation_degrees.x) == -45):
+			############################################################-45 -> -25
+	elif (round($Head.rotation_degrees.x) == -25):
+		print("=====================================================================================")
 		syncing_head_body = false
 
 func rotate_head_vertical(angle):

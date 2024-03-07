@@ -40,6 +40,9 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 2.4569, 0)
 mesh = SubResource("SphereMesh_a1ldo")
 surface_material_override/0 = ExtResource("2_8bfjo")
 
+[node name="povCamera" type="Camera3D" parent="Head"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.231758, -0.389955)
+
 [node name="VisionRayCast" type="RayCast3D" parent="Head"]
 transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.0222375, -0.497046)
 target_position = Vector3(0, -1, -50)
@@ -57,6 +60,7 @@ cast_shadow = 0
 
 [node name="Collision" type="CollisionShape3D" parent="Head/VisionCones"]
 transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, 0, 2.47603, -20.1639)
+visible = false
 shape = SubResource("ConvexPolygonShape3D_ut46h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
