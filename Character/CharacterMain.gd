@@ -69,9 +69,9 @@ func _physics_process(delta):
 				destination = get_random_location(5, 50)
 				print(get_point_on_map(destination, 1).distance_to(destination))
 				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
-					syncing_head_body = true					
-					bonus = 5
 					go_to(destination, "default")
+					syncing_head_body = true
+					bonus = 5
 		"urgent explore":
 			var visible_ob = $Head/VisionCones.get_overlapping_bodies()
 			if(contains_food(visible_ob)):
@@ -84,10 +84,10 @@ func _physics_process(delta):
 			else:
 				destination = get_random_location(5, 10)
 				print(get_point_on_map(destination, 1).distance_to(destination))
-				if(get_point_on_map(destination, 1).distance_to(destination) < 10):					
+				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
+					go_to(destination, "default")
 					syncing_head_body = true
 					bonus = 5
-					go_to(destination, "default")
 	
 	
 func go_to(location, head_movement_mode):
