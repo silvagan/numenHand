@@ -67,8 +67,6 @@ func generating_nav_mesh():
 			rock_spawn_locations.append(vertices[i])
 		
 		
-		
-		
 		if vertices[i].y < min_height:
 			min_height = vertices[i].y
 		if vertices[i].y > max_height:
