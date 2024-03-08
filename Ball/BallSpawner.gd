@@ -1,6 +1,7 @@
 extends Node3D
 var ball = preload("res://Ball/Ball.tscn")
 
+	
 var location = Vector3()
 func spawn_ball():
 	randomize()

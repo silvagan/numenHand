@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var nav_agent = $Navigation
+@onready var debug_arrow = preload("res://Debug_arrow.tscn")
 
 var movement_speed = 5.0
 var destination = Vector3(0,0,0)
@@ -12,12 +13,14 @@ var exaustion = 0
 var head_movement_speed = 0.5
 var bonus = 1
 var memory = []
+var memory2 = []
 var objective = "idle"
 var right = false
 
 @onready var bar = $HealthBar3D
 
 func _ready():
+	
 	#update_target_location(get_random_near_location())
 	#has_target = true
 	pass
@@ -36,7 +39,16 @@ func _physics_process(delta):
 		"idle":
 			pass
 		"find food":
-			if(navigating):
+			if (memory2.size() > 0):
+				var debug = debug_arrow.instantiate()
+				debug.position = memory2[0].position
+				$"..".add_child(debug)
+				print("going to memory",memory2[0].position)
+				go_to(memory2[0].position,"destination")
+				if(!is_instance_valid(memory2[0])):
+					memory2.clear()
+				
+			elif(navigating):
 				go_to(destination, "destination")
 			else:
 				var visible_ob = $Head/VisionCones.get_overlapping_bodies()
@@ -64,13 +76,37 @@ func _physics_process(delta):
 			pass
 		"explore":
 			var visible_ob = $Head/VisionCones.get_overlapping_bodies()
-			#if(contains_food(visible_ob)):
-				#memory.append(get_food_closest(visible_ob))
+			#finds food and checks it with memory to replace it ir not
+			########################################################################
+			if(contains_food(visible_ob)):
+				var food_in_vision = get_food_closest_obj(visible_ob)
+				if(memory2.size() > 0 and is_instance_valid(memory2[0])):
+					var memory2_food = diff(memory2[0])
+					var seen_food = diff(food_in_vision)
+					if (memory2_food > seen_food and memory2[0] != food_in_vision): 
+						memory2.clear()
+						memory2.append(food_in_vision)
+						print("swaped memory item", food_in_vision.position)
+						var debug = debug_arrow.instantiate()
+						debug.position.x = food_in_vision.position.x
+						debug.position.z = food_in_vision.position.z
+						debug.position.y = food_in_vision.position.y
+						$"..".add_child(debug)
+				else:
+					memory2.clear()
+					memory2.append(food_in_vision)
+					print("added new to memory", memory2[0].position)
+					var debug = debug_arrow.instantiate()
+					debug.position.x = food_in_vision.position.x
+					debug.position.z = food_in_vision.position.z
+					debug.position.y = food_in_vision.position.y
+					$"..".add_child(debug)
+			########################################################################
 			if(destination != Vector3(0,0,0)):
 				go_to(destination, "default")
 			else:
 				destination = get_random_location(5, 50)
-				print(get_point_on_map(destination, 1).distance_to(destination))
+				#print(get_point_on_map(destination, 1).distance_to(destination))
 				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
 					syncing_head_body = true
 					bonus = 5
@@ -86,7 +122,7 @@ func _physics_process(delta):
 				go_to(destination, "default")
 			else:
 				destination = get_random_location(5, 10)
-				print(get_point_on_map(destination, 1).distance_to(destination))
+				#print(get_point_on_map(destination, 1).distance_to(destination))
 				if(get_point_on_map(destination, 1).distance_to(destination) < 10):
 					syncing_head_body = true
 					bonus = 5
@@ -194,7 +230,19 @@ func get_food_closest(all):
 			var c2 = diff(m.global_position)
 			if (c1 < c2):
 				m = c
+	
 	return m.global_position
+
+func get_food_closest_obj(all):
+	var m = get_first_food(all)
+	for c in all:
+		if (c.is_in_group("food") && is_visible_from_view(c.global_transform.origin)):
+			var c1 = diff(c.global_position)
+			var c2 = diff(m.global_position)
+			if (c1 < c2):
+				m = c
+	
+	return m
 
 func get_food_closest_memory():
 	var m = memory[0]
@@ -207,12 +255,21 @@ func get_food_closest_memory():
 	return m
 
 func diff(ob):
+	var x2
+	var y2
+	var z2
+	if(ob is Vector3):
+		x2 = ob.x
+		y2 = ob.y
+		z2 = ob.z
+	else :
+		x2 = ob.position.x
+		y2 = ob.position.y
+		z2 = ob.position.z
+	
 	var x1 = self.global_position.x
 	var y1 = self.global_position.y
 	var z1 = self.global_position.z
-	var x2 = ob.x
-	var y2 = ob.y
-	var z2 = ob.z
 	var s = sqrt(pow(x2 - x1, 2)+pow(y2 - y1, 2)+pow(z2 - z1, 2))
 	return s
 
@@ -278,7 +335,7 @@ func look_around():
 	var angle = int(abs($Head.rotation_degrees.y-$Body.rotation_degrees.y)) % 360
 	############################################################ 90 -> 60
 	if(angle > 60 && right == false):
-		print(angle)
+		#print(angle)
 		head_movement_speed *= -1
 		right = true
 	############################################################ 90 -> 60
@@ -292,7 +349,7 @@ func look_around():
 func turn_head_left():
 
 	var diff = abs($Head.rotation_degrees.y - $Body.rotation_degrees.y)
-	print($Head.rotation_degrees.y, " - ", $Body.rotation_degrees.y)
+	#print($Head.rotation_degrees.y, " - ", $Body.rotation_degrees.y)
 		
 	if (diff > 180):
 		if (abs($Head.rotation_degrees.y) > abs($Body.rotation_degrees.y)):
@@ -306,7 +363,7 @@ func turn_head_left():
 			else:
 				$Body.rotation_degrees.y += 360
 	
-	print($Head.rotation_degrees.y, " - ", $Body.rotation_degrees.y)
+	#print($Head.rotation_degrees.y, " - ", $Body.rotation_degrees.y)
 	
 	if ($Head.rotation_degrees.y > $Body.rotation_degrees.y):
 		return false
@@ -332,13 +389,13 @@ func sync_head_body(bonus):
 	var turn_left = turn_head_left()
 	if (round($Head.rotation_degrees.y) != round($Body.rotation_degrees.y)):
 		if turn_left == true:
-			print("turn left")
+			#print("turn left")
 			$Head.rotation_degrees.y += 0.8 * bonus
 			if($Head.rotation_degrees.y > $Body.rotation_degrees.y):
 				$Head.rotation_degrees.y = $Body.rotation_degrees.y
 			#head_movement_speed = 0.5
 		elif turn_left == false:
-			print("turn right")
+			#print("turn right")
 			$Head.rotation_degrees.y += -0.8 * bonus
 			if($Head.rotation_degrees.y < $Body.rotation_degrees.y):
 				$Head.rotation_degrees.y = $Body.rotation_degrees.y
@@ -347,7 +404,7 @@ func sync_head_body(bonus):
 			pass
 			############################################################-45 -> -25
 	elif (round($Head.rotation_degrees.x) == -25):
-		print("=====================================================================================")
+		#print("=====================================================================================")
 		syncing_head_body = false
 
 func rotate_head_vertical(angle):
