@@ -45,6 +45,7 @@ autostart = true
 transform = Transform3D(0.993427, 0, 0.114469, 0, 1, 0, -0.114469, 0, 0.993427, -0.08815, 9.84542, 0.0101569)
 
 [node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
 transform = Transform3D(-1, 7.7118e-08, -4.11772e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
