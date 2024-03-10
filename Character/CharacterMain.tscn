@@ -1,11 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://l5hjt2l7cdv6"]
+[gd_scene load_steps=19 format=3 uid="uid://l5hjt2l7cdv6"]
 
-[ext_resource type="Script" path="res://Character/CharacterMain.gd" id="1_57c2a"]
+[ext_resource type="Script" path="res://Character/Scripts/ChMain.gd" id="1_57c2a"]
 [ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="2_8bfjo"]
+[ext_resource type="Script" path="res://Character/Scripts/ChPerception.gd" id="2_i65l6"]
 [ext_resource type="Script" path="res://Character/ActionObject.gd" id="2_pasrq"]
 [ext_resource type="Script" path="res://Character/DetectObject.gd" id="3_6bxbn"]
 [ext_resource type="PackedScene" uid="uid://cu60udop5m3v" path="res://Character/ViewCone.tscn" id="3_12bjn"]
+[ext_resource type="Script" path="res://Character/Scripts/ChNavigation.gd" id="3_yqimu"]
 [ext_resource type="PackedScene" uid="uid://c5dwbs10n2cft" path="res://Character/Health&Hunger/HealthBar3D.tscn" id="4_swnpx"]
+[ext_resource type="Script" path="res://Character/Scripts/ChMemory.gd" id="4_yk162"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nygyd"]
 material = ExtResource("2_8bfjo")
@@ -30,6 +33,17 @@ points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.9808
 
 [node name="CharacterMain" type="CharacterBody3D" groups=["characters"]]
 script = ExtResource("1_57c2a")
+
+[node name="Scripts" type="Node" parent="."]
+
+[node name="Perception" type="Node" parent="Scripts"]
+script = ExtResource("2_i65l6")
+
+[node name="Navigation" type="Node" parent="Scripts"]
+script = ExtResource("3_yqimu")
+
+[node name="Memory" type="Node" parent="Scripts"]
+script = ExtResource("4_yk162")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -107,6 +121,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.19972, 0)
 wait_time = 0.5
 autostart = true
 
-[connection signal="navigation_finished" from="Navigation" to="." method="_on_navigation_navigation_finished"]
+[connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]

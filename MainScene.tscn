@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ohnc23h86fm7"]
+[gd_scene load_steps=9 format=3 uid="uid://ohnc23h86fm7"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_r5ocb"]
 [ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://Character/CharacterMain.tscn" id="5_64jpk"]
 [ext_resource type="PackedScene" uid="uid://bab84aiqartcu" path="res://Camera/camera_3d.tscn" id="5_mcpj8"]
 [ext_resource type="PackedScene" uid="uid://bhqtahcree8ju" path="res://Camera/spawner.tscn" id="6_p2lvb"]
-[ext_resource type="PackedScene" uid="uid://cq2qm20jlkj68" path="res://Ball/Ball.tscn" id="6_qhxmi"]
 [ext_resource type="PackedScene" uid="uid://dlethjugcp3lm" path="res://Procedural Generation/navigation_region_3d.tscn" id="8_8mkv1"]
 
 [sub_resource type="Environment" id="Environment_4vcr7"]
@@ -49,14 +48,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
 transform = Transform3D(-1, 7.7118e-08, -4.11772e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
-
-[node name="Ball" parent="." instance=ExtResource("6_qhxmi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8562, 10.9132, -0.55333)
-
-[node name="Ball2" parent="." instance=ExtResource("6_qhxmi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.420296, 11.4642, -6.58329)
-
-[node name="Ball3" parent="." instance=ExtResource("6_qhxmi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.47762, 10.7826, -2.27728)
 
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]

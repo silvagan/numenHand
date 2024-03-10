@@ -10,5 +10,5 @@ func _physics_process(delta):
 				get_parent().hunger += 50
 			else: 
 				get_parent().hunger = 100
-			get_parent().destination = Vector3(0,0,0)
-			get_parent().navigating = false
+			$"..".nav.destination = Vector3(0,0,0)
+			$"..".nav.navigating = false
