@@ -1,12 +1,21 @@
 extends Node
+#this is a script dedicated to the NAVIGATION of the character
+#NAVIGATION
 
+#destination is null if Vector(0,0,0)
 var destination = Vector3(0,0,0)
+#character state for minimisation of 'set destination' functions
 var navigating = false
+#character movement speed
 var movement_speed = 5.0
 
+#ready perception and memory scripts for use in furher functions
 @onready var per = $"../Perception"
 @onready var mem = $"../Memory"
+#ready arrow for debugging
+@onready var dbarrow = preload("res://Debug_arrow.tscn")
 
+#responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
 	update_target_location(location)
 	var current_location = $"../..".global_transform.origin
@@ -22,7 +31,6 @@ func go_to(location, head_movement_mode):
 				per.look_around()
 		"destination":
 			per.look_towards($"../../Head", $"../..".nav_agent.target_position)
-			#look_at_target(nav_agent.target_position)
 			
 #func get_point_on_map(target_point: Vector3, min_dist_from_edge: float) -> Vector3:
 	#var map := $".".get_world_3d().navigation_map
@@ -36,6 +44,7 @@ func go_to(location, head_movement_mode):
 		#closest_point += delta * min_dist_from_edge
 	#return closest_point
 	
+#gets random location based on distance from current object
 func get_random_location(speed, distance):
 	movement_speed = speed
 	var x = $"../..".global_transform.origin.x
@@ -47,12 +56,10 @@ func get_random_location(speed, distance):
 	
 	return Vector3(x, y, z)
 
-@onready var dbarrow = preload("res://Debug_arrow.tscn")
-
+#behaviour for roaming and updating memory
 func explore():
-	var visible_ob = $"../../Head/VisionCones".get_overlapping_bodies()
+	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	#finds food and checks it with memory to replace it ir not
-	########################################################################
 	if(per.contains_type(visible_ob, "food")):
 		var food_in_vision = per.get_closest_obj(visible_ob, "food")
 		if(mem.memory.size() > 0 and is_instance_valid(mem.memory[0])):
@@ -76,17 +83,15 @@ func explore():
 			debug.position.z = food_in_vision.position.z
 			debug.position.y = food_in_vision.position.y
 			$"..".add_child(debug)
-	########################################################################
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
 		destination = get_random_location(5, 50)
-		#print(get_point_on_map(destination, 1).distance_to(destination))
-		#if(navigation.get_point_on_map(navigation.destination, 1).distance_to(navigation.destination) < 10):
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")
 
+#behaviour for anything related to getting food
 func find_food():
 	if(navigating):
 		go_to(destination, "destination")
@@ -101,26 +106,17 @@ func find_food():
 		print("going to memory",mem.memory[0].position)
 		go_to(mem.memory[0].position,"destination")
 	else:
-		var visible_ob = $"../../Head/VisionCones".get_overlapping_bodies()
+		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 		if(per.contains_type(visible_ob, "food")):
 			destination = per.get_closest_obj(visible_ob, "food").position
 			go_to(destination, "destination")
 			navigating = true
-		
-		#elif(memory.size() > 0):
-			#destination = get_food_closest_memory()
-			#if (is_visible_from_view(destination)):
-				#go_to(destination, "destination")
-				#navigating = true
-			#else:
-				#destination = Vector3(0,0,0)
-				#memory.erase(get_food_closest_memory())
-				#return
 		else:
 			$"../..".objective = "urgent explore"
 			
+#behaviour that is accessed when no food is in the area // similar to explore
 func urgent_explore():
-	var visible_ob = $"../../Head/VisionCones".get_overlapping_bodies()
+	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "food")):
 		$"../..".objective = "find food"
 		movement_speed = 9
@@ -130,12 +126,11 @@ func urgent_explore():
 		go_to(destination, "default")
 	else:
 		destination = get_random_location(5, 10)
-		#print(get_point_on_map(destination, 1).distance_to(destination))
-		#if(navigation.get_point_on_map(navigation.destination, 1).distance_to(navigation.destination) < 10):
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")
 		
+#behaviour that is responsible for the objects navigaion to the ground
 func fall():
 	if(navigating):
 		go_to(destination, "destination")
@@ -144,13 +139,16 @@ func fall():
 		go_to(destination, "destination")
 		navigating = true
 	
+#updates the nav agent with a new target location
 func update_target_location(target_location):
 	$"../..".nav_agent.set_target_position(target_location)
 	
+#is called on targetlocation reached
 func _on_navigation_navigation_finished():
 	destination = Vector3(0,0,0)
 	navigating = false
 	
+#updates body rotation according to momentum
 func update_body_rotation():
 	var lookdir = atan2(-$"../..".velocity.x, -$"../..".velocity.z)
 	$"../../Body".rotation.y = lookdir

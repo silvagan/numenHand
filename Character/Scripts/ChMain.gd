@@ -1,35 +1,34 @@
 extends CharacterBody3D
+#this is the MAIN character script
+#MAIN
 
-
-@onready var nav_agent = $Navigation
-@onready var debug_arrow = preload("res://Debug_arrow.tscn")
-
+#character needs
 var hunger = 100
 var health = 100
 var exaustion = 0
 
+#character timer and objective
 var timer = 0
-
 var objective = "idle"
 
+#load agent for navigation
+@onready var nav_agent = $Navigation
 
+#load all associated scripts
 @onready var bar = $HealthBar3D
 @onready var per = $Scripts/Node
 @onready var nav = $Scripts/Navigation
 @onready var mem = $Scripts/Memory
 
-func _ready():
-	pass
-
-
+#process
 func _physics_process(delta):
 	
+	#update objective, visuals and body rotation
 	objective = update_objective()
 	update_needs_visuals()
 	nav.update_body_rotation()
 	
-	print(objective)
-	
+	#act upon current objective
 	match objective:
 		"idle":
 			nav.fall()
@@ -46,6 +45,17 @@ func _physics_process(delta):
 		"urgent explore":
 			nav.urgent_explore()
 
+#called on timer timeout
+func _on_tick_timeout():
+	timer += 1
+	if(hunger > 0):
+		hunger -= 1
+	if(hunger <= 0):
+		health -= 1
+	if(health <= 0):
+		queue_free()
+
+#updates the objective based on criteria
 func update_objective():
 	if(objective == "urgent explore" && hunger < 90):
 		return "urgent explore"
@@ -56,31 +66,7 @@ func update_objective():
 	else:
 		return "explore"
 
-func _on_tick_timeout():
-	timer += 1
-	if(hunger > 0):
-		hunger -= 1
-	if(hunger <= 0):
-		health -= 1
-	if(health <= 0):
-		queue_free()
-
-#func _on_vision_timer_timeout():
-	#if (has_target == true):
-		#pass
-	#var overlaps = $Head/VisionCones.get_overlapping_bodies()
-	##print(str(overlaps.size()) + " objects in view")
-	#if overlaps.size() > 0:
-		#if (contains_food(overlaps) == true):
-			#if (hunger <= 70):
-				#update_target_location(get_closest(overlaps))
-				#has_target = true
-				#has_destination = true
-				#SPEED = 5.0
-			#elif (!memory.has(get_closest(overlaps))):
-				#memory.append(get_closest(overlaps))
-		#pass
-	#pass
-
+#updates needs visuals
 func update_needs_visuals():
 	bar.update(hunger, 100)
+

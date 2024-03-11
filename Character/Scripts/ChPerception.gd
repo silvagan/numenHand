@@ -1,32 +1,43 @@
 extends Node
+#this is a script dedicated to the PERCEPTION of the character
+#PERCEPTION
 
+#boolean responsible for the sync of the head and body of the character
 var syncing_head_body = false
-var right = false
+var right = false #|subject to change|
+#head movement speed and head movement speed bonus for a burst of movement at the start of target acquisition
 var head_movement_speed = 0.5
 var bonus = 1
 
-func look_towards(node: Object, vector, smooth_speed:= 0.1, return_only:= false):
+#ready raycast for line of sight checking
+@onready var vsray = $"../../Head/VisionRayCast"
+#ready head and body reference
+@onready var hd = $"../../Head"
+@onready var bd = $"../../Body"
+
+#look towards target location
+func look_towards(node: Object, target, smooth_speed:= 0.1, return_only:= false):
 	var smooth
 	if smooth_speed == 0:
 		smooth = false
 	else:
 		smooth = true
-	if vector is Object:
-		vector = vector.global_transform.origin
-	elif !vector is Vector3:
+	if target is Object:
+		target = target.global_transform.origin
+	elif !target is Vector3:
 		print("No target to look towards")
 		get_tree().paused = true
 		return
 	var looker = Node3D.new()
 	node.add_child(looker)
-	looker.look_at(vector, Vector3.UP)
+	looker.look_at(target, Vector3.UP)
 	var finalRot = node.rotation_degrees + looker.rotation_degrees
 	if return_only == true:
 		return finalRot
 	elif smooth == false:
 		node.rotation_degrees = finalRot
 	else:
-		looker.look_at(vector, Vector3.UP)
+		looker.look_at(target, Vector3.UP)
 		finalRot = node.rotation_degrees + looker.rotation_degrees
 		node.rotation_degrees = lerp(node.rotation_degrees, finalRot, smooth_speed)
 	looker.queue_free()
@@ -35,9 +46,9 @@ func look_towards(node: Object, vector, smooth_speed:= 0.1, return_only:= false)
 #func look_at_target(target):
 	#$Head.look_at(target, Vector3.UP)
 
-@onready var vsray = $"../../Head/VisionRayCast"
-
+#check if target is visible from view
 func is_visible_from_view(target):
+	
 	vsray.look_at(target, Vector3.UP)
 	vsray.force_raycast_update()
 	
@@ -52,9 +63,8 @@ func is_visible_from_view(target):
 			#print("I dont see food")
 			return false
 
+#head movement pattern for scanning the surroundings
 func look_around():
-	var hd = $"../../Head"
-	var bd = $"../../Body"
 	
 	var v1 = hd.rotation_degrees.y
 	var v2 = bd.rotation_degrees.y
@@ -72,10 +82,8 @@ func look_around():
 	if(hd.rotation_degrees.x < -15):
 		hd.rotation_degrees.x += 0.5
 
-
+#indicated whether the head should be turned left or right to minimise head rotation |subject to change|
 func turn_head_left():
-	var hd = $"../../Head"
-	var bd = $"../../Body"
 	var diff = abs(hd.rotation_degrees.y - bd.rotation_degrees.y)
 	#print($Head.rotation_degrees.y, " - ", $Body.rotation_degrees.y)
 		
@@ -98,28 +106,23 @@ func turn_head_left():
 	else:
 		return true
 
+#head movement pattern for syncing head with body |subject to change|
 func sync_head_with_body():
-	var hd = $"../../Head"
-	var bd = $"../../Body"
 	
 	if(bonus > 1):
 		sync_head_body(bonus)
 		if(abs(hd.rotation_degrees.y-bd.rotation_degrees.y) < 10):
 			bonus *= 0.5
 		else:
-			#print((abs($Head.rotation_degrees.y - $Body.rotation_degrees.y) / head_rotate_distance))
-			#bonus *= pow((abs($Head.rotation_degrees.y - $Body.rotation_degrees.y)) / sqrt(head_rotate_distance), 1/3)
 			bonus *= 0.97	
 	else:
 		sync_head_body(1)
 
+#gradually change head rotation to match body rotation
 func sync_head_body(bonus):	
-	var hd = $"../../Head"
-	var bd = $"../../Body"
 	
-	############################################################-45 -> -25
 	rotate_head_vertical(-25)
-		
+	
 	var turn_left = turn_head_left()
 	if (round(hd.rotation_degrees.y) != round(bd.rotation_degrees.y)):
 		if turn_left == true:
@@ -127,23 +130,19 @@ func sync_head_body(bonus):
 			hd.rotation_degrees.y += 0.8 * bonus
 			if(hd.rotation_degrees.y > bd.rotation_degrees.y):
 				hd.rotation_degrees.y = bd.rotation_degrees.y
-			#head_movement_speed = 0.5
 		elif turn_left == false:
 			#print("turn right")
 			hd.rotation_degrees.y += -0.8 * bonus
 			if(hd.rotation_degrees.y < bd.rotation_degrees.y):
 				hd.rotation_degrees.y = bd.rotation_degrees.y
-			#head_movement_speed = -0.5
 		else:
 			pass
-			############################################################-45 -> -25
 	elif (round(hd.rotation_degrees.x) == -25):
-		#print("=====================================================================================")
 		syncing_head_body = false
 
+#responsible for vertical head allignment to angle
 func rotate_head_vertical(angle):
-	var hd = $"../../Head"
-	var bd = $"../../Body"
+	
 	#print(rotation)
 	if (hd.rotation_degrees.x > angle):
 		hd.rotation_degrees.x -= 1
@@ -156,19 +155,20 @@ func rotate_head_vertical(angle):
 	else:
 		pass
 
+#check if contains type
 func contains_type(all, type):
 	for c in all:
 		if(c.is_in_group(type) && is_visible_from_view(c.global_transform.origin)):
 			return true
 
+#get first object of type
 func get_first_obj(all, type):
 	for c in all:
 		if (c.is_in_group(type) && is_visible_from_view(c.global_transform.origin)):
 			return c
 
+#get closest object of type
 func get_closest_obj(all, type):
-	var hd = $"../../Head"
-	var bd = $"../../Body"
 
 	var m = get_first_obj(all, type)
 	for c in all:
