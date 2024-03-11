@@ -6,7 +6,6 @@ func _ready():
 	#$NavigationRegion.bake_navigation_mesh()
 	pass
 func _process(delta):
-	
 	pass
 #to avoid new terrain generation cliping through and falling
 func _input(event):
