@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://byeapy1i6q38r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vk3t"]
+albedo_color = Color(0.0588235, 0.419608, 0.105882, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_sksro"]
+material = SubResource("StandardMaterial3D_8vk3t")
+radius = 1.5
+height = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tvbxe"]
+radius = 1.6
+
+[node name="BerryBush" type="StaticBody3D" groups=["berry_bush"]]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_sksro")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_tvbxe")

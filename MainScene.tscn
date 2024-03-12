@@ -12,10 +12,10 @@
 noise_type = 3
 frequency = 0.0076
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xgy38"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6tsky"]
 noise_type = 0
-frequency = 0.335
-fractal_octaves = 10
+frequency = 1.0
+fractal_octaves = 1
 
 [node name="MainScene" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.0271511, -0.026598)
@@ -31,14 +31,13 @@ directional_shadow_max_distance = 34.6
 
 [node name="NavigationRegion3D" parent="." instance=ExtResource("8_8mkv1")]
 size = 100
-subdivide = 60
+subdivide = 20
 amplitude = 0
 noise = SubResource("FastNoiseLite_uorvg")
-rock_noise = SubResource("FastNoiseLite_xgy38")
+bush_noise = SubResource("FastNoiseLite_6tsky")
 
 [node name="FoodSpawnTimer" type="Timer" parent="."]
 process_callback = 0
-autostart = true
 
 [node name="CharacterMain" parent="." instance=ExtResource("5_64jpk")]
 transform = Transform3D(0.993427, 0, 0.114469, 0, 1, 0, -0.114469, 0, 0.993427, -0.08815, 9.84542, 0.0101569)

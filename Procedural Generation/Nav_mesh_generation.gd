@@ -4,15 +4,15 @@ extends NavigationRegion3D
 @export var subdivide : int = 63
 @export var amplitude : int = 16
 @export var noise : FastNoiseLite = FastNoiseLite.new()
-@export var rock_noise : FastNoiseLite = FastNoiseLite.new()
+@export var bush_noise : FastNoiseLite = FastNoiseLite.new()
 
 @export var min_height : float = 0
 @export var max_height : float = 0
 
 var seed
 
-var rock_spawn_locations : PackedVector3Array
-var rock_scene = preload("res://Procedural Generation/Objects/Rock/Rock.tscn")
+var bush_spawn_locations : PackedVector3Array
+var berry_bush_scene = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
 
 func _input(event):
 	if event is InputEventKey:
@@ -22,31 +22,31 @@ func _input(event):
 			generating_nav_mesh()
 		if event.is_action_pressed("spawn_objects"):
 			for i in get_child_count():
-				if get_child(i).is_in_group("rock"):
+				if get_child(i).is_in_group("berry_bush"):
 					get_child(i).queue_free()
-			for i in rock_spawn_locations.size():
-				var rock = rock_scene.instantiate()
-				rock.position.x = rock_spawn_locations[i].x
-				rock.position.y = rock_spawn_locations[i].y
-				rock.position.z = rock_spawn_locations[i].z
-				rock.rotation.y = randi_range(0,180)
-				rock.scale.x = randf_range(1,2)
-				add_child(rock)
+			for i in bush_spawn_locations.size():
+				var bush = berry_bush_scene.instantiate()
+				bush.position.x = bush_spawn_locations[i].x
+				bush.position.y = bush_spawn_locations[i].y
+				bush.position.z = bush_spawn_locations[i].z
+				bush.rotation.y = randi_range(0,180)
+				bush.scale.x = randf_range(1,2)
+				add_child(bush)
 
 func _ready():	
 	$".".navigation_mesh = NavigationMesh.new()
 	generating_nav_mesh()
 
 func generating_nav_mesh():
-	rock_spawn_locations.clear()
+	bush_spawn_locations.clear()
 	for i in get_child_count():
-		if get_child(i).is_in_group("rock"):
+		if get_child(i).is_in_group("berry_bush"):
 			get_child(i).queue_free()
 	print("Generating Mesh..")
 	
 	seed = (Time.get_date_string_from_system()+Time.get_time_string_from_system()).to_int()
 	noise.seed = seed
-	rock_noise.seed = seed
+	bush_noise.seed = seed
 	
 	
 	var plane_mesh = PlaneMesh.new()
@@ -63,9 +63,13 @@ func generating_nav_mesh():
 		var vertex = vertices[i]
 		vertices[i].y = noise.get_noise_2d(vertex.x,vertex.z) * amplitude
 		
-		if(abs(rock_noise.get_noise_2d(vertex.x,vertex.z)) > 0.7):
-			rock_spawn_locations.append(vertices[i])
-		
+		if(abs(bush_noise.get_noise_2d(vertex.x,vertex.z)) > 0.9):
+			bush_spawn_locations.append(vertices[i])
+			var bush = berry_bush_scene.instantiate()
+			bush.position.x = vertices[i].x
+			bush.position.y = vertices[i].y
+			bush.position.z = vertices[i].z
+			add_child(bush)
 		
 		
 		
