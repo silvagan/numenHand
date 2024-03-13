@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://byeapy1i6q38r"]
+[gd_scene load_steps=5 format=3 uid="uid://byeapy1i6q38r"]
+
+[ext_resource type="Script" path="res://Procedural Generation/Objects/Berry bush/Resource.gd" id="1_ci4ti"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vk3t"]
 albedo_color = Color(0.0588235, 0.419608, 0.105882, 1)
@@ -12,9 +14,17 @@ height = 3.0
 radius = 1.6
 
 [node name="BerryBush" type="StaticBody3D" groups=["berry_bush"]]
+script = ExtResource("1_ci4ti")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_sksro")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_tvbxe")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13019, 0)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

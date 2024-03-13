@@ -47,5 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
 transform = Transform3D(-1, 7.7118e-08, -4.11772e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
+moveSpeed = 20.0
 
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]

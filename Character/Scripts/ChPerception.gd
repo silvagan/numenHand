@@ -54,7 +54,7 @@ func is_visible_from_view(target):
 	
 	if vsray.is_colliding():
 		var collider = vsray.get_collider()
-		if collider.is_in_group("food"):
+		if collider.is_in_group("berry_bush"):
 			vsray.debug_shape_custom_color = Color(0, 255, 0)
 			#print("I see food")
 			return true

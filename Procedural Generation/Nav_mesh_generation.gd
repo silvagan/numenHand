@@ -69,6 +69,9 @@ func generating_nav_mesh():
 			bush.position.x = vertices[i].x
 			bush.position.y = vertices[i].y
 			bush.position.z = vertices[i].z
+			bush.location = vertices[i]
+			bush.amount = randi_range(1,5)
+			bush.weight = randi_range(1,5)
 			add_child(bush)
 		
 		
@@ -89,4 +92,4 @@ func generating_nav_mesh():
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
 	
 	$".".bake_navigation_mesh()
-	
+

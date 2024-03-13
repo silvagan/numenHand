@@ -62,29 +62,29 @@ func get_random_location(speed, distance):
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	#finds food and checks it with memory to replace it ir not
-	if(per.contains_type(visible_ob, "food")):
-		var food_in_vision = per.get_closest_obj(visible_ob, "food")
-		if(mem.memory.size() > 0 and is_instance_valid(mem.memory[0])):
-			var memory_food = char.position.distance_to(mem.memory[0].position)
+	if(per.contains_type(visible_ob, "berry_bush")):
+		var food_in_vision = per.get_closest_obj(visible_ob, "berry_bush")
+		if(mem.memory.size() == mem.size):
+			var memory_food = char.position.distance_to(mem.get_food_closest_memory().position)
 			var seen_food = char.position.distance_to(food_in_vision.position)
-			if (memory_food > seen_food and mem.memory[0] != food_in_vision): 
-				mem.memory.clear()
+			if (memory_food > seen_food): 
+				mem.memory.erase(mem.get_food_closest_memory())
 				mem.memory.append(food_in_vision)
-				print("swaped memory item", food_in_vision.position)
-				var debug = dbarrow.instantiate()
-				debug.position.x = food_in_vision.position.x
-				debug.position.z = food_in_vision.position.z
-				debug.position.y = food_in_vision.position.y
-				$"..".add_child(debug)
+				print("swaped memory item", mem.memory.size())
+				#var debug = dbarrow.instantiate()
+				#debug.position.x = food_in_vision.position.x
+				#debug.position.z = food_in_vision.position.z
+				#debug.position.y = food_in_vision.position.y
+				#$"..".add_child(debug)
 		else:
-			mem.memory.clear()
-			mem.memory.append(food_in_vision)
-			print("added new to memory", mem.memory[0].position)
-			var debug = dbarrow.instantiate()
-			debug.position.x = food_in_vision.position.x
-			debug.position.z = food_in_vision.position.z
-			debug.position.y = food_in_vision.position.y
-			$"..".add_child(debug)
+			if !mem.memory.has(food_in_vision):
+				mem.memory.append(food_in_vision)
+				print("added new to memory",food_in_vision.position, mem.memory.size())
+			#var debug = dbarrow.instantiate()
+			#debug.position.x = food_in_vision.position.x
+			#debug.position.z = food_in_vision.position.z
+			#debug.position.y = food_in_vision.position.y
+			#$"..".add_child(debug)
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
@@ -98,19 +98,21 @@ func find_food():
 	if(navigating):
 		go_to(destination, "destination")
 	elif (mem.memory.size() > 0):
-		if(!is_instance_valid(mem.memory[0])):
-			mem.memory.clear()
-			return
-		print(mem.memory.size())
-		var debug = dbarrow.instantiate()
-		debug.position = mem.memory[0].position
-		$"..".add_child(debug)
-		print("going to memory",mem.memory[0].position)
-		go_to(mem.memory[0].position,"destination")
+		#if(!is_instance_valid(mem.memory[0])):
+			#mem.memory.clear()
+			#return
+		#print(mem.memory.size())
+		
+		#var debug = dbarrow.instantiate()
+		#debug.position = mem.memory[0].position
+		#$"..".add_child(debug)
+		
+		#print("going to memory")
+		go_to(mem.get_food_closest_memory().position,"destination")
 	else:
 		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-		if(per.contains_type(visible_ob, "food")):
-			destination = per.get_closest_obj(visible_ob, "food").position
+		if(per.contains_type(visible_ob, "berry_bush")):
+			destination = per.get_closest_obj(visible_ob, "berry_bush").position
 			go_to(destination, "destination")
 			navigating = true
 		else:
@@ -119,7 +121,7 @@ func find_food():
 #behaviour that is accessed when no food is in the area // similar to explore
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-	if(per.contains_type(visible_ob, "food")):
+	if(per.contains_type(visible_ob, "berry_bush")):
 		char.objective = "find food"
 		movement_speed = 9
 		destination = Vector3(0,0,0)
@@ -134,6 +136,7 @@ func urgent_explore():
 		
 #behaviour that is responsible for the objects navigaion to the ground
 func fall():
+	await get_tree().create_timer(0.1).timeout
 	if(navigating):
 		go_to(destination, "destination")
 	else:

@@ -14,13 +14,15 @@ var objective = "idle"
 #load agent for navigation
 @onready var nav_agent = $Navigation
 
+
 #load all associated scripts
 @onready var bar = $HealthBar3D
-@onready var per = $Scripts/Node
+@onready var per = $Scripts/Perception
 @onready var nav = $Scripts/Navigation
 @onready var mem = $Scripts/Memory
+func _ready():
+	pass
 
-#process
 func _physics_process(delta):
 	
 	#update objective, visuals and body rotation
