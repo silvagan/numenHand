@@ -9,8 +9,8 @@ var navigating = false
 #character movement speed
 var movement_speed = 5.0
 
-#character place for easier acces and cleaner code :)
-@onready var char = $"../.."
+#ready NPCharacter for use in calls
+@onready var ch = $"../.."
 #ready perception and memory scripts for use in furher functions
 @onready var per = $"../Perception"
 @onready var mem = $"../Memory"
@@ -20,10 +20,10 @@ var movement_speed = 5.0
 #responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
 	update_target_location(location)
-	var current_location = char.global_transform.origin
-	var new_velocity = (char.nav_agent.get_next_path_position() - char.global_transform.origin).normalized() * movement_speed
-	char.velocity = new_velocity
-	char.move_and_slide()
+	var current_location = ch.global_transform.origin
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed
+	ch.velocity = new_velocity
+	ch.move_and_slide()
 		
 	match head_movement_mode:
 		"default":
@@ -32,7 +32,23 @@ func go_to(location, head_movement_mode):
 			else:
 				per.look_around()
 		"destination":
-			per.look_towards($"../../Head", char.nav_agent.target_position)
+			per.look_towards($"../../Head", ch.nav_agent.target_position)
+			
+func go_near(location, head_movement_mode):
+	update_target_location(location)
+	var current_location = ch.global_transform.origin
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed
+	ch.velocity = new_velocity
+	ch.move_and_slide()
+		
+	match head_movement_mode:
+		"default":
+			if (per.syncing_head_body == true):
+				per.sync_head_with_body()
+			else:
+				per.look_around()
+		"destination":
+			per.look_towards($"../../Head", ch.nav_agent.target_position)
 			
 #func get_point_on_map(target_point: Vector3, min_dist_from_edge: float) -> Vector3:
 	#var map := $".".get_world_3d().navigation_map
@@ -49,12 +65,12 @@ func go_to(location, head_movement_mode):
 #gets random location based on distance from current object
 func get_random_location(speed, distance):
 	movement_speed = speed
-	var x = char.global_transform.origin.x
-	var z = char.global_transform.origin.z
+	var x = ch.global_transform.origin.x
+	var z = ch.global_transform.origin.z
 	
 	x += randf_range(-distance, distance)
 	z += randf_range(-distance, distance)
-	var y = char.global_transform.origin.y
+	var y = ch.global_transform.origin.y
 	
 	return Vector3(x, y, z)
 
@@ -65,8 +81,8 @@ func explore():
 	if(per.contains_type(visible_ob, "berry_bush")):
 		var food_in_vision = per.get_closest_obj(visible_ob, "berry_bush")
 		if(mem.memory.size() == mem.size):
-			var memory_food = char.position.distance_to(mem.get_food_closest_memory().position)
-			var seen_food = char.position.distance_to(food_in_vision.position)
+			var memory_food = ch.position.distance_to(mem.get_food_closest_memory().position)
+			var seen_food = ch.position.distance_to(food_in_vision.position)
 			if (memory_food > seen_food): 
 				mem.memory.erase(mem.get_food_closest_memory())
 				mem.memory.append(food_in_vision)
@@ -95,6 +111,8 @@ func explore():
 
 #behaviour for anything related to getting food
 func find_food():
+	if($"../../InRange".get_collision_count() > 0):
+		ch.objective = "eat"
 	if(navigating):
 		go_to(destination, "destination")
 	elif (mem.memory.size() > 0):
@@ -116,13 +134,13 @@ func find_food():
 			go_to(destination, "destination")
 			navigating = true
 		else:
-			char.objective = "urgent explore"
+			ch.objective = "urgent explore"
 			
 #behaviour that is accessed when no food is in the area // similar to explore
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "berry_bush")):
-		char.objective = "find food"
+		ch.objective = "find food"
 		movement_speed = 9
 		destination = Vector3(0,0,0)
 		return
@@ -136,7 +154,6 @@ func urgent_explore():
 		
 #behaviour that is responsible for the objects navigaion to the ground
 func fall():
-	await get_tree().create_timer(0.1).timeout
 	if(navigating):
 		go_to(destination, "destination")
 	else:
@@ -146,7 +163,7 @@ func fall():
 	
 #updates the nav agent with a new target location
 func update_target_location(target_location):
-	char.nav_agent.set_target_position(target_location)
+	ch.nav_agent.set_target_position(target_location)
 	
 #is called on targetlocation reached
 func _on_navigation_navigation_finished():
@@ -155,5 +172,5 @@ func _on_navigation_navigation_finished():
 	
 #updates body rotation according to momentum
 func update_body_rotation():
-	var lookdir = atan2(-char.velocity.x, -char.velocity.z)
+	var lookdir = atan2(-ch.velocity.x, -ch.velocity.z)
 	$"../../Body".rotation.y = lookdir
