@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://l5hjt2l7cdv6"]
 
-[ext_resource type="Script" path="res://Character/Scripts/!ChMain.gd" id="1_57c2a"]
+[ext_resource type="Script" path="res://Character/Scripts/ChMain.gd" id="1_57c2a"]
 [ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="2_8bfjo"]
 [ext_resource type="Script" path="res://Character/Scripts/ChPerception.gd" id="2_i65l6"]
 [ext_resource type="Script" path="res://Character/Scripts/ChNavigation.gd" id="3_yqimu"]
