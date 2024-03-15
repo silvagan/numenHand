@@ -67,6 +67,7 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.231758, -0.3899
 
 [node name="Navigation" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
+debug_enabled = true
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -89,5 +90,6 @@ wait_time = 0.5
 autostart = true
 
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
+[connection signal="updateMesh" from="ObjectPickUp" to="." method="_on_object_pick_up_update_mesh"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]

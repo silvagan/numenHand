@@ -12,16 +12,18 @@ func _ready():
 	textmesh.font_size = 100
 	$MeshInstance3D2.mesh = textmesh
 
-func update():
+func update() -> bool:
 	pickable = false
 	amount -= 1
 	if amount == 0:
 		queue_free()
+		return true
 	else:
 		$Timer.start()
 		textmesh.text = "Amount: %s" % [amount]
 		textmesh.font_size = 100
 		$MeshInstance3D2.mesh = textmesh
+		return false
 	
 
 

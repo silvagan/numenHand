@@ -90,6 +90,7 @@ func generating_nav_mesh():
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
-	
+	await get_tree().create_timer(1).timeout
+	$".".navigation_mesh.set_vertices([Vector3(10,-10,10),Vector3(20,-10,10),Vector3(15,-10,20)])
 	$".".bake_navigation_mesh()
 

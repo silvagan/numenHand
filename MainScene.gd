@@ -18,3 +18,5 @@ func _input(event):
 		if event.is_action_pressed("pov_camera"):
 			$CharacterMain/Head/povCamera.set_current(true)
 	
+
+

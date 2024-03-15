@@ -1,7 +1,6 @@
 extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
-
 #character needs
 var hunger = 100
 var health = 100
@@ -72,3 +71,8 @@ func update_objective():
 func update_needs_visuals():
 	bar.update(hunger, 100)
 
+
+
+func _on_object_pick_up_update_mesh():
+	await get_tree().create_timer(0.5).timeout
+	$"../NavigationRegion3D".bake_navigation_mesh()
