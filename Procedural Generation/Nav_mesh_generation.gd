@@ -16,10 +16,10 @@ var berry_bush_scene = preload("res://Procedural Generation/Objects/Berry bush/B
 
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("Generate_map"):
-			min_height = 0
-			max_height = 0
-			generating_nav_mesh()
+		if event.is_action_pressed("test_bake"):
+			print($".".position.x)
+			$".".navigation_mesh.filter_baking_aabb = AABB(Vector3(0,0,0),Vector3(20,20,20))
+			$".".bake_navigation_mesh()
 		if event.is_action_pressed("spawn_objects"):
 			for i in get_child_count():
 				if get_child(i).is_in_group("berry_bush"):
@@ -90,7 +90,12 @@ func generating_nav_mesh():
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
-	await get_tree().create_timer(1).timeout
-	$".".navigation_mesh.set_vertices([Vector3(10,-10,10),Vector3(20,-10,10),Vector3(15,-10,20)])
+	
 	$".".bake_navigation_mesh()
 
+func rebakeMesh(location:Vector3):
+	await get_tree().create_timer(0.1).timeout
+	$".".navigation_mesh.filter_baking_aabb = AABB(location,Vector3(10,10,10))
+	print(location)
+	$".".bake_navigation_mesh()
+	pass

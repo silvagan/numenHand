@@ -92,18 +92,15 @@ wait_time = 0.5
 autostart = true
 
 [node name="InteractTimer" type="Timer" parent="."]
+wait_time = 0.663
 
 [node name="Temp" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 autostart = true
 
+[connection signal="rebakeMesh" from="Scripts/Interaction" to="." method="_on_interaction_rebake_mesh"]
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
-<<<<<<< HEAD
-[connection signal="updateMesh" from="ObjectPickUp" to="." method="_on_object_pick_up_update_mesh"]
-[connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
-=======
->>>>>>> 773ae76dcccaf9848e61e98d6092dea1416dc7b7
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="timeout" from="InteractTimer" to="Scripts/Interaction" method="_on_interact_timer_timeout"]

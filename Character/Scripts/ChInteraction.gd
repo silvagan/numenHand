@@ -8,6 +8,8 @@ extends Node
 @onready var per = $"../Perception"
 var lookat = Vector3(0,0,0)
 
+signal rebakeMesh(location)
+
 func eat():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
@@ -31,12 +33,11 @@ func eat():
 func _on_interact_timer_timeout():
 	for c in ir.get_collision_count():
 		var col = ir.get_collider(c)
-		if (col.is_in_group("berry_bush") and col.pickable):
+		if (col.is_in_group("berry_bush")):
 			#updates picked items data
-			col.update()
+			if(col.update()):
+				rebakeMesh.emit(col.location)
 			ch.mem.update()
-			#if (get_parent().memory.has(col.global_position)):
-				#get_parent().memory.erase(col.global_position)
 			if (ch.hunger < 80):
 				ch.hunger += 20
 			else: 

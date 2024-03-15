@@ -10,13 +10,8 @@ func _process(delta):
 #to avoid new terrain generation cliping through and falling
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("Generate_map"):
-			$CharacterMain.position.y += 5
-			#########################################################
 		if event.is_action_pressed("free_camera"):
 			$Camera3D.set_current(true)
 		if event.is_action_pressed("pov_camera"):
 			$CharacterMain/Head/povCamera.set_current(true)
 	
-
-
