@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://dd0j0cfanajlw"]
+
+[ext_resource type="Script" path="res://Infinity_terrain.gd" id="1_gwgnc"]
+[ext_resource type="PackedScene" uid="uid://cnmbfyhchd1it" path="res://chunk.tscn" id="2_vi3oi"]
+[ext_resource type="Script" path="res://Camera3D.gd" id="3_e3hfu"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vrlce"]
+noise_type = 3
+frequency = 0.008
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h41xj"]
+
+[sub_resource type="Sky" id="Sky_xgsjg"]
+sky_material = SubResource("ProceduralSkyMaterial_h41xj")
+
+[sub_resource type="Environment" id="Environment_s2h0a"]
+background_mode = 2
+sky = SubResource("Sky_xgsjg")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Infinity_terrain" type="Node3D" node_paths=PackedStringArray("viewer")]
+script = ExtResource("1_gwgnc")
+viewer = NodePath("Camera3D")
+chunk_mesh_scene = ExtResource("2_vi3oi")
+noise = SubResource("FastNoiseLite_vrlce")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.96296, 0.269643, 0, -0.269643, -0.96296, 0, 3.66107, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s2h0a")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+script = ExtResource("3_e3hfu")
+moveSpeed = 50.0

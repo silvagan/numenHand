@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnmbfyhchd1it"]
+
+[ext_resource type="Script" path="res://chunk.gd" id="1_3n44t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_twq64"]
+albedo_color = Color(0.203922, 0.823529, 0.886275, 1)
+
+[node name="Mesh" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_twq64")
+script = ExtResource("1_3n44t")

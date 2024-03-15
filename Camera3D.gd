@@ -12,6 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	pass#CHANGED
 	lookAngles.y = clamp(lookAngles.y, PI /-2, PI / 2)
 	set_rotation(Vector3(lookAngles.y, lookAngles.x, 0))
 	var direction = updateDirection()
@@ -23,6 +24,7 @@ func _process(delta):
 		translate(velocity * delta)
 
 func _input(event):
+	pass#CHANGED
 	if event is InputEventMouseMotion:
 		lookAngles -= event.relative / mouseSpeed
 		
