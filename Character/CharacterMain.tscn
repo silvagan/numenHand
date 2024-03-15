@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Character/Scripts/ChMain.gd" id="1_57c2a"]
 [ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="2_8bfjo"]
 [ext_resource type="Script" path="res://Character/Scripts/ChPerception.gd" id="2_i65l6"]
-[ext_resource type="Script" path="res://Character/ActionObject.gd" id="2_pasrq"]
 [ext_resource type="Script" path="res://Character/Scripts/ChNavigation.gd" id="3_yqimu"]
 [ext_resource type="PackedScene" uid="uid://c5dwbs10n2cft" path="res://Character/Health&Hunger/HealthBar3D.tscn" id="4_swnpx"]
 [ext_resource type="Script" path="res://Character/Scripts/ChMemory.gd" id="4_yk162"]
+[ext_resource type="Script" path="res://Character/Scripts/ChInteraction.gd" id="5_07ab3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nygyd"]
 material = ExtResource("2_8bfjo")
@@ -35,6 +35,9 @@ script = ExtResource("3_yqimu")
 
 [node name="Memory" type="Node" parent="Scripts"]
 script = ExtResource("4_yk162")
+
+[node name="Interaction" type="Node" parent="Scripts"]
+script = ExtResource("5_07ab3")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -73,23 +76,34 @@ debug_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_jxpkx")
 
-[node name="ObjectPickUp" type="ShapeCast3D" parent="."]
+[node name="InRange" type="ShapeCast3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 2.1, 0)
 shape = SubResource("CylinderShape3D_cstso")
-script = ExtResource("2_pasrq")
 
 [node name="HealthBar3D" parent="." instance=ExtResource("4_swnpx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.19972, 0)
+
+[node name="Tick" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
 [node name="VisionTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
-[node name="Tick" type="Timer" parent="."]
-wait_time = 0.5
+[node name="InteractTimer" type="Timer" parent="."]
+
+[node name="Temp" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 autostart = true
 
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
+<<<<<<< HEAD
 [connection signal="updateMesh" from="ObjectPickUp" to="." method="_on_object_pick_up_update_mesh"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
+=======
+>>>>>>> 773ae76dcccaf9848e61e98d6092dea1416dc7b7
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
+[connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
+[connection signal="timeout" from="InteractTimer" to="Scripts/Interaction" method="_on_interact_timer_timeout"]

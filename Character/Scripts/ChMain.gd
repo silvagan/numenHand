@@ -6,8 +6,7 @@ var hunger = 100
 var health = 100
 var exaustion = 0
 
-#character timer and objective
-var timer = 0
+#character objective
 var objective = "idle"
 
 #load agent for navigation
@@ -19,6 +18,8 @@ var objective = "idle"
 @onready var per = $Scripts/Perception
 @onready var nav = $Scripts/Navigation
 @onready var mem = $Scripts/Memory
+@onready var itr = $Scripts/Interaction
+
 func _ready():
 	pass
 
@@ -35,6 +36,8 @@ func _physics_process(delta):
 			nav.fall()
 		"find food":
 			nav.find_food()
+		"eat":
+			itr.eat()
 		"find water":
 			pass
 		"go sleep":
@@ -48,7 +51,6 @@ func _physics_process(delta):
 
 #called on timer timeout
 func _on_tick_timeout():
-	timer += 1
 	if(hunger > 0):
 		hunger -= 1
 	if(hunger <= 0):
@@ -58,11 +60,13 @@ func _on_tick_timeout():
 
 #updates the objective based on criteria
 func update_objective():
-	if(objective == "urgent explore" && hunger < 90):
+	if(objective == "eat" && hunger < 90):
+		return "eat"
+	if(objective == "urgent explore" && hunger < 50):
 		return "urgent explore"
-	if(hunger < 90):
+	elif(hunger < 50):
 		return "find food"
-	elif(timer < 5):
+	elif($Temp.get_time_left() > 0):
 		return "idle"
 	else:
 		return "explore"

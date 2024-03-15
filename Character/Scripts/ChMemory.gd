@@ -1,7 +1,7 @@
 extends Node
 #this is a script dedicated to the MEMORY of the character
 #MEMORY
-@onready var char = $"../.."
+@onready var ch = $"../.."
 #set universal momery for storing objects
 var memory = []
 var size = 3
@@ -11,8 +11,8 @@ func get_food_closest_memory():
 	var m = memory[0]
 	if memory.size() > 1:		
 		for c in memory:
-			var c1 = char.position.distance_to(c.position)
-			var c2 = char.position.distance_to(m.position)
+			var c1 = ch.position.distance_to(c.position)
+			var c2 = ch.position.distance_to(m.position)
 			if (c1 < c2):
 				m = c
 		
