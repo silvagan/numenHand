@@ -49,6 +49,7 @@ focus_mode = 0
 text = "Rock
 "
 
+[connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
 [connection signal="mouse_entered" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_entered"]
 [connection signal="mouse_exited" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_exited"]
 [connection signal="toggled" from="Control/BerryBush" to="." method="_on_berry_bush_toggled"]
