@@ -53,6 +53,8 @@ text = "Rock
 [connection signal="mouse_exited" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_exited"]
 [connection signal="toggled" from="Control/BerryBush" to="." method="_on_berry_bush_toggled"]
 [connection signal="mouse_entered" from="Control/Tree" to="." method="_on_tree_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Tree" to="." method="_on_tree_mouse_exited"]
 [connection signal="toggled" from="Control/Tree" to="." method="_on_tree_toggled"]
 [connection signal="mouse_entered" from="Control/Rock" to="." method="_on_rock_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Rock" to="." method="_on_rock_mouse_exited"]
 [connection signal="toggled" from="Control/Rock" to="." method="_on_rock_toggled"]
