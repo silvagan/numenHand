@@ -9,6 +9,10 @@ var prev_item
 
 
 func _on_berry_bush_toggled(toggled_on):
+	if $Control/Tree.button_pressed == true:
+		$Control/Tree.button_pressed = !toggled_on
+	if $Control/Rock.button_pressed == true:
+		$Control/Rock.button_pressed = !toggled_on
 	spawn_item.emit("BerryBush",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
@@ -16,12 +20,20 @@ func _on_berry_bush_toggled(toggled_on):
 
 
 func _on_tree_toggled(toggled_on):
+	if $Control/BerryBush.button_pressed == true:
+		$Control/BerryBush.button_pressed = !toggled_on
+	if $Control/Rock.button_pressed == true:
+		$Control/Rock.button_pressed = !toggled_on
 	spawn_item.emit("Tree",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
 		prev_item = "Tree"
 
 func _on_rock_toggled(toggled_on):
+	if $Control/Tree.button_pressed == true:
+		$Control/Tree.button_pressed = !toggled_on
+	if $Control/BerryBush.button_pressed == true:
+		$Control/BerryBush.button_pressed = !toggled_on
 	spawn_item.emit("Rock",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
@@ -57,3 +69,4 @@ func _on_tree_mouse_exited():
 
 func _on_rock_mouse_exited():
 	spawn_item.emit(prev_item,toggled)
+
