@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://l5hjt2l7cdv6"]
+[gd_scene load_steps=15 format=3 uid="uid://l5hjt2l7cdv6"]
 
 [ext_resource type="Script" path="res://Character/Scripts/ChMain.gd" id="1_57c2a"]
 [ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="2_8bfjo"]
@@ -21,6 +21,8 @@ points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.9808
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jxpkx"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cstso"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uq0eh"]
 
 [node name="CharacterMain" type="CharacterBody3D" groups=["characters"]]
 script = ExtResource("1_57c2a")
@@ -57,7 +59,6 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, -3.07112, 0)
 
 [node name="Collision" type="CollisionShape3D" parent="Head/Vision"]
 transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, 0, 2.47603, -20.1639)
-visible = false
 shape = SubResource("ConvexPolygonShape3D_ut46h")
 
 [node name="VisionRayCast" type="RayCast3D" parent="Head"]
@@ -76,8 +77,9 @@ debug_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_jxpkx")
 
-[node name="InRange" type="ShapeCast3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 2.1, 0)
+[node name="InRangenot" type="ShapeCast3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 2.51194, 0)
+visible = false
 shape = SubResource("CylinderShape3D_cstso")
 
 [node name="HealthBar3D" parent="." instance=ExtResource("4_swnpx")]
@@ -98,6 +100,12 @@ wait_time = 0.663
 wait_time = 2.0
 one_shot = true
 autostart = true
+
+[node name="InRange" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.5, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="InRange"]
+shape = SubResource("CylinderShape3D_uq0eh")
 
 [connection signal="rebakeMesh" from="Scripts/Interaction" to="." method="_on_interaction_rebake_mesh"]
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]

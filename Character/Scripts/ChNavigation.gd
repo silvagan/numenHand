@@ -111,7 +111,7 @@ func explore():
 
 #behaviour for anything related to getting food
 func find_food():
-	if($"../../InRange".get_collision_count() > 0):
+	if($"../../InRange".get_overlapping_bodies().size() > 0):
 		ch.objective = "eat"
 	if(navigating):
 		go_to(destination, "destination")
