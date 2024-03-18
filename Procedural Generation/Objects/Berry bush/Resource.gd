@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-var amount : int
+@onready var amount : int = randi_range(1,5)
 var location : Vector3
 var weight : int
 

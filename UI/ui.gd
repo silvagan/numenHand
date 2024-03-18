@@ -1,0 +1,37 @@
+extends CanvasLayer
+
+@onready var item = preload("res://Ball/Ball.tscn")
+var toggled := false
+
+signal spawn_item(item:String, state:bool)
+
+
+
+func _on_berry_bush_toggled(toggled_on):
+	spawn_item.emit("BerryBush",toggled_on)
+
+
+func _on_tree_toggled(toggled_on):
+	spawn_item.emit("Tree",toggled_on)
+
+func _on_rock_toggled(toggled_on):
+	spawn_item.emit("Rock",toggled_on)
+
+
+func _on_berry_bush_mouse_entered():
+	spawn_item.emit("BerryBush",false)
+	$Control/BerryBush.disabled = true
+	$Control/BerryBush.disabled = false
+
+
+func _on_tree_mouse_entered():
+	spawn_item.emit("Tree",false)
+	$Control/Tree.disabled = true
+	$Control/Tree.disabled = false
+
+
+
+func _on_rock_mouse_entered():
+	spawn_item.emit("Rock",false)
+	$Control/Rock.disabled = true
+	$Control/Rock.disabled = false

@@ -7,6 +7,9 @@ extends Camera3D
 var velocity = Vector3.ZERO
 var lookAngles = Vector2(-3.14, -1.4)
 # Called when the node enters the scene tree for the first time.
+
+signal spawn_coords(coords)
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -26,7 +29,11 @@ func _process(delta):
 func _input(event):
 	pass#CHANGED
 	if event is InputEventMouseMotion:
-		lookAngles -= event.relative / mouseSpeed
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			lookAngles -= event.relative / mouseSpeed
+	#########################################################
+	if event.is_action_pressed("mouse_left"):
+		shoot_ray()
 		
 func updateDirection():
 	var dir = Vector3()
@@ -50,3 +57,18 @@ func updateDirection():
 
 func _on_timer_timeout():
 	pass # Replace with function body.
+	
+
+func shoot_ray():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_length = 1000
+	var from = project_ray_origin(mouse_pos)
+	var to = from + project_ray_normal(mouse_pos) * ray_length
+	var space = get_world_3d().direct_space_state
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	ray_query.from = from
+	ray_query.to = to
+	var raycast_result = space.intersect_ray(ray_query)
+	if raycast_result != { }:
+		spawn_coords.emit(raycast_result.position)
+

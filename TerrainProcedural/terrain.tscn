@@ -5,7 +5,7 @@
 [ext_resource type="Shader" path="res://Procedural Generation/terrain_color.gdshader" id="3_oqsnh"]
 [ext_resource type="Texture2D" uid="uid://cmi82s1esgilo" path="res://TerrainProcedural/Textures/rock.jpg" id="4_fya8w"]
 [ext_resource type="Texture2D" uid="uid://75l2hnffvb5o" path="res://TerrainProcedural/Textures/sand.jpg" id="5_6hipa"]
-[ext_resource type="PackedScene" uid="uid://b5y0q5dw3q8ak" path="res://TerrainProcedural/tree.tscn" id="7_8jlph"]
+[ext_resource type="PackedScene" uid="uid://b5y0q5dw3q8ak" path="res://Procedural Generation/Objects/Tree/tree.tscn" id="7_8jlph"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ii617"]
 seed = -1875645840

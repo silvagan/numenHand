@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpggs1af067qh"]
+
+[ext_resource type="Script" path="res://UI/ui.gd" id="1_8bw7v"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_8bw7v")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -119.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="BerryBush" type="CheckButton" parent="Control"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 24.0
+text = "Berry Bush"
+
+[node name="Tree" type="CheckButton" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -12.0
+offset_right = 44.0
+offset_bottom = 12.0
+grow_vertical = 2
+text = "Tree
+"
+
+[node name="Rock" type="CheckButton" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 86.0
+grow_vertical = 0
+text = "Rock
+"
+
+[connection signal="mouse_entered" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_entered"]
+[connection signal="toggled" from="Control/BerryBush" to="." method="_on_berry_bush_toggled"]
+[connection signal="mouse_entered" from="Control/Tree" to="." method="_on_tree_mouse_entered"]
+[connection signal="toggled" from="Control/Tree" to="." method="_on_tree_toggled"]
+[connection signal="mouse_entered" from="Control/Rock" to="." method="_on_rock_mouse_entered"]
+[connection signal="toggled" from="Control/Rock" to="." method="_on_rock_toggled"]

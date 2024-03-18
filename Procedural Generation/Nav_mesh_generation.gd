@@ -14,12 +14,12 @@ var seed
 var bush_spawn_locations : PackedVector3Array
 var berry_bush_scene = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
 
+
+var item_to_spawn : PackedScene
+var item_spawnable : bool = false
+
 func _input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed("test_bake"):
-			print($".".position.x)
-			$".".navigation_mesh.filter_baking_aabb = AABB(Vector3(0,0,0),Vector3(20,20,20))
-			$".".bake_navigation_mesh()
 		if event.is_action_pressed("spawn_objects"):
 			for i in get_child_count():
 				if get_child(i).is_in_group("berry_bush"):
@@ -70,9 +70,9 @@ func generating_nav_mesh():
 			bush.position.y = vertices[i].y
 			bush.position.z = vertices[i].z
 			bush.location = vertices[i]
-			bush.amount = randi_range(1,5)
+			#bush.amount = randi_range(1,5)
 			bush.weight = randi_range(1,5)
-			add_child(bush)
+			#add_child(bush)
 		
 		
 		
@@ -90,12 +90,37 @@ func generating_nav_mesh():
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
 	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
-	
+	$".".navigation_mesh.cell_height = 0.05
 	$".".bake_navigation_mesh()
 
 func rebakeMesh(location:Vector3):
-	await get_tree().create_timer(0.1).timeout
-	$".".navigation_mesh.filter_baking_aabb = AABB(location,Vector3(10,10,10))
-	print(location)
+	await get_tree().create_timer(0.01).timeout
 	$".".bake_navigation_mesh()
 	pass
+
+
+func _on_camera_3d_spawn_coords(coords):
+	if item_spawnable:
+		var item = item_to_spawn.instantiate()
+		item.position = coords
+		add_child(item)
+		$Timer.stop()
+		$Timer.start(1)
+
+
+func _on_ui_spawn_item(item, state):
+	match item:
+		"BerryBush":
+			item_spawnable = state
+			item_to_spawn = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
+		"Tree":
+			item_spawnable = state
+			item_to_spawn = preload("res://Procedural Generation/Objects/Tree/tree.tscn")
+		"Rock":
+			item_spawnable = state
+			item_to_spawn = preload("res://Procedural Generation/Objects/Rock/Rock.tscn")
+
+
+func _on_timer_timeout():
+	$".".bake_navigation_mesh()
+	$Timer.stop()
