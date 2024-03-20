@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://ohnc23h86fm7"]
+[gd_scene load_steps=9 format=3 uid="uid://ohnc23h86fm7"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_r5ocb"]
-[ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://Character/CharacterMain.tscn" id="5_64jpk"]
 [ext_resource type="PackedScene" uid="uid://bab84aiqartcu" path="res://Camera/camera_3d.tscn" id="5_mcpj8"]
 [ext_resource type="PackedScene" uid="uid://cpggs1af067qh" path="res://UI/ui.tscn" id="6_jdr17"]
 [ext_resource type="PackedScene" uid="uid://bhqtahcree8ju" path="res://Camera/spawner.tscn" id="6_p2lvb"]
@@ -39,9 +38,6 @@ bush_noise = SubResource("FastNoiseLite_6tsky")
 
 [node name="FoodSpawnTimer" type="Timer" parent="."]
 process_callback = 0
-
-[node name="CharacterMain" parent="." instance=ExtResource("5_64jpk")]
-transform = Transform3D(0.993427, 0, 0.114469, 0, 1, 0, -0.114469, 0, 0.993427, -0.08815, 9.84542, 0.0101569)
 
 [node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

@@ -7,8 +7,9 @@ var weight : int
 var textmesh = TextMesh.new()
 
 func _ready():
-	textmesh.text = "Amount: %s" % [amount]
-	textmesh.font_size = 100
+	textmesh.text = "berries: %s" % [amount]
+	textmesh.font_size = 80
+	textmesh
 	$MeshInstance3D2.mesh = textmesh
 
 func update() -> bool:
@@ -17,8 +18,8 @@ func update() -> bool:
 		queue_free()
 		return true
 	else:
-		textmesh.text = "Amount: %s" % [amount]
-		textmesh.font_size = 100
+		textmesh.text = "berries: %s" % [amount]
+		textmesh.font_size = 80
 		$MeshInstance3D2.mesh = textmesh
 		return false
 	

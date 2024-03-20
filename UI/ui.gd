@@ -6,24 +6,25 @@ var toggled := false
 signal spawn_item(item:String, state:bool)
 var prev_item
 
-
-
 func _on_berry_bush_toggled(toggled_on):
 	if $Control/Tree.button_pressed == true:
 		$Control/Tree.button_pressed = !toggled_on
 	if $Control/Rock.button_pressed == true:
 		$Control/Rock.button_pressed = !toggled_on
+	if $Control/Character.button_pressed == true:
+		$Control/Character.button_pressed = !toggled_on
 	spawn_item.emit("BerryBush",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
 		prev_item = "BerryBush"
-
 
 func _on_tree_toggled(toggled_on):
 	if $Control/BerryBush.button_pressed == true:
 		$Control/BerryBush.button_pressed = !toggled_on
 	if $Control/Rock.button_pressed == true:
 		$Control/Rock.button_pressed = !toggled_on
+	if $Control/Character.button_pressed == true:
+		$Control/Character.button_pressed = !toggled_on
 	spawn_item.emit("Tree",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
@@ -34,10 +35,25 @@ func _on_rock_toggled(toggled_on):
 		$Control/Tree.button_pressed = !toggled_on
 	if $Control/BerryBush.button_pressed == true:
 		$Control/BerryBush.button_pressed = !toggled_on
+	if $Control/Character.button_pressed == true:
+		$Control/Character.button_pressed = !toggled_on
 	spawn_item.emit("Rock",toggled_on)
 	toggled=toggled_on
 	if toggled_on:
 		prev_item = "Rock"
+
+func _on_character_toggled(toggled_on):
+	if $Control/Tree.button_pressed == true:
+		$Control/Tree.button_pressed = !toggled_on
+	if $Control/BerryBush.button_pressed == true:
+		$Control/BerryBush.button_pressed = !toggled_on
+	if $Control/Rock.button_pressed == true:
+		$Control/Rock.button_pressed = !toggled_on
+	spawn_item.emit("Ch",toggled_on)
+	toggled=toggled_on
+	if toggled_on:
+		prev_item = "Ch"
+
 
 
 func _on_berry_bush_mouse_entered():
@@ -45,18 +61,21 @@ func _on_berry_bush_mouse_entered():
 	$Control/BerryBush.disabled = true
 	$Control/BerryBush.disabled = false
 
-
 func _on_tree_mouse_entered():
 	spawn_item.emit("Tree",false)
 	$Control/Tree.disabled = true
 	$Control/Tree.disabled = false
 
-
-
 func _on_rock_mouse_entered():
 	spawn_item.emit("Rock",false)
 	$Control/Rock.disabled = true
 	$Control/Rock.disabled = false
+	
+func _on_character_mouse_entered():
+	spawn_item.emit("Ch",false)
+	$Control/Character.disabled = true
+	$Control/Character.disabled = false
+
 
 
 func _on_berry_bush_mouse_exited():
@@ -70,3 +89,6 @@ func _on_tree_mouse_exited():
 func _on_rock_mouse_exited():
 	spawn_item.emit(prev_item,toggled)
 
+
+func _on_character_mouse_exited():
+	spawn_item.emit(prev_item,toggled)
