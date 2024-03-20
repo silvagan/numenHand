@@ -7,7 +7,7 @@ var destination = Vector3(0,0,0)
 #character state for minimisation of 'set destination' functions
 var navigating = false
 #character movement speed
-var movement_speed = 5.0
+var movement_speed = 5.0 
 
 #ready NPCharacter for use in calls
 @onready var ch = $"../.."
@@ -19,9 +19,10 @@ var movement_speed = 5.0
 
 #responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
+	
 	update_target_location(location)
 	var current_location = ch.global_transform.origin
-	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed * ch.speed_stat
 	ch.velocity = new_velocity
 	ch.move_and_slide()
 		
@@ -37,7 +38,7 @@ func go_to(location, head_movement_mode):
 func go_near(location, head_movement_mode):
 	update_target_location(location)
 	var current_location = ch.global_transform.origin
-	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed * ch.speed_stat
 	ch.velocity = new_velocity
 	ch.move_and_slide()
 		
@@ -64,7 +65,7 @@ func go_near(location, head_movement_mode):
 	
 #gets random location based on distance from current object
 func get_random_location(speed, distance):
-	movement_speed = speed
+	movement_speed = speed * ch.speed_stat
 	var x = ch.global_transform.origin.x
 	var z = ch.global_transform.origin.z
 	
@@ -141,7 +142,7 @@ func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "berry_bush")):
 		ch.objective = "find food"
-		movement_speed = 9
+		movement_speed = 9 * ch.speed_stat
 		destination = Vector3(0,0,0)
 		return
 	if (destination != Vector3(0,0,0)):

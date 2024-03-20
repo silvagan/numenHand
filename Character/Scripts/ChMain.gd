@@ -7,6 +7,7 @@ var hunger = 100
 var health = 100
 var exaustion = 0
 
+@onready var speed_stat = randf_range(.2,.5)
 #character objective
 var objective = "idle"
 
