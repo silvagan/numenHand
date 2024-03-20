@@ -6,8 +6,6 @@ extends Node
 var destination = Vector3(0,0,0)
 #character state for minimisation of 'set destination' functions
 var navigating = false
-#character movement speed
-var movement_speed = 5.0
 
 #ready NPCharacter for use in calls
 @onready var ch = $"../.."
@@ -16,6 +14,10 @@ var movement_speed = 5.0
 @onready var mem = $"../Memory"
 #ready arrow for debugging
 @onready var dbarrow = preload("res://Debug_arrow.tscn")
+
+#character movement speed
+#var movement_speed = 5.0 * ch.speed
+var movement_speed = 5.0
 
 #responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
@@ -111,7 +113,7 @@ func explore():
 
 #behaviour for anything related to getting food
 func find_food():
-	if($"../../InRange".get_overlapping_bodies().size() > 0):
+	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "berry_bush")):
 		ch.objective = "eat"
 	if(navigating):
 		go_to(destination, "destination")
@@ -141,7 +143,7 @@ func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "berry_bush")):
 		ch.objective = "find food"
-		movement_speed = 9
+		movement_speed = 9.0 * ch.speed
 		destination = Vector3(0,0,0)
 		return
 	if (destination != Vector3(0,0,0)):

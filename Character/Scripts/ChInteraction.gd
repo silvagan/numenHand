@@ -13,14 +13,14 @@ signal rebakeMesh(location)
 func eat():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
-		lookat = ir.get_overlapping_bodies()[0].global_position
+		lookat = per.get_first_obj(ir.get_overlapping_bodies(), "berry_bush").position
 		per.look_towards($"../../Head", lookat)
 	else:
 		per.look_towards($"../../Head", lookat)
 
-	print(ir.get_overlapping_bodies())
-	print($"../../InRange".get_overlapping_bodies())
-	
+	print(ir.get_overlapping_bodies().size())
+	print($"../../InRange".get_overlapping_bodies().size())
+		 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "berry_bush")):
 		if(timer.is_stopped()):
 			timer.start()
@@ -34,11 +34,10 @@ func eat():
 
 
 func _on_interact_timer_timeout():
-	for c in ir.get_collision_count():
-		var col = ir.get_collider(c)
-		if (col.is_in_group("berry_bush")):
+	for c in ir.get_overlapping_bodies():
+		if (c.is_in_group("berry_bush")):
 			#updates picked items data
-			col.update()
+			c.update()
 				#rebakeMesh.emit(col.location)
 			ch.mem.update()
 			if (ch.hunger < 80):

@@ -7,6 +7,8 @@ var hunger = 100
 var health = 100
 var exaustion = 0
 
+@onready var speed = randf_range(1,1.5)
+
 #character objective
 var objective = "idle"
 
@@ -61,7 +63,7 @@ func _on_tick_timeout():
 
 #updates the objective based on criteria
 func update_objective():
-	if(objective == "eat" && hunger < 90):
+	if(objective == "eat"):
 		return "eat"
 	if(objective == "urgent explore" && hunger < 50):
 		return "urgent explore"
