@@ -25,14 +25,14 @@ script = ExtResource("1_r5ocb")
 environment = SubResource("Environment_4vcr7")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.757929, -4.17533e-07, 0.652337, 0.580397, -0.456508, 0.674344, 0.297797, 0.889719, 0.346001, 27.5828, 16.8026, -23.3874)
+transform = Transform3D(-0.757929, -3.49769e-07, 0.652337, 0.580397, -0.456508, 0.674344, 0.297797, 0.889719, 0.346001, 27.5828, 16.8026, -23.3874)
 shadow_enabled = true
-directional_shadow_max_distance = 34.6
+directional_shadow_max_distance = 150.0
 
 [node name="NavigationRegion3D" parent="." instance=ExtResource("8_8mkv1")]
-size = 100
+size = 200
 subdivide = 20
-amplitude = 0
+amplitude = 20
 noise = SubResource("FastNoiseLite_uorvg")
 bush_noise = SubResource("FastNoiseLite_6tsky")
 
@@ -43,7 +43,9 @@ process_callback = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
-transform = Transform3D(-1, 7.7118e-08, -4.11772e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
+transform = Transform3D(-1, 7.7118e-08, -4.11771e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
+fov = 100.0
+far = 150.0
 moveSpeed = 20.0
 
 [node name="UI" parent="." instance=ExtResource("6_jdr17")]

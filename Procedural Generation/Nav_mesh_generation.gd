@@ -74,8 +74,6 @@ func generating_nav_mesh():
 			bush.weight = randi_range(1,5)
 			#add_child(bush)
 		
-		
-		
 		if vertices[i].y < min_height:
 			min_height = vertices[i].y
 		if vertices[i].y > max_height:
