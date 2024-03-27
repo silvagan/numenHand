@@ -33,6 +33,8 @@ func _physics_process(delta):
 	update_needs_visuals()
 	nav.update_body_rotation()
 	
+	print(objective)
+	
 	#act upon current objective
 	match objective:
 		"idle":
