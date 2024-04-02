@@ -119,7 +119,7 @@ func _on_ui_spawn_item(item, state):
 			item_to_spawn = preload("res://Procedural Generation/Objects/Rock/Rock.tscn")
 		"Ch":
 			item_spawnable = state
-			item_to_spawn = preload("res://Character/CharacterMain.tscn")
+			item_to_spawn = preload("res://Hand/Hand.tscn")
 
 
 func _on_timer_timeout():
