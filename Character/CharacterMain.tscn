@@ -107,7 +107,6 @@ transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.5, 0)
 [node name="Collision" type="CollisionShape3D" parent="InRange"]
 shape = SubResource("CylinderShape3D_uq0eh")
 
-[connection signal="rebakeMesh" from="Scripts/Interaction" to="." method="_on_interaction_rebake_mesh"]
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]

@@ -17,9 +17,12 @@ func eat():
 		per.look_towards($"../../Head", lookat)
 	else:
 		per.look_towards($"../../Head", lookat)
+#<<<<<<< HEAD
 
 	#print(ir.get_overlapping_bodies().size())
 	#print($"../../InRange".get_overlapping_bodies().size())
+#=======
+#>>>>>>> 5e299e4c9f148e14235c96a01d20c3e74099b166
 		 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "berry_bush")):
 		if(timer.is_stopped()):

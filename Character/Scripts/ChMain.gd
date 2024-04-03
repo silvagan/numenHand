@@ -7,7 +7,7 @@ var hunger = 100
 var health = 100
 var exaustion = 0
 
-@onready var speed_stat = randf_range(1,1.5)
+@onready var speed_stat = randf_range(0.8,1.2)
 
 #character objective
 var objective = "idle"
@@ -32,6 +32,8 @@ func _physics_process(delta):
 	objective = update_objective()
 	update_needs_visuals()
 	nav.update_body_rotation()
+	
+	print(objective)
 	
 	#act upon current objective
 	match objective:
