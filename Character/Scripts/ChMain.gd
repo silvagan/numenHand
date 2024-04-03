@@ -53,6 +53,8 @@ func _physics_process(delta):
 			itr.drink()
 		"go sleep":
 			pass
+		"go_rest":
+			nav.go_rest()
 		"gather resources":
 			pass
 		"explore":
@@ -79,8 +81,13 @@ func _on_tick_timeout():
 func update_objective():
 	if(objective == "eat"):
 		return "eat"
+
 	if(objective == "drink"):
 		return "drink"
+
+	if(objective == "go_rest"):
+		return "go_rest"
+
 	if(objective == "urgent explore" && hunger < 50):
 		return "urgent explore"
 		

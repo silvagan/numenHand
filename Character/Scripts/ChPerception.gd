@@ -58,6 +58,9 @@ func is_visible_from_view(target):
 			vsray.debug_shape_custom_color = Color(0, 255, 0)
 			#print("I see food")
 			return true
+		elif collider.is_in_group("Campfire"):
+			vsray.debug_shape_custom_color = Color(255,179,0)
+			return true
 		else:
 			vsray.debug_shape_custom_color = Color(174, 0, 0)
 			#print("I dont see food")

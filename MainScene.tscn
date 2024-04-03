@@ -29,8 +29,8 @@ transform = Transform3D(-0.757929, -3.49769e-07, 0.652337, 0.580397, -0.456508, 
 shadow_enabled = true
 directional_shadow_max_distance = 150.0
 
-[node name="NavigationRegion3D" parent="." instance=ExtResource("8_8mkv1")]
-size = 200
+[node name="Terrain" parent="." instance=ExtResource("8_8mkv1")]
+size = 100
 subdivide = 20
 amplitude = 20
 noise = SubResource("FastNoiseLite_uorvg")
@@ -50,6 +50,8 @@ moveSpeed = 20.0
 
 [node name="UI" parent="." instance=ExtResource("6_jdr17")]
 
+[node name="Characters" type="Node3D" parent="."]
+
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]
-[connection signal="spawn_coords" from="Camera3D" to="NavigationRegion3D" method="_on_camera_3d_spawn_coords"]
-[connection signal="spawn_item" from="UI" to="NavigationRegion3D" method="_on_ui_spawn_item"]
+[connection signal="spawn_coords" from="Camera3D" to="Terrain" method="_on_camera_3d_spawn_coords"]
+[connection signal="spawn_item" from="UI" to="Terrain" method="_on_ui_spawn_item"]

@@ -120,3 +120,10 @@ func _on_character_mouse_exited():
 
 func _on_water_pond_mouse_exited():
 	spawn_item.emit(prev_item,toggled)
+	
+func _on_campfire_pressed():
+	spawn_item.emit("Campfire",true)
+
+func _on_rest_pressed():
+	for c in get_parent().get_node("Characters").get_children():
+		c.objective = "go_rest"
