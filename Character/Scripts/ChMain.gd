@@ -5,7 +5,8 @@ extends CharacterBody3D
 #character needs
 var hunger = 100
 var health = 100
-var exaustion = 0
+var thirst = 100
+var exaustion = 100
 
 @onready var speed_stat = randf_range(0.8,1.2)
 
@@ -15,9 +16,12 @@ var objective = "idle"
 #load agent for navigation
 @onready var nav_agent = $Navigation
 
-
 #load all associated scripts
-@onready var bar = $HealthBar3D
+@onready var hebar = $Health
+@onready var hubar = $Hunger
+@onready var thbar = $Thirst
+@onready var exbar = $Exaustion
+
 @onready var per = $Scripts/Perception
 @onready var nav = $Scripts/Navigation
 @onready var mem = $Scripts/Memory
@@ -44,7 +48,9 @@ func _physics_process(delta):
 		"eat":
 			itr.eat()
 		"find water":
-			pass
+			nav.find_water()
+		"drink":
+			itr.drink()
 		"go sleep":
 			pass
 		"gather resources":
@@ -57,9 +63,15 @@ func _physics_process(delta):
 #called on timer timeout
 func _on_tick_timeout():
 	if(hunger > 0):
-		hunger -= 1
+		hunger -= 0.3
+	if(thirst > 0):
+		thirst -= 1
 	if(hunger <= 0):
 		health -= 1
+	if(thirst <= 0):
+		health -= 1
+	if(exaustion > 0):
+		exaustion -= 0.1
 	if(health <= 0):
 		queue_free()
 
@@ -67,10 +79,17 @@ func _on_tick_timeout():
 func update_objective():
 	if(objective == "eat"):
 		return "eat"
+	if(objective == "drink"):
+		return "drink"
 	if(objective == "urgent explore" && hunger < 50):
+		return "urgent explore"
+		
+	if(objective == "urgent explore" && thirst < 50):
 		return "urgent explore"
 	elif(hunger < 50):
 		return "find food"
+	elif(thirst < 50 && objective != "find food"):
+		return "find water"
 	elif($Temp.get_time_left() > 0):
 		return "idle"
 	else:
@@ -78,7 +97,10 @@ func update_objective():
 
 #updates needs visuals
 func update_needs_visuals():
-	bar.update(hunger, 100)
+	hebar.update(health, 100)
+	hubar.update(hunger, 100)
+	thbar.update(thirst, 100)
+	exbar.update(exaustion, 100)
 
 
 

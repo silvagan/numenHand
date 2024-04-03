@@ -105,6 +105,10 @@ func explore():
 			#debug.position.z = food_in_vision.position.z
 			#debug.position.y = food_in_vision.position.y
 			#$"..".add_child(debug)
+			
+	#elif(per.contains_type(visible_ob, "water")):
+		#var food_in_vision = per.get_closest_obj(visible_ob, "water")
+		
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
@@ -140,11 +144,34 @@ func find_food():
 		else:
 			ch.objective = "urgent explore"
 			
+			
+func find_water():
+	if(per.contains_type($"../../InRdsange".get_overlapping_bodies(), "water")):
+		ch.objective = "drink"
+	if(navigating):
+		go_to(destination, "destination")
+	#elif (mem.memory.size() > 0):
+		#go_to(mem.get_water_closest_memory().position,"destination")
+	else:
+		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
+		if(per.contains_type(visible_ob, "water")):
+			destination = per.get_closest_obj(visible_ob, "water").position
+			go_to(destination, "destination")
+			navigating = true
+		else:
+			ch.objective = "urgent explore"
+			
+			
 #behaviour that is accessed when no food is in the area // similar to explore
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "berry_bush")):
 		ch.objective = "find food"
+		movement_speed = 9 * ch.speed_stat
+		destination = Vector3(0,0,0)
+		return
+	if(per.contains_type(visible_ob, "water")):
+		ch.objective = "find water"
 		movement_speed = 9 * ch.speed_stat
 		destination = Vector3(0,0,0)
 		return

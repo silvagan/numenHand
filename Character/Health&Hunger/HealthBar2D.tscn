@@ -1,13 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://djx70pjj47nn3"]
 
-[ext_resource type="Texture2D" uid="uid://onx51ivfxp8t" path="res://Character/Health&Hunger/barHorizontal_green_mid 200.png" id="1_euuq8"]
+[ext_resource type="Texture2D" uid="uid://onx51ivfxp8t" path="res://Hand/Health&Hunger/barHorizontal_green_mid 200.png" id="1_euuq8"]
 [ext_resource type="Script" path="res://Character/Health&Hunger/HealthBar2D.gd" id="1_kre0c"]
 
 [node name="HealthBar2D" type="TextureProgressBar"]
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 201.0
-offset_bottom = 41.0
+offset_right = 200.0
+offset_bottom = 40.0
 value = 100.0
 texture_progress = ExtResource("1_euuq8")
 script = ExtResource("1_kre0c")
