@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpw6i72va0xyg"]
+
+[ext_resource type="Texture2D" uid="uid://cb8a7vhgbx713" path="res://Objects/Campfire/Bark001_1K-PNG_Color.png" id="1_kt3n1"]
+[ext_resource type="Texture2D" uid="uid://jyd5xambe6ph" path="res://Objects/Campfire/Bark001_1K-PNG_Displacement.png" id="2_nnle5"]
+[ext_resource type="Texture2D" uid="uid://wwe18su2jwjg" path="res://Objects/Campfire/Bark001_1K-PNG_NormalGL.png" id="3_w7i85"]
+[ext_resource type="Texture2D" uid="uid://dw7a3eien4wfa" path="res://Objects/Campfire/Bark001_1K-PNG_Roughness.png" id="4_gkqwq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pmxmq"]
+radius = 3.71342
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hu2gv"]
+albedo_texture = ExtResource("1_kt3n1")
+roughness_texture = ExtResource("4_gkqwq")
+normal_enabled = true
+normal_texture = ExtResource("3_w7i85")
+heightmap_enabled = true
+heightmap_scale = 1.151
+heightmap_texture = ExtResource("2_nnle5")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0rnyr"]
+material = SubResource("StandardMaterial3D_hu2gv")
+height = 2.4
+
+[node name="Campfire" type="StaticBody3D" groups=["Campfire"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_pmxmq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.158365, -0.987381, 0, 0.987381, -0.158365, 0, 0.46387, 1.04412)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.999999, 0.00103407, -0.000165853, 0, -0.158365, -0.987381, -0.00104729, -0.98738, 0.158365, 0, 0.46387, -1.16728)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0126358, -0.987302, 0.158352, 0, -0.158365, -0.987381, 0.99992, 0.0124763, -0.00200107, -1.10561, 0.46387, -0.0476107)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0115886, 0.987314, -0.158354, -1.56058e-11, -0.158365, -0.987381, -0.999933, -0.0114424, 0.00183523, 1.10561, 0.46387, -0.0755535)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.774944, -0.624054, 0.100091, 2.32812e-10, -0.158365, -0.987381, 0.632029, -0.765165, 0.122724, -0.698833, 0.46387, -0.918436)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.775606, 0.623252, -0.0999627, -1.32013e-10, -0.158365, -0.987381, -0.631217, 0.765818, -0.122829, 0.698833, 0.46387, 0.795272)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.711143, 0.694175, -0.111338, 2.32812e-10, -0.158365, -0.987381, -0.703047, -0.702169, 0.11262, 0.777358, 0.46387, -0.847891)
+mesh = SubResource("CylinderMesh_0rnyr")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.710406, -0.69491, 0.111456, -5.91073e-09, -0.158365, -0.987381, 0.703792, 0.701442, -0.112503, -0.777358, 0.46387, 0.724727)
+mesh = SubResource("CylinderMesh_0rnyr")

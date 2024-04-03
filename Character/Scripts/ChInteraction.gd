@@ -18,8 +18,8 @@ func eat():
 	else:
 		per.look_towards($"../../Head", lookat)
 
-	print(ir.get_overlapping_bodies().size())
-	print($"../../InRange".get_overlapping_bodies().size())
+	#print(ir.get_overlapping_bodies().size())
+	#print($"../../InRange".get_overlapping_bodies().size())
 		 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "berry_bush")):
 		if(timer.is_stopped()):
@@ -37,9 +37,9 @@ func _on_interact_timer_timeout():
 	for c in ir.get_overlapping_bodies():
 		if (c.is_in_group("berry_bush")):
 			#updates picked items data
-			c.update()
-				#rebakeMesh.emit(col.location)
-			ch.mem.update()
+			if(c.update()):
+				ch.mem.update()
+			
 			if (ch.hunger < 80):
 				ch.hunger += 20
 			else: 

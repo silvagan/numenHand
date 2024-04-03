@@ -58,6 +58,33 @@ focus_mode = 0
 text = "Character
 "
 
+[node name="Campfire" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Campfire"
+
+[node name="Rest" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Rest"
+
 [connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
 [connection signal="mouse_entered" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_entered"]
 [connection signal="mouse_exited" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_exited"]
@@ -71,3 +98,5 @@ text = "Character
 [connection signal="mouse_entered" from="Control/Character" to="." method="_on_character_mouse_entered"]
 [connection signal="mouse_exited" from="Control/Character" to="." method="_on_character_mouse_exited"]
 [connection signal="toggled" from="Control/Character" to="." method="_on_character_toggled"]
+[connection signal="pressed" from="Control/Campfire" to="." method="_on_campfire_pressed"]
+[connection signal="pressed" from="Control/Rest" to="." method="_on_rest_pressed"]
