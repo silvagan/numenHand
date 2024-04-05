@@ -81,7 +81,7 @@ func get_random_location(speed, distance):
 #behaviour for roaming and updating memory
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-	
+	print(visible_ob)
 	if(per.contains_type(visible_ob, "Campfire")):
 		if !mem.has_home():
 			if(mem.memory.size() == mem.size):
@@ -96,10 +96,10 @@ func explore():
 	if(per.contains_type(visible_ob, "berry_bush")):
 		var food_in_vision = per.get_closest_obj(visible_ob, "berry_bush")
 		if(mem.memory.size() == mem.size):
-			var memory_food = ch.position.distance_to(mem.get_food_closest_memory().position)
+			var memory_food = ch.position.distance_to(mem.get_food_farthest_memory().position)
 			var seen_food = ch.position.distance_to(food_in_vision.position)
 			if (memory_food > seen_food): 
-				mem.memory.erase(mem.get_food_closest_memory())
+				mem.memory.erase(mem.get_food_farthest_memory())
 				mem.memory.append(food_in_vision)
 				print("swaped memory item", mem.memory.size())
 		else:
@@ -144,7 +144,7 @@ func find_food():
 			
 			
 func find_water():
-	if(per.contains_type($"../../InRdsange".get_overlapping_bodies(), "water")):
+	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "water")):
 		ch.objective = "drink"
 	if(navigating):
 		go_to(destination, "destination")

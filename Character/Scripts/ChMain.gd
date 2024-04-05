@@ -1,3 +1,4 @@
+class_name MainChar
 extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
@@ -8,7 +9,7 @@ var health = 100
 var thirst = 100
 var exaustion = 100
 
-@onready var speed_stat = randf_range(0.8,1.2)
+var speed_stat = randf_range(0.8,1.2)
 
 #character objective
 var objective = "idle"

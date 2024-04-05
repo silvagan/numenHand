@@ -127,9 +127,9 @@ func _on_ui_spawn_item(item, state):
 		"Ch":
 			item_spawnable = state
 			item_to_spawn = preload("res://Character/CharacterMain.tscn")
-		"WaterPond":
-			item_spawnable = state
-			item_to_spawn = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn")
+		#"WaterPond":
+			#item_spawnable = state
+			#item_to_spawn = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn")
 		"Campfire":
 			item_spawnable = state
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")

@@ -1,10 +1,10 @@
 extends Node3D
 #@export var terra: terrain
-
+var test = Memory.new()
 func _ready():
 	#terra.generating_mesh(a)
 	#$NavigationRegion.bake_navigation_mesh()
-	pass
+	print(test.size)
 func _process(delta):
 	pass
 #to avoid new terrain generation cliping through and falling
