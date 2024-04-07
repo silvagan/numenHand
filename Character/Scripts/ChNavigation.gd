@@ -81,7 +81,6 @@ func get_random_location(speed, distance):
 #behaviour for roaming and updating memory
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-	print(visible_ob)
 	if(per.contains_type(visible_ob, "Campfire")):
 		if !mem.has_home():
 			if(mem.memory.size() == mem.size):
@@ -164,7 +163,8 @@ func find_water():
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 				
-	if(per.contains_type(visible_ob, "berry_bush")):
+	#NOTE added "&& ch.hunger < 50"
+	if(per.contains_type(visible_ob, "berry_bush") && ch.hunger < 50):
 		ch.objective = "find food"
 		movement_speed = 9 * ch.speed_stat
 		destination = Vector3(0,0,0)
@@ -184,12 +184,13 @@ func urgent_explore():
 		
 		
 func go_rest():
-	if(mem.has_home()):
-		go_to(mem.home_location(),"destination")
-		#if ch.fatigue > someValue:
-			#ch.objective = previous objective
-	else:
-		ch.objective = "explore"
+	pass
+	#if(mem.has_home()):
+		#go_to(mem.home_location(),"destination")
+		##if ch.fatigue > someValue:
+			##ch.objective = previous objective
+	#else:
+		#ch.objective = "explore"
 #behaviour that is responsible for the objects navigaion to the ground
 func fall():
 	if(navigating):

@@ -13,14 +13,14 @@ var size = 3
 
 func get_first_food_item():
 	for c in memory:
-		if c.is_in_group("berry_bush"):
+		if c != null and c.is_in_group("berry_bush"):
 			return c
 #gets the closest memory |subject to change|
 func get_food_closest_memory():
 	var m = get_first_food_item()
 	if memory.size() > 1:		
 		for c in memory:
-			if c.is_in_group("berry_bush"):
+			if c != null and c.is_in_group("berry_bush"):
 				var c1 = ch.position.distance_to(c.position)
 				var c2 = ch.position.distance_to(m.position)
 				if (c1 < c2):
@@ -31,7 +31,7 @@ func get_food_farthest_memory():
 	var m = get_first_food_item()
 	if memory.size() > 1:		
 		for c in memory:
-			if c.is_in_group("berry_bush"):
+			if c != null and c.is_in_group("berry_bush"):
 				var c1 = ch.position.distance_to(c.position)
 				var c2 = ch.position.distance_to(m.position)
 				if (c1 > c2):
@@ -41,24 +41,24 @@ func get_food_farthest_memory():
 
 func has_home():
 	for c in memory:
-		if c.is_in_group("Campfire"):
+		if c != null and c.is_in_group("Campfire"):
 			return true
 	return false
 	
 func has_food():
 	for c in memory:
-		if c.is_in_group("berry_bush"):
+		if c != null and c.is_in_group("berry_bush"):
 			return true
 	return false
 	
 func home_location():
 	for c in memory:
-		if c.is_in_group("Campfire"):
+		if c != null and c.is_in_group("Campfire"):
 			return c.position
 #removes invalid memory items
 func update():
 	for char in allCh.get_children():
 		for c in char.mem.memory:
-			if c.is_in_group("berry_bush"):
+			if c != null and c.is_in_group("berry_bush"):
 				if c.amount == 0:
 					char.mem.memory.erase(c)

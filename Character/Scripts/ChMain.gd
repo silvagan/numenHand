@@ -39,7 +39,8 @@ func _physics_process(delta):
 	nav.update_body_rotation()
 	
 	print(objective)
-	
+	print(thirst)
+	print(hunger)
 	#act upon current objective
 	match objective:
 		"idle":
@@ -88,13 +89,13 @@ func update_objective():
 
 	if(objective == "go_rest"):
 		return "go_rest"
-
+	
 	if(objective == "urgent explore" && hunger < 50):
 		return "urgent explore"
-		
+	
 	if(objective == "urgent explore" && thirst < 50):
 		return "urgent explore"
-	elif(hunger < 50):
+	elif(hunger < 50 ):
 		return "find food"
 	elif(thirst < 50 && objective != "find food"):
 		return "find water"
