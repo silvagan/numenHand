@@ -95,7 +95,7 @@ func update_objective():
 	
 	if(objective == "urgent explore" && thirst < 50):
 		return "urgent explore"
-	elif(hunger < 50 ):
+	elif(hunger < 50):
 		return "find food"
 	elif(thirst < 50 && objective != "find food"):
 		return "find water"
