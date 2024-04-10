@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbj46plvyn5w7"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cl71c"]
+top_radius = 1.5
+bottom_radius = 1.5
+height = 6.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_l1pwf"]
+height = 6.0
+radius = 1.5
+
+[node name="WaterPond" type="StaticBody3D" groups=["water"]]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("CylinderMesh_cl71c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("CylinderShape3D_l1pwf")

@@ -18,14 +18,14 @@ var navigating = false
 
 #character movement speed
 #var movement_speed = 5.0 * ch.speed
-var movement_speed = 5.0
+#var movement_speed = 5.0
 
 #responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
 	
 	update_target_location(location)
 	var current_location = ch.global_transform.origin
-	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed * ch.speed_stat
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * ch.movement_speed
 	ch.velocity = new_velocity
 	ch.move_and_slide()
 		
@@ -41,7 +41,7 @@ func go_to(location, head_movement_mode):
 func go_near(location, head_movement_mode):
 	update_target_location(location)
 	var current_location = ch.global_transform.origin
-	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * movement_speed * ch.speed_stat
+	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * ch.movement_speed
 	ch.velocity = new_velocity
 	ch.move_and_slide()
 		
@@ -67,8 +67,8 @@ func go_near(location, head_movement_mode):
 	#return closest_point
 	
 #gets random location based on distance from current object
-func get_random_location(speed, distance):
-	movement_speed = speed * ch.speed_stat
+func get_random_location(distance):
+	#movement_speed = speed * ch.speed_stat
 	var x = ch.global_transform.origin.x
 	var z = ch.global_transform.origin.z
 	
@@ -82,9 +82,9 @@ func get_random_location(speed, distance):
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 	if(per.contains_type(visible_ob, "Campfire")):
-		if !mem.has_home():
+		if !mem.has_type("Campfire"):
 			if(mem.memory.size() == mem.size):
-				mem.memory.erase(mem.get_food_farthest_memory())
+				mem.memory.erase(mem.get_farthest_memory_item("berry_bush"))
 				mem.memory.append(per.get_closest_obj(visible_ob,"Campfire"))
 				print("added home to memory")
 			else:			
@@ -95,21 +95,40 @@ func explore():
 	if(per.contains_type(visible_ob, "berry_bush")):
 		var food_in_vision = per.get_closest_obj(visible_ob, "berry_bush")
 		if(mem.memory.size() == mem.size):
-			var memory_food = ch.position.distance_to(mem.get_food_farthest_memory().position)
+			var memory_food = ch.position.distance_to(mem.get_farthest_memory_item("berry_bush").position)
 			var seen_food = ch.position.distance_to(food_in_vision.position)
 			if (memory_food > seen_food): 
-				mem.memory.erase(mem.get_food_farthest_memory())
+				mem.memory.erase(mem.get_farthest_memory_item("berry_bush"))
 				mem.memory.append(food_in_vision)
-				print("swaped memory item", mem.memory.size())
+				print("swaped memory item")
 		else:
 			if !mem.memory.has(food_in_vision):
 				mem.memory.append(food_in_vision)
-				print("added new to memory",food_in_vision.position, mem.memory.size())
+				print("added new food to memory")
+	
+	if(per.contains_type(visible_ob, "water")):
+		var water_in_vision = per.get_closest_obj(visible_ob, "water")
+		if (!mem.has_type("water")):			
+			if(mem.memory.size() == mem.size):				
+				mem.memory.erase(mem.get_farthest_memory_item("berry_bush"))
+				mem.memory.append(water_in_vision)
+				print("added new water source to memory")
+			else:
+				mem.memory.append(water_in_vision)
+				print("added new water source to memory")
+		else:
+			if !mem.memory.has(water_in_vision):
+				var memory_water = ch.position.distance_to(mem.get_closest_memory_item("water").position)
+				var seen_water = ch.position.distance_to(water_in_vision.position)
+				if memory_water > seen_water:
+					mem.memory.erase(mem.get_closest_memory_item("water"))
+					mem.memory.append(water_in_vision)
+					print("swaped water source")
 
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
-		destination = get_random_location(5, 50)
+		destination = get_random_location(50) # (5,50)
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")
@@ -120,18 +139,8 @@ func find_food():
 		ch.objective = "eat"
 	if(navigating):
 		go_to(destination, "destination")
-	elif (mem.has_food()):
-		#if(!is_instance_valid(mem.memory[0])):
-			#mem.memory.clear()
-			#return
-		#print(mem.memory.size())
-		
-		#var debug = dbarrow.instantiate()
-		#debug.position = mem.memory[0].position
-		#$"..".add_child(debug)
-		
-		#print("going to memory")
-		go_to(mem.get_food_closest_memory().position,"destination")
+	elif (mem.has_type("berry_bush")):
+		go_to(mem.get_closest_memory_item("berry_bush").position,"destination")
 	else:
 		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 		if(per.contains_type(visible_ob, "berry_bush")):
@@ -147,8 +156,8 @@ func find_water():
 		ch.objective = "drink"
 	if(navigating):
 		go_to(destination, "destination")
-	#elif (mem.memory.size() > 0):
-		#go_to(mem.get_water_closest_memory().position,"destination")
+	elif(mem.has_type("water")):
+		go_to(mem.get_closest_memory_item("water").position,"destination")
 	else:
 		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 		if(per.contains_type(visible_ob, "water")):
@@ -159,6 +168,24 @@ func find_water():
 			ch.objective = "urgent explore"
 			
 			
+
+func go_rest():	
+	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "Campfire")):
+		ch.objective = "rest"
+	if(navigating):
+		go_to(destination, "destination")
+	elif(mem.has_type("Campfire")):
+		go_to(mem.home_location(),"destination")
+	else:
+		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
+		if(per.contains_type(visible_ob, "Campfire")):
+			destination = per.get_closest_obj(visible_ob, "Campfire").position
+			go_to(destination, "destination")
+			navigating = true
+		else:
+			ch.objective = "urgent explore"
+		
+
 #behaviour that is accessed when no food is in the area // similar to explore
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
@@ -166,31 +193,27 @@ func urgent_explore():
 	#NOTE added "&& ch.hunger < 50"
 	if(per.contains_type(visible_ob, "berry_bush") && ch.hunger < 50):
 		ch.objective = "find food"
-		movement_speed = 9 * ch.speed_stat
+		#movement_speed = 9 * ch.speed_stat
 		destination = Vector3(0,0,0)
 		return
 	if(per.contains_type(visible_ob, "water")):
 		ch.objective = "find water"
-		movement_speed = 9 * ch.speed_stat
+		#movement_speed = 9 * ch.speed_stat
+		destination = Vector3(0,0,0)
+		return
+	if(per.contains_type(visible_ob,"Campfire") && ch.exhaustion < 50):
+		ch.objective = "go_rest"
 		destination = Vector3(0,0,0)
 		return
 	if (destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
-		destination = get_random_location(5, 10)
+		destination = get_random_location(10) # (5,10)
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")
 		
 		
-func go_rest():
-	pass
-	#if(mem.has_home()):
-		#go_to(mem.home_location(),"destination")
-		##if ch.fatigue > someValue:
-			##ch.objective = previous objective
-	#else:
-		#ch.objective = "explore"
 #behaviour that is responsible for the objects navigaion to the ground
 func fall():
 	if(navigating):

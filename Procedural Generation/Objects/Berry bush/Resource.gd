@@ -1,12 +1,13 @@
 extends StaticBody3D
 
-@onready var amount : int = randi_range(1,5)
+@onready var amount : int = randi_range(1,4)
 var location : Vector3
 var weight : int
 
 var textmesh = TextMesh.new()
 
 func _ready():
+	print(get_parent())
 	textmesh.text = "berries: %s" % [amount]
 	textmesh.font_size = 80
 	textmesh
@@ -23,4 +24,6 @@ func update() -> bool:
 		$MeshInstance3D2.mesh = textmesh
 		return false
 	
+
+
 
