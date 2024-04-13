@@ -1,0 +1,130 @@
+[gd_scene load_steps=11 format=3 uid="uid://djlr4oxnvp4iv"]
+
+[ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_gk8kb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scqge"]
+bg_color = Color(0.207843, 0.596078, 0.905882, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 8
+border_color = Color(0.0470588, 0.329412, 0.529412, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_on17k"]
+bg_color = Color(0.133333, 0.521569, 0.815686, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 8
+border_color = Color(0.0470588, 0.329412, 0.529412, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gw61y"]
+bg_color = Color(0.0901961, 0.45098, 0.713726, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.0470588, 0.329412, 0.529412, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 1
+
+[sub_resource type="Theme" id="Theme_kfus3"]
+Button/styles/hover = SubResource("StyleBoxFlat_scqge")
+Button/styles/normal = SubResource("StyleBoxFlat_on17k")
+Button/styles/pressed = SubResource("StyleBoxFlat_gw61y")
+
+[sub_resource type="Theme" id="Theme_4m18l"]
+default_font_size = 100
+
+[sub_resource type="Theme" id="Theme_8kyq7"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_u4y34"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_dsdg2"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_xiemh"]
+default_font_size = 30
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kfus3")
+script = ExtResource("1_gk8kb")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_right = 170.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_direction = 1
+layout_mode = 2
+theme = SubResource("Theme_4m18l")
+text = "NumenHand
+"
+
+[node name="New Game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_8kyq7")
+text = "New Game
+"
+
+[node name="Load Game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_u4y34")
+text = "Load Game
+"
+
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_dsdg2")
+text = "Settings"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_xiemh")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

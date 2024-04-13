@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://8h6hbmw4m8pw"]
+
+[ext_resource type="Script" path="res://In-game menu/In_gameMenu.gd" id="1_5i7al"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31cgn"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.14902, 0.14902, 0.14902, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 1
+
+[sub_resource type="Theme" id="Theme_5fak4"]
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_75del"]
+default_font_size = 20
+
+[node name="In_gameMenu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5i7al")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="Panel" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 125.0
+offset_right = 726.0
+offset_bottom = 525.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_31cgn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_right = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Continue" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_5fak4")
+text = "Continue"
+
+[node name="Save" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_5fak4")
+text = "Save
+"
+
+[node name="Main Menu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_75del")
+text = "Main Menu"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]

@@ -37,20 +37,21 @@ func _input(event):
 		
 func updateDirection():
 	var dir = Vector3()
-	if Input.is_action_pressed("move_forward"):
-		dir += Vector3.FORWARD
-	if Input.is_action_pressed("move_backward"):
-		dir += Vector3.BACK
-	if Input.is_action_pressed("move_left"):
-		dir += Vector3.LEFT
-	if Input.is_action_pressed("move_right"):
-		dir += Vector3.RIGHT
-	if Input.is_action_pressed("move_up"):
-		dir += Vector3.UP
-	if Input.is_action_pressed("move_down"):
-		dir += Vector3.DOWN
-	if dir == Vector3.ZERO:
-		velocity = Vector3.ZERO
+	if(!get_parent().has_node("In_gameMenu")):
+		if Input.is_action_pressed("move_forward"):
+			dir += Vector3.FORWARD
+		if Input.is_action_pressed("move_backward"):
+			dir += Vector3.BACK
+		if Input.is_action_pressed("move_left"):
+			dir += Vector3.LEFT
+		if Input.is_action_pressed("move_right"):
+			dir += Vector3.RIGHT
+		if Input.is_action_pressed("move_up"):
+			dir += Vector3.UP
+		if Input.is_action_pressed("move_down"):
+			dir += Vector3.DOWN
+		if dir == Vector3.ZERO:
+			velocity = Vector3.ZERO
 		
 	return dir.normalized()
 
