@@ -23,7 +23,6 @@ points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.9808
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cstso"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_uq0eh"]
-height = 2.7
 
 [node name="CharacterMain" type="CharacterBody3D" groups=["characters"]]
 script = ExtResource("1_57c2a")

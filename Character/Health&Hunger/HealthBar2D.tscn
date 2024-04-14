@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://djx70pjj47nn3"]
 
-[ext_resource type="Texture2D" uid="uid://onx51ivfxp8t" path="res://Hand/Health&Hunger/barHorizontal_green_mid 200.png" id="1_euuq8"]
+[ext_resource type="Texture2D" uid="uid://onx51ivfxp8t" path="res://Character/Health&Hunger/barHorizontal_green_mid 200.png" id="1_euuq8"]
 [ext_resource type="Script" path="res://Character/Health&Hunger/HealthBar2D.gd" id="1_kre0c"]
 
 [node name="HealthBar2D" type="TextureProgressBar"]
