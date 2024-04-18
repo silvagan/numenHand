@@ -1,18 +1,21 @@
 extends Control
 
 func save():	
+	var saveRes = SaveRes.new()
 	var mainNode = get_parent()
-	var save_dict = {
-		"terrain" : mainNode.get_node("Characters")
-	}
-	return save_dict
+	saveRes.save_data["terrain_mesh"] = mainNode.get_node("Terrain").get_node("MeshInstance3D").mesh
+	saveRes.save_data["terrain_nav_mesh"] = mainNode.get_node("Terrain").navigation_mesh
+	
+	
+	return saveRes
 
 func save_game():
-	var save_game = FileAccess.open("user://savegame.save",FileAccess.WRITE)
-	
-	var json_string = JSON.stringify(save())
-	
-	save_game.store_line(json_string)
+	#var save_game = FileAccess.open("user://savegame.save",FileAccess.WRITE)
+	#
+	#var json_string = JSON.stringify(save())
+	#
+	#save_game.store_line(json_string)
+	ResourceSaver.save(save(),"user://savegame.tres")
 	
 	
 func _on_continue_pressed():

@@ -33,9 +33,14 @@ func _input(event):
 				bush.scale.x = randf_range(1,2)
 				add_child(bush)
 
-func _ready():	
+func _ready():
 	$".".navigation_mesh = NavigationMesh.new()
 	generating_nav_mesh()
+	await get_tree().create_timer(2).timeout
+	var res = ResourceLoader.load("user://savegame.tres")
+	
+	#$MeshInstance3D.mesh = res.save_data["terrain_mesh"]
+	#$".".navigation_mesh = res.save_data["terrain_nav_mesh"]
 
 func generating_nav_mesh():
 	bush_spawn_locations.clear()
@@ -43,6 +48,7 @@ func generating_nav_mesh():
 		if get_child(i).is_in_group("berry_bush"):
 			get_child(i).queue_free()
 	print("Generating Mesh..")
+	
 	
 	seed = (Time.get_date_string_from_system()+Time.get_time_string_from_system()).to_int()
 	noise.seed = seed

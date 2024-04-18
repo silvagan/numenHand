@@ -17,6 +17,10 @@ config/custom_user_dir_name="SaveSystem"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MainMenu="*res://MainMenu/main_menu.gd"
+
 [dotnet]
 
 project/assembly_name="test project"

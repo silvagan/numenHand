@@ -32,7 +32,7 @@ directional_shadow_max_distance = 150.0
 [node name="Terrain" parent="." instance=ExtResource("8_8mkv1")]
 size = 100
 subdivide = 20
-amplitude = 40
+amplitude = 20
 noise = SubResource("FastNoiseLite_uorvg")
 bush_noise = SubResource("FastNoiseLite_6tsky")
 

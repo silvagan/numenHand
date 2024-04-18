@@ -2,17 +2,9 @@ extends Node3D
 
 
 func _ready():
-	var newNode = Node3D.new();
-	print(typeof(newNode))
-	var dict = {
-		"node" : newNode
-	}
-	var json_string = JSON.stringify(dict)
-	#data: Variant, indent: String = "", sort_keys: bool = true, full_precision: bool = false
-	var json = JSON.new()
-	var error = json.parse(json_string)
-	var data_received = json.data
-	print(typeof(data_received["node"]))
+	pass
+
+
 func _process(delta):
 	pass
 #to avoid new terrain generation cliping through and falling

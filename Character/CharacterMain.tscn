@@ -67,9 +67,6 @@ transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.0222375, -0.497
 target_position = Vector3(0, -1, -50)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
-[node name="povCamera" type="Camera3D" parent="Head"]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.231758, -0.389955)
-
 [node name="Navigation" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
 debug_enabled = true
@@ -113,7 +110,6 @@ wait_time = 0.663
 [node name="Temp" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-autostart = true
 
 [node name="InRange" type="Area3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.5, 0)
@@ -121,7 +117,14 @@ transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.5, 0)
 [node name="Collision" type="CollisionShape3D" parent="InRange"]
 shape = SubResource("CylinderShape3D_uq0eh")
 
+[node name="AliveTime" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2277, 0)
+
+[node name="aliveTime" type="Timer" parent="."]
+autostart = true
+
 [connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="timeout" from="InteractTimer" to="Scripts/Interaction" method="_on_interact_timer_timeout"]
+[connection signal="timeout" from="aliveTime" to="." method="_on_alive_time_timeout"]

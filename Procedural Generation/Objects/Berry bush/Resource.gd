@@ -7,7 +7,6 @@ var weight : int
 var textmesh = TextMesh.new()
 
 func _ready():
-	print(get_parent())
 	textmesh.text = "berries: %s" % [amount]
 	textmesh.font_size = 80
 	textmesh
