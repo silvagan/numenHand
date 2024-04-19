@@ -46,12 +46,17 @@ func _ready():
 	randSpeed.seed = seed
 	speed_stat = snapped(randSpeed.randf_range(0.8,1.2),.1)
 	
-	movement_speed = BASE_SPEED * speed_stat
+	calc_speed(speed_stat)
 	
 	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
 	textmesh.font_size = 80
 	textmesh
 	$AliveTime.mesh = textmesh
+
+func calc_speed(speed_stat):
+		
+	movement_speed = BASE_SPEED * speed_stat
+	
 
 func _physics_process(delta):
 	if(exhaustion > 20):

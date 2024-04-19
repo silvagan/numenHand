@@ -1,3 +1,4 @@
+class_name Navigation
 extends Node
 #this is a script dedicated to the NAVIGATION of the character
 #NAVIGATION
@@ -76,8 +77,6 @@ func get_random_location(distance):
 	#movement_speed = speed * ch.speed_stat
 	var x = ch.global_transform.origin.x
 	var z = ch.global_transform.origin.z
-	
-	
 	
 	x += randNumGen.randf_range(-distance,distance)
 	z += randNumGen.randf_range(-distance,distance)
@@ -198,7 +197,7 @@ func go_rest():
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 				
-	#NOTE added "&& ch.hunger < 50"
+	#NOTE added "&& ch.hunger < 50" 
 	if(per.contains_type(visible_ob, "berry_bush") && ch.hunger < 50):
 		ch.objective = "find food"
 		#movement_speed = 9 * ch.speed_stat

@@ -1,5 +1,59 @@
 extends GutTest
 
+var test_environment = load("res://test_environment.tscn")
+
+var _environment = null
+var _memory = null
+var _char = null
+
+func before_all():
+	InputMap.add_action("ui_cancel")
+
+func before_each():
+	_environment = add_child_autofree(test_environment.instantiate())
+	_memory = Memory.new()
+	_char = _environment.get_node("char")
+
+
+#ChatGPT generated tests
+#==========================================================================================
+func test_has_type_empty_memory():
+	var result = _memory.has_type("SomeType")
+	assert_false(result, "Function should return false for empty memory")
+
+
+func test_has_type_non_existent_type():
+	var item1 = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn").instantiate()
+	var item2 = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn").instantiate()
+	var item3 = preload("res://Procedural Generation/Objects/Rock/Rock.tscn").instantiate()
+	_memory.memory.append(item1)
+	_memory.memory.append(item2)
+	_memory.memory.append(item3)
+	var result = _memory.has_type("NonExistentType")
+	assert_false(result, "Function should return false for non-existent type")
+
+func test_has_type_single_match():
+	var item1 = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn").instantiate()
+	_memory.memory.append(item1)
+	var result = _memory.has_type("berry_bush")
+	assert_true(result, "Function should return true for a single match")
+
+func test_has_type_multiple_matches():
+	var item1 = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn").instantiate()
+	var item2 = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn").instantiate()
+	_memory.memory.append(item1)
+	_memory.memory.append(item2)
+	var result = _memory.has_type("berry_bush")
+	assert_true(result)
+	result = _memory.has_type("water")
+	assert_true(result)
+
+#==========================================================================================
+
+func test_added_food_to_memory():
+	await wait_seconds(5)
+	assert_true(_char.mem.has_type("berry_bush"))
+
 func test_get_closest_food_from_memory():	
 	var player = preload("res://Character/CharacterMain.tscn").instantiate()
 	player.position = Vector3(0,0,0)
