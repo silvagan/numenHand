@@ -2,6 +2,7 @@ extends Control
 
 
 func _on_new_game_pressed():
+	Globals.LOADED = false
 	get_tree().change_scene_to_file("res://MainScene.tscn")
 
 
@@ -16,9 +17,8 @@ func _on_load_game_pressed():
 		#var node_data = json.get_data()
 		#print(node_data["terrain"])
 		
-	
+	Globals.LOADED = true
 	get_tree().change_scene_to_file("res://MainScene.tscn")
-	
 	
 
 

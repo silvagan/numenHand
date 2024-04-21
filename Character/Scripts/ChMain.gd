@@ -3,6 +3,7 @@ extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
 
+
 @export var seed = randi()
 
 var t = RandomNumberGenerator.new()
@@ -12,7 +13,6 @@ var t = RandomNumberGenerator.new()
 @export var health = 100
 @export var thirst = 100
 @export var exhaustion = 100
-
 
 
 var BASE_SPEED = 7
@@ -164,3 +164,12 @@ func _on_alive_time_timeout():
 	textmesh.font_size = 80
 	textmesh
 	$AliveTime.mesh = textmesh
+
+
+
+func _on_in_range_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.is_action_pressed("mouse_left"):
+			print(":SDf")
+			
+			

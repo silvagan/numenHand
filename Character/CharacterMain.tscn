@@ -127,4 +127,5 @@ autostart = true
 [connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="timeout" from="InteractTimer" to="Scripts/Interaction" method="_on_interact_timer_timeout"]
+[connection signal="input_event" from="InRange" to="." method="_on_in_range_input_event"]
 [connection signal="timeout" from="aliveTime" to="." method="_on_alive_time_timeout"]
