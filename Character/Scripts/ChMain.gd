@@ -3,9 +3,7 @@ extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
 
-
 @export var seed = randi()
-
 var t = RandomNumberGenerator.new()
 
 #character needs
@@ -15,7 +13,7 @@ var t = RandomNumberGenerator.new()
 @export var exhaustion = 100
 
 
-var BASE_SPEED = 7
+var _BASE_SPEED = 7
 var movement_speed
 var speed_stat 
 
@@ -55,17 +53,17 @@ func _ready():
 
 func calc_speed(speed_stat):
 		
-	movement_speed = BASE_SPEED * speed_stat
+	movement_speed = _BASE_SPEED * speed_stat
 	
 
 func _physics_process(delta):
 	if(exhaustion > 20):
 		if(thirst < 50 or hunger < 50):
-			movement_speed = BASE_SPEED * speed_stat * 1.3
+			movement_speed = _BASE_SPEED * speed_stat * 1.3
 		else:
-			movement_speed = BASE_SPEED * speed_stat
+			movement_speed = _BASE_SPEED * speed_stat
 	else:
-		movement_speed = BASE_SPEED * speed_stat * 0.8
+		movement_speed = _BASE_SPEED * speed_stat * 0.8
 	#update objective, visuals and body rotation
 	objective = update_objective()
 	update_needs_visuals()
@@ -173,3 +171,55 @@ func _on_in_range_input_event(camera, event, position, normal, shape_idx):
 			print(":SDf")
 			
 			
+
+func on_game_save(saved_data:Array[SavedData]):
+	var my_data :SavedData = SavedData.new()
+	
+	my_data.exhaustion = exhaustion
+	my_data.health = health
+	my_data.hunger = hunger
+	my_data.thirst = thirst
+	my_data.movement_speed = movement_speed
+	my_data.position = global_position
+	my_data.seed = seed
+	my_data.speed_stat = speed_stat
+	my_data.objective = objective
+	my_data.memory = mem.memory
+	my_data.scene_path = scene_file_path
+	my_data.velocity = velocity
+	my_data.destination = nav.destination
+	
+	saved_data.append(my_data)
+	
+func on_load(saved_data:SavedData):
+	health = saved_data.health
+	hunger = saved_data.hunger
+	thirst = saved_data.thirst
+	exhaustion = saved_data.exhaustion
+	seed = saved_data.seed
+	global_position = saved_data.position
+	speed_stat = saved_data.speed_stat
+	movement_speed = saved_data.movement_speed
+	objective = saved_data.objective
+	mem.memory = saved_data.memory
+	velocity = saved_data.velocity
+	nav.destination = saved_data.destination
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

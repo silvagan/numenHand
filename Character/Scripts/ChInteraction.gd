@@ -1,29 +1,24 @@
+class_name Interaction
 extends Node
 #this is a script dedicated to the world INTERACTION of the character
 #INTERACTION
+var lookat = Vector3(0,0,0)
+
+signal rebakeMesh(location)
 @onready var ch = $"../.."
 @onready var ir = $"../../InRange"
 @onready var timer = $"../../InteractTimer"
 
 @onready var per = $"../Perception"
-var lookat = Vector3(0,0,0)
 
-signal rebakeMesh(location)
-
+#test
 func eat():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
 		lookat = per.get_first_obj(ir.get_overlapping_bodies(), "berry_bush").position
 		per.look_towards($"../../Head", lookat)
 	else:
-		per.look_towards($"../../Head", lookat)
-#<<<<<<< HEAD
-
-	#print(ir.get_overlapping_bodies().size())
-	#print($"../../InRange".get_overlapping_bodies().size())
-#=======
-#>>>>>>> 5e299e4c9f148e14235c96a01d20c3e74099b166
-		 	
+		per.look_towards($"../../Head", lookat) 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "berry_bush")):
 		if(timer.is_stopped()):
 			timer.start()
@@ -34,7 +29,7 @@ func eat():
 		timer.stop()
 		ch.objective = "find food"
 		lookat = Vector3(0,0,0)
-
+#test
 func drink():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
@@ -42,13 +37,6 @@ func drink():
 		per.look_towards($"../../Head", lookat)
 	else:
 		per.look_towards($"../../Head", lookat)
-#<<<<<<< HEAD
-
-	#print(ir.get_overlapping_bodies().size())
-	#print($"../../InRange".get_overlapping_bodies().size())
-#=======
-#>>>>>>> 5e299e4c9f148e14235c96a01d20c3e74099b166
-		 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "water")):
 		if(timer.is_stopped()):
 			timer.start()
@@ -60,6 +48,7 @@ func drink():
 		ch.objective = "find water"
 		lookat = Vector3(0,0,0)
 		
+#test
 func rest():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
@@ -67,12 +56,6 @@ func rest():
 		per.look_towards($"../../Head", lookat)
 	else:
 		per.look_towards($"../../Head", lookat)
-#<<<<<<< HEAD
-
-	#print(ir.get_overlapping_bodies().size())
-	#print($"../../InRange".get_overlapping_bodies().size())
-#=======
-#>>>>>>> 5e299e4c9f148e14235c96a01d20c3e74099b166
 		 	
 	if(per.contains_type(ir.get_overlapping_bodies(), "Campfire")):
 		if(timer.is_stopped()):
@@ -84,7 +67,7 @@ func rest():
 		timer.stop()
 		ch.objective = "go_rest"
 		lookat = Vector3(0,0,0)
-
+#test
 func _on_interact_timer_timeout():
 	for c in ir.get_overlapping_bodies():
 		if (c.is_in_group("berry_bush")):

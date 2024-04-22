@@ -3,7 +3,6 @@ extends Node
 #this is a script dedicated to the MEMORY of the character
 #MEMORY
 @onready var ch = $"../.."
-
 #node where all char are a child of
 @onready var allCh = get_parent().get_parent().get_parent()
 #set universal momery for storing objects
@@ -16,6 +15,7 @@ func get_first_item(type):
 		if c != null and c.is_in_group(type):
 			return c
 
+#test
 func get_closest_memory_item(type):
 	var m = get_first_item(type)
 	if memory.size() > 1:		
@@ -28,6 +28,7 @@ func get_closest_memory_item(type):
 		
 	return m
 
+#test
 func get_farthest_memory_item(type):
 	var m = get_first_item(type)
 	if memory.size() > 1:		
@@ -40,6 +41,7 @@ func get_farthest_memory_item(type):
 		
 	return m
 
+#test
 func has_type(type):
 	for c in memory:
 		if c != null and c.is_in_group(type):
@@ -50,6 +52,7 @@ func home_location():
 	for c in memory:
 		if c != null and c.is_in_group("Campfire"):
 			return c.position
+
 #removes invalid memory items
 #func update():
 	#for char in allCh.get_children():
@@ -57,6 +60,8 @@ func home_location():
 			#if c != null and c.is_in_group("berry_bush"):
 				#if c.amount == 0:
 					#char.mem.memory.erase(c)
+
+#test
 func update():
 	for char in allCh.get_children():
 		for c in char.mem.memory:

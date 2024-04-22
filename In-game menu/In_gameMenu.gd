@@ -1,19 +1,27 @@
 extends Control
 
+@onready var allNpcs = get_parent().get_node("Characters").get_children()
 func save_data():	
-	var saveRes = SaveRes.new()
+	var savedGame :SavedGame = SavedGame.new()
 	var mainNode = get_parent()
-	saveRes.save_data["terrain_mesh"] = mainNode.get_node("Terrain").get_node("MeshInstance3D").mesh
-	saveRes.save_data["terrain_nav_mesh"] = mainNode.get_node("Terrain").navigation_mesh
-	#saveRes.save_data["characters"] = mainNode.get_node("Characters").get_children()
+
+	savedGame.save_data["terrain_mesh"] = mainNode.get_node("Terrain").get_node("MeshInstance3D").mesh
+	savedGame.save_data["terrain_nav_mesh"] = mainNode.get_node("Terrain").navigation_mesh
+
 	
-	return saveRes
+	var savedData : Array[SavedData] = []
+	get_tree().call_group("game_events", "on_game_save",savedData)
+	
+	savedGame.npcsData = savedData
+	return savedGame
 
 func save_game():
-	#var save_game = FileAccess.open("user://savegame.save",FileAccess.WRITE)
-	#
+	#var file = FileAccess.open("user://savegame.data",FileAccess.WRITE)
+	#file.store_var(allNpcs[0].global_position)
+	#file.close()
+	
 	#var json_string = JSON.stringify(save())
-	#
+	
 	#save_game.store_line(json_string)
 	ResourceSaver.save(save_data(),"user://savegame.tres")
 	

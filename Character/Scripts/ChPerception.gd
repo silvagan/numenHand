@@ -1,3 +1,4 @@
+class_name Perception
 extends Node
 #this is a script dedicated to the PERCEPTION of the character
 #PERCEPTION
@@ -8,7 +9,6 @@ var right = false #|subject to change|
 #head movement speed and head movement speed bonus for a burst of movement at the start of target acquisition
 var head_movement_speed = 0.5
 var bonus = 1
-
 #ready raycast for line of sight checking
 @onready var vsray = $"../../Head/VisionRayCast"
 #ready head and body reference
