@@ -13,3 +13,4 @@ extends Resource
 @export var memory : Array = []
 @export var scene_path : String
 @export var velocity : Vector3
+@export var destination : Vector3

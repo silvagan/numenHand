@@ -187,6 +187,7 @@ func on_game_save(saved_data:Array[SavedData]):
 	my_data.memory = mem.memory
 	my_data.scene_path = scene_file_path
 	my_data.velocity = velocity
+	my_data.destination = nav.destination
 	
 	saved_data.append(my_data)
 	
@@ -202,6 +203,8 @@ func on_load(saved_data:SavedData):
 	objective = saved_data.objective
 	mem.memory = saved_data.memory
 	velocity = saved_data.velocity
+	nav.destination = saved_data.destination
+	
 	
 	
 	
