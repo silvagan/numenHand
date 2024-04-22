@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://l5hjt2l7cdv6"]
+[gd_scene load_steps=16 format=3 uid="uid://l5hjt2l7cdv6"]
 
 [ext_resource type="Script" path="res://Character/Scripts/ChMain.gd" id="1_57c2a"]
 [ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="2_8bfjo"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c5dwbs10n2cft" path="res://Character/Health&Hunger/HealthBar3D.tscn" id="4_swnpx"]
 [ext_resource type="Script" path="res://Character/Scripts/ChMemory.gd" id="4_yk162"]
 [ext_resource type="Script" path="res://Character/Scripts/ChInteraction.gd" id="5_07ab3"]
+[ext_resource type="Script" path="res://Character/Test.gd" id="6_n0i0i"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nygyd"]
 material = ExtResource("2_8bfjo")
@@ -25,7 +26,7 @@ points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.9808
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_uq0eh"]
 height = 2.7
 
-[node name="CharacterMain" type="CharacterBody3D" groups=["characters", "game_events"]]
+[node name="CharacterMain" type="CharacterBody3D" groups=["characters"]]
 script = ExtResource("1_57c2a")
 
 [node name="Scripts" type="Node" parent="."]
@@ -41,6 +42,10 @@ script = ExtResource("5_07ab3")
 
 [node name="Perception" type="Node" parent="Scripts"]
 script = ExtResource("2_i65l6")
+
+[node name="Test" type="Node" parent="Scripts" node_paths=PackedStringArray("ch")]
+script = ExtResource("6_n0i0i")
+ch = NodePath("../..")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

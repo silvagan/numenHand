@@ -11,6 +11,8 @@ var navigating = false
 
 @onready var seed = $"../..".seed
 
+
+
 var randNumGen = RandomNumberGenerator.new()
 #ready NPCharacter for use in calls
 @onready var ch = $"../.."
