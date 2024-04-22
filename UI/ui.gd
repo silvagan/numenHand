@@ -3,6 +3,9 @@ extends CanvasLayer
 @onready var item = preload("res://Ball/Ball.tscn")
 var toggled := false
 
+var minutes = 0
+var second = 0
+
 signal spawn_item(item:String, state:bool)
 var prev_item
 
@@ -127,3 +130,6 @@ func _on_campfire_pressed():
 func _on_rest_pressed():
 	for c in get_parent().get_node("Characters").get_children():
 		c.objective = "go_rest"
+
+
+	

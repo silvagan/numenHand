@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ohnc23h86fm7"]
+[gd_scene load_steps=10 format=3 uid="uid://ohnc23h86fm7"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_r5ocb"]
 [ext_resource type="PackedScene" uid="uid://bab84aiqartcu" path="res://Camera/camera_3d.tscn" id="5_mcpj8"]
+[ext_resource type="Script" path="res://loadChars.gd" id="6_54pum"]
 [ext_resource type="PackedScene" uid="uid://cpggs1af067qh" path="res://UI/ui.tscn" id="6_jdr17"]
 [ext_resource type="PackedScene" uid="uid://bhqtahcree8ju" path="res://Camera/spawner.tscn" id="6_p2lvb"]
 [ext_resource type="PackedScene" uid="uid://dlethjugcp3lm" path="res://Procedural Generation/navigation_region_3d.tscn" id="8_8mkv1"]
@@ -32,6 +33,7 @@ directional_shadow_max_distance = 150.0
 [node name="Terrain" parent="." instance=ExtResource("8_8mkv1")]
 size = 100
 subdivide = 20
+amplitude = 20
 noise = SubResource("FastNoiseLite_uorvg")
 bush_noise = SubResource("FastNoiseLite_6tsky")
 
@@ -39,9 +41,10 @@ bush_noise = SubResource("FastNoiseLite_6tsky")
 process_callback = 0
 
 [node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.8402, 0)
 
 [node name="Camera3D" parent="." instance=ExtResource("5_mcpj8")]
+process_mode = 3
 transform = Transform3D(-1, 7.7118e-08, -4.11771e-08, -3.82454e-08, 0.0376379, 0.999291, 7.86132e-08, 0.999291, -0.0376379, -0.0428782, 23.7761, -4.9689)
 fov = 100.0
 far = 150.0
@@ -50,6 +53,7 @@ moveSpeed = 20.0
 [node name="UI" parent="." instance=ExtResource("6_jdr17")]
 
 [node name="Characters" type="Node3D" parent="."]
+script = ExtResource("6_54pum")
 
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]
 [connection signal="spawn_coords" from="Camera3D" to="Terrain" method="_on_camera_3d_spawn_coords"]

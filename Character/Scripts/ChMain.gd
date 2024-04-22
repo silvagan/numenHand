@@ -3,20 +3,24 @@ extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
 
-#character needs
-var hunger = 100
-var health = 100
-var thirst = 100
-var exhaustion = 100
 
-var speed_stat = randf_range(0.8,1.2)
+@export var seed = randi()
+
+var t = RandomNumberGenerator.new()
+
+#character needs
+@export var hunger = 100
+@export var health = 100
+@export var thirst = 100
+@export var exhaustion = 100
+
 
 var BASE_SPEED = 7
 var movement_speed
-
+var speed_stat 
 
 #character objective
-var objective = "idle"
+@export var objective := "idle"
 var prev_objective : String
 
 #load agent for navigation
@@ -33,8 +37,26 @@ var prev_objective : String
 @onready var mem = $Scripts/Memory
 @onready var itr = $Scripts/Interaction
 
+var textmesh = TextMesh.new()
+var minutes = 0
+var seconds = 0
+
 func _ready():
-	pass
+	var randSpeed = RandomNumberGenerator.new()
+	randSpeed.seed = seed
+	speed_stat = snapped(randSpeed.randf_range(0.8,1.2),.1)
+	
+	calc_speed(speed_stat)
+	
+	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
+	textmesh.font_size = 80
+	textmesh
+	$AliveTime.mesh = textmesh
+
+func calc_speed(speed_stat):
+		
+	movement_speed = BASE_SPEED * speed_stat
+	
 
 func _physics_process(delta):
 	if(exhaustion > 20):
@@ -130,3 +152,24 @@ func update_needs_visuals():
 
 func _on_interaction_rebake_mesh(location):
 	$"../NavigationRegion3D".rebakeMesh(location)
+
+
+func _on_alive_time_timeout():
+	if(seconds == 59):
+		seconds = 0
+		minutes += 1
+	else:
+		seconds += 1
+	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
+	textmesh.font_size = 80
+	textmesh
+	$AliveTime.mesh = textmesh
+
+
+
+func _on_in_range_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEventMouseButton:
+		if event.is_action_pressed("mouse_left"):
+			print(":SDf")
+			
+			

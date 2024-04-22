@@ -1,3 +1,4 @@
+class_name Navigation
 extends Node
 #this is a script dedicated to the NAVIGATION of the character
 #NAVIGATION
@@ -8,6 +9,9 @@ var destination = Vector3(0,0,0)
 var navigating = false
 #character movement speed
 
+@onready var seed = $"../..".seed
+
+var randNumGen = RandomNumberGenerator.new()
 #ready NPCharacter for use in calls
 @onready var ch = $"../.."
 #ready perception and memory scripts for use in furher functions
@@ -19,13 +23,15 @@ var navigating = false
 #character movement speed
 #var movement_speed = 5.0 * ch.speed
 #var movement_speed = 5.0
-
+func _ready():
+	randNumGen.seed = seed
 #responsible for body movement and head rotation
 func go_to(location, head_movement_mode):
 	
 	update_target_location(location)
 	var current_location = ch.global_transform.origin
-	var new_velocity = (ch.nav_agent.get_next_path_position() - ch.global_transform.origin).normalized() * ch.movement_speed
+	var next_position = ch.nav_agent.get_next_path_position()
+	var new_velocity = (next_position - current_location).normalized() * ch.movement_speed
 	ch.velocity = new_velocity
 	ch.move_and_slide()
 		
@@ -72,8 +78,9 @@ func get_random_location(distance):
 	var x = ch.global_transform.origin.x
 	var z = ch.global_transform.origin.z
 	
-	x += randf_range(-distance, distance)
-	z += randf_range(-distance, distance)
+	x += randNumGen.randf_range(-distance,distance)
+	z += randNumGen.randf_range(-distance,distance)
+	
 	var y = ch.global_transform.origin.y
 	
 	return Vector3(x, y, z)
@@ -128,7 +135,7 @@ func explore():
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
-		destination = get_random_location(50) # (5,50)
+		destination = get_random_location(30) # (5,50)
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")
@@ -190,7 +197,7 @@ func go_rest():
 func urgent_explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 				
-	#NOTE added "&& ch.hunger < 50"
+	#NOTE added "&& ch.hunger < 50" 
 	if(per.contains_type(visible_ob, "berry_bush") && ch.hunger < 50):
 		ch.objective = "find food"
 		#movement_speed = 9 * ch.speed_stat
@@ -208,7 +215,7 @@ func urgent_explore():
 	if (destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
-		destination = get_random_location(10) # (5,10)
+		destination = get_random_location(15) # (5,10)
 		per.syncing_head_body = true
 		per.bonus = 5
 		go_to(destination, "default")

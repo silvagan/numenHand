@@ -125,7 +125,7 @@ func sync_head_with_body():
 		sync_head_body(1)
 
 #gradually change head rotation to match body rotation
-func sync_head_body(bonus):	
+func sync_head_body(bonusi):	
 	
 	rotate_head_vertical(-25)
 	
