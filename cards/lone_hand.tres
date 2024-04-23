@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://drv2lmguwysj0"]
+
+[ext_resource type="Script" path="res://custom_resources/card.gd" id="1_3sury"]
+[ext_resource type="Texture2D" uid="uid://dlnu3crjk81qw" path="res://cards/visuals/the lost hand.png" id="1_nq617"]
+
+[resource]
+script = ExtResource("1_3sury")
+id = "lone_hand"
+type = 0
+icon = ExtResource("1_nq617")
+tooltip_text = ""

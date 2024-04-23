@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpggs1af067qh"]
+[gd_scene load_steps=10 format=3 uid="uid://cpggs1af067qh"]
 
 [ext_resource type="Script" path="res://UI/ui.gd" id="1_8bw7v"]
+[ext_resource type="Script" path="res://UI/hand.gd" id="2_4n6q8"]
+[ext_resource type="PackedScene" uid="uid://nuyg0ddc1j3g" path="res://card_UI/card_ui.tscn" id="2_o4rmt"]
+[ext_resource type="Resource" uid="uid://drv2lmguwysj0" path="res://cards/lone_hand.tres" id="4_xb3yo"]
+[ext_resource type="Resource" uid="uid://dowrqduer3slv" path="res://cards/berry_bush.tres" id="5_pmwim"]
+[ext_resource type="Resource" uid="uid://kwoapbgu5xfp" path="res://cards/water_pond.tres" id="6_iit37"]
+[ext_resource type="Resource" uid="uid://cbopatlsp2v25" path="res://cards/campfire.tres" id="7_1c6bp"]
+[ext_resource type="Resource" uid="uid://yn06m2wwppup" path="res://cards/tree.tres" id="7_7xdap"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kselr"]
+size = Vector2(1172.16, 513.507)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_8bw7v")
@@ -94,6 +104,50 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Rest"
 
+[node name="CardDropArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea"]
+position = Vector2(576, 247)
+scale = Vector2(0.982808, 0.962012)
+shape = SubResource("RectangleShape2D_kselr")
+
+[node name="DropUI" type="CanvasLayer" parent="." groups=["ui_layer"]]
+
+[node name="Hand" type="HBoxContainer" parent="DropUI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -110.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("2_4n6q8")
+
+[node name="CardUI" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("4_xb3yo")
+
+[node name="CardUI2" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("5_pmwim")
+
+[node name="CardUI3" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("6_iit37")
+
+[node name="CardUI4" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("7_1c6bp")
+
+[node name="CardUI5" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("7_7xdap")
+
 [connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
 [connection signal="mouse_entered" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_entered"]
 [connection signal="mouse_exited" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_exited"]
@@ -112,3 +166,4 @@ text = "Rest"
 [connection signal="toggled" from="Control/Character" to="." method="_on_character_toggled"]
 [connection signal="pressed" from="Control/Campfire" to="." method="_on_campfire_pressed"]
 [connection signal="pressed" from="Control/Rest" to="." method="_on_rest_pressed"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI" to="." method="_on_card_ui_spawn_item"]

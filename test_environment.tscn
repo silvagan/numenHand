@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dc6a8shgk1mub"]
 
 [ext_resource type="PackedScene" uid="uid://byeapy1i6q38r" path="res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn" id="1_456on"]
-[ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://Character/CharacterMain.tscn" id="1_kn777"]
+[ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://character/CharacterMain.tscn" id="1_kn777"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_562mf"]
 vertices = PackedVector3Array(-499.5, 0.5, -499.5, -499.5, 0.5, 499.5, 499.5, 0.5, 499.5, 499.5, 0.5, -499.5)

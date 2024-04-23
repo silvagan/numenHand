@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dib34qhc3lrqj"
-path="res://.godot/imported/ViewCone.glb-b6ce379140e04d9f6f565cf7126d651d.scn"
+path="res://.godot/imported/ViewCone.glb-6ae1b47ca05bf4dbc8cfd1e5f8cf904b.scn"
 
 [deps]
 
-source_file="res://Character/ViewCone.glb"
-dest_files=["res://.godot/imported/ViewCone.glb-b6ce379140e04d9f6f565cf7126d651d.scn"]
+source_file="res://character/ViewCone.glb"
+dest_files=["res://.godot/imported/ViewCone.glb-6ae1b47ca05bf4dbc8cfd1e5f8cf904b.scn"]
 
 [params]
 

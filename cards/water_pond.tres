@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://kwoapbgu5xfp"]
+
+[ext_resource type="Script" path="res://custom_resources/card.gd" id="1_t0glc"]
+
+[resource]
+script = ExtResource("1_t0glc")
+id = "water_pond"
+type = 0

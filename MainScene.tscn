@@ -57,4 +57,5 @@ script = ExtResource("6_54pum")
 
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]
 [connection signal="spawn_coords" from="Camera3D" to="Terrain" method="_on_camera_3d_spawn_coords"]
+[connection signal="place_object_from_card" from="UI" to="Terrain" method="_on_ui_place_object_from_card"]
 [connection signal="spawn_item" from="UI" to="Terrain" method="_on_ui_spawn_item"]

@@ -143,7 +143,23 @@ func _on_ui_spawn_item(item, state):
 			item_spawnable = state
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
 
+func _on_ui_place_object_from_card(item):
+	item_spawnable = true
+	match item:
+		"berry_bush":
+			item_to_spawn = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
+		"tree":
+			item_to_spawn = preload("res://Procedural Generation/Objects/Tree/tree.tscn")
+		"rock":
+			item_to_spawn = preload("res://Procedural Generation/Objects/Rock/Rock.tscn")
+		"lone_hand":
+			item_to_spawn = preload("res://Character/CharacterMain.tscn")
+		"water_pond":
+			item_to_spawn = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn")
+		"campfire":
+			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
 
 func _on_timer_timeout():
 	$".".bake_navigation_mesh()
 	$Timer.stop()
+
