@@ -4,7 +4,6 @@ extends Control
 signal reparent_requested(which_card_ui: CardUI)
 
 @export var card: Card : set = _set_card
-
 @onready var panel = $Panel
 @onready var icon = $Icon
 

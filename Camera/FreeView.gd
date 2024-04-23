@@ -34,6 +34,8 @@ func _input(event):
 	#########################################################
 	if event.is_action_pressed("mouse_left"):
 		shoot_ray()
+	if event.is_action_released("mouse_left"):
+		shoot_ray()
 		
 func updateDirection():
 	var dir = Vector3()

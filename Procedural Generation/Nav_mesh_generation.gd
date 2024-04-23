@@ -124,22 +124,22 @@ func _on_camera_3d_spawn_coords(coords):
 
 func _on_ui_spawn_item(item, state):
 	match item:
-		"BerryBush":
+		"berry_bush":
 			item_spawnable = state
 			item_to_spawn = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
-		"Tree":
+		"tree":
 			item_spawnable = state
 			item_to_spawn = preload("res://Procedural Generation/Objects/Tree/tree.tscn")
-		"Rock":
+		"rock":
 			item_spawnable = state
 			item_to_spawn = preload("res://Procedural Generation/Objects/Rock/Rock.tscn")
-		"Ch":
+		"lone_hand":
 			item_spawnable = state
 			item_to_spawn = preload("res://Character/CharacterMain.tscn")
-		"WaterPond":
+		"water_pond":
 			item_spawnable = state
 			item_to_spawn = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn")
-		"Campfire":
+		"campfire":
 			item_spawnable = state
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
 
