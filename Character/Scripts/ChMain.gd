@@ -13,6 +13,10 @@ var t = RandomNumberGenerator.new()
 @export var exhaustion = 100
 
 
+@onready var orbital_view = get_parent().get_parent().get_node("%OrbitalView")
+@onready var orbital_cam = get_parent().get_parent().get_node("%OrbitalCam")
+
+
 var _BASE_SPEED = 7
 var movement_speed
 var speed_stat 
@@ -40,6 +44,7 @@ var minutes = 0
 var seconds = 0
 
 func _ready():
+	
 	var randSpeed = RandomNumberGenerator.new()
 	randSpeed.seed = seed
 	speed_stat = snapped(randSpeed.randf_range(0.8,1.2),.1)
@@ -57,6 +62,7 @@ func calc_speed(speed_stat):
 	
 
 func _physics_process(delta):
+	
 	if(exhaustion > 20):
 		if(thirst < 50 or hunger < 50):
 			movement_speed = _BASE_SPEED * speed_stat * 1.3
@@ -164,13 +170,13 @@ func _on_alive_time_timeout():
 	$AliveTime.mesh = textmesh
 
 
-
-func _on_in_range_input_event(camera, event, position, normal, shape_idx):
-	if event is InputEventMouseButton:
-		if event.is_action_pressed("mouse_left"):
-			print(":SDf")
-			
-			
+#
+#func _on_in_range_input_event(camera, event, position, normal, shape_idx):
+	#if event is InputEventMouseButton:
+		#if event.is_action_pressed("mouse_left"):
+			#print(":SDf")
+			#
+			#
 
 func on_game_save(saved_data:Array[SavedData]):
 	var my_data :SavedData = SavedData.new()
@@ -207,19 +213,13 @@ func on_load(saved_data:SavedData):
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+func _on_in_range_input_event(camera, event, position, normal, shape_idx):
+	if event is InputEvent:
+		if event.is_action_pressed("mouse_right"):
+			orbital_cam.set_current(true)
+			$"../../FreeCam".position = orbital_cam.position
+			orbital_view.set_follow_target_node(self)
+			orbital_view.set_priority(1)
