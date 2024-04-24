@@ -106,20 +106,20 @@ func rebakeMesh(location:Vector3):
 	pass
 
 
-func _on_camera_3d_spawn_coords(coords):
-	if item_spawnable:
-		var item = item_to_spawn.instantiate()		
-		item.position = coords
-		if item.is_in_group("characters"):
-			$"../Characters".add_child(item)
-		elif item.is_in_group("Campfire"):
-			add_child(item)
-			item_spawnable = false
-			$"../UI/Control/Campfire".queue_free()
-		else:
-			add_child(item)
-		$Timer.stop()
-		$Timer.start(1)
+#func _on_camera_3d_spawn_coords(coords):
+	#if item_spawnable:
+		#var item = item_to_spawn.instantiate()		
+		#item.position = coords
+		#if item.is_in_group("characters"):
+			#$"../Characters".add_child(item)
+		#elif item.is_in_group("Campfire"):
+			#add_child(item)
+			#item_spawnable = false
+			#$"../UI/Control/Campfire".queue_free()
+		#else:
+			#add_child(item)
+		#$Timer.stop()
+		#$Timer.start(1)
 
 
 func _on_ui_spawn_item(item, state):
@@ -147,3 +147,19 @@ func _on_ui_spawn_item(item, state):
 func _on_timer_timeout():
 	$".".bake_navigation_mesh()
 	$Timer.stop()
+
+
+func _on_free_cam_spawn_coords(coords):
+	if item_spawnable:
+		var item = item_to_spawn.instantiate()		
+		item.position = coords
+		if item.is_in_group("characters"):
+			$"../Characters".add_child(item)
+		elif item.is_in_group("Campfire"):
+			add_child(item)
+			item_spawnable = false
+			$"../UI/Control/Campfire".queue_free()
+		else:
+			add_child(item)
+		$Timer.stop()
+		$Timer.start(1)

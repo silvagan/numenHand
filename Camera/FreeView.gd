@@ -4,6 +4,9 @@ extends Camera3D
 @export var moveSpeed = 5.0
 @export var mouseSpeed = 300.0
 
+@onready var free_view = $"../FreeView"
+@onready var orbital_view = $"../OrbitalView"
+
 var velocity = Vector3.ZERO
 var lookAngles = Vector2(-3.14, -1.4)
 # Called when the node enters the scene tree for the first time.
@@ -30,6 +33,7 @@ func _input(event):
 	pass#CHANGED
 	if event is InputEventMouseMotion:
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			
 			lookAngles -= event.relative / mouseSpeed
 	#########################################################
 	if event.is_action_pressed("mouse_left"):
@@ -39,16 +43,22 @@ func updateDirection():
 	var dir = Vector3()
 	if(!get_parent().has_node("In_gameMenu")):
 		if Input.is_action_pressed("move_forward"):
+			set_current(true)
 			dir += Vector3.FORWARD
 		if Input.is_action_pressed("move_backward"):
+			set_current(true)
 			dir += Vector3.BACK
 		if Input.is_action_pressed("move_left"):
+			set_current(true)
 			dir += Vector3.LEFT
 		if Input.is_action_pressed("move_right"):
+			set_current(true)
 			dir += Vector3.RIGHT
 		if Input.is_action_pressed("move_up"):
+			set_current(true)
 			dir += Vector3.UP
 		if Input.is_action_pressed("move_down"):
+			set_current(true)
 			dir += Vector3.DOWN
 		if dir == Vector3.ZERO:
 			velocity = Vector3.ZERO
