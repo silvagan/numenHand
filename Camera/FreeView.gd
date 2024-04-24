@@ -32,10 +32,10 @@ func _input(event):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			lookAngles -= event.relative / mouseSpeed
 	#########################################################
-	if event.is_action_pressed("mouse_left"):
-		shoot_ray()
-	if event.is_action_released("mouse_left"):
-		shoot_ray()
+	#if event.is_action_pressed("mouse_left"):
+		#shoot_ray()
+	#if event.is_action_released("mouse_left"):
+		#shoot_ray()
 		
 func updateDirection():
 	var dir = Vector3()
@@ -75,3 +75,17 @@ func shoot_ray():
 	if raycast_result != { }:
 		spawn_coords.emit(raycast_result.position)
 
+
+
+func _on_terrain_get_mouse_location():
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_length = 1000
+	var from = project_ray_origin(mouse_pos)
+	var to = from + project_ray_normal(mouse_pos) * ray_length
+	var space = get_world_3d().direct_space_state
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	ray_query.from = from
+	ray_query.to = to
+	var raycast_result = space.intersect_ray(ray_query)
+	if raycast_result != { }:
+		spawn_coords.emit(raycast_result.position)

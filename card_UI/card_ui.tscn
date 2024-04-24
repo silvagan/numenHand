@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://ctnwekej0x41b" path="res://main_theme.tres" id="1_wrkr4"]
 [ext_resource type="Script" path="res://card_UI/card_ui.gd" id="2_fsa71"]
-[ext_resource type="StyleBox" path="res://card_UI/new_style_box_flat.tres" id="3_0sa8s"]
+[ext_resource type="StyleBox" uid="uid://nxk5kh4byxd6" path="res://card_UI/new_style_box_flat.tres" id="3_0sa8s"]
 [ext_resource type="Script" path="res://card_UI/card_state_machine.gd" id="3_lqrrk"]
 [ext_resource type="Script" path="res://card_UI/card_states/card_base_state.gd" id="4_82pk7"]
 [ext_resource type="Script" path="res://card_UI/card_states/card_clicked_state.gd" id="5_d3wq8"]
@@ -79,7 +79,6 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector"]
 position = Vector2(40, 55.0163)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_wtqh2")
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]

@@ -28,6 +28,7 @@ signal spawn_item(item:String)
 func on_input(_event: InputEvent) -> void:
 	if played:
 		spawn_item.emit(type)
+		get_parent().get_parent().queue_free()
 		return
 	
 	transition_requested.emit(self, CardState.State.BASE)

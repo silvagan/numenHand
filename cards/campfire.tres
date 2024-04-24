@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://cbopatlsp2v25"]
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://cbopatlsp2v25"]
 
+[ext_resource type="Texture2D" uid="uid://crmllampxx4cd" path="res://cards/visuals/campfire.png" id="1_4wlte"]
 [ext_resource type="Script" path="res://custom_resources/card.gd" id="1_22seu"]
 
 [resource]
 script = ExtResource("1_22seu")
 id = "campfire"
 type = 0
+icon = ExtResource("1_4wlte")
+tooltip_text = ""

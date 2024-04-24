@@ -143,6 +143,8 @@ func _on_ui_spawn_item(item, state):
 			item_spawnable = state
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
 
+signal get_mouse_location()
+
 func _on_ui_place_object_from_card(item):
 	item_spawnable = true
 	match item:
@@ -158,6 +160,8 @@ func _on_ui_place_object_from_card(item):
 			item_to_spawn = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn")
 		"campfire":
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
+	get_mouse_location.emit()
+
 
 func _on_timer_timeout():
 	$".".bake_navigation_mesh()

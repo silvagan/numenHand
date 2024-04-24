@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="Card" load_steps=2 format=3 uid="uid://dowrqduer3slv"]
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://dowrqduer3slv"]
 
+[ext_resource type="Texture2D" uid="uid://b5gbpy0d10f8m" path="res://cards/visuals/berry_bush.png" id="1_c7xbg"]
 [ext_resource type="Script" path="res://custom_resources/card.gd" id="1_pp8gj"]
 
 [resource]
 script = ExtResource("1_pp8gj")
 id = "berry_bush"
 type = 0
+icon = ExtResource("1_c7xbg")
+tooltip_text = ""
