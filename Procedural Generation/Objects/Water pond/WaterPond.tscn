@@ -1,17 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3qjob5h75pga"]
+[gd_scene load_steps=3 format=3 uid="uid://dqt2p373hlwys"]
 
-[ext_resource type="PackedScene" uid="uid://o1rwgml505c4" path="res://Procedural Generation/Objects/Water pond/water.glb" id="1_o3y3f"]
-[ext_resource type="Script" path="res://Procedural Generation/Objects/Water pond/handle.gd" id="2_fwcp3"]
+[ext_resource type="PackedScene" uid="uid://o1rwgml505c4" path="res://Procedural Generation/Objects/Water pond/water.glb" id="1_pp4r3"]
+[ext_resource type="Script" path="res://handle.gd" id="2_74mt6"]
 
-[node name="water" groups=["water"] instance=ExtResource("1_o3y3f")]
-transform = Transform3D(1.585, 0, 0, 0, 1.585, 0, 0, 0, 1.585, 0, 0.22672, 0)
-
-[node name="waterpond" parent="." index="0" groups=["water"]]
+[node name="water" instance=ExtResource("1_pp4r3")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="col" parent="." index="1" groups=["water"]]
-script = ExtResource("2_fwcp3")
-
-[node name="CollisionShape3D" parent="col" index="0" groups=["water"]]
+script = ExtResource("2_74mt6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10278, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56426, 0)
