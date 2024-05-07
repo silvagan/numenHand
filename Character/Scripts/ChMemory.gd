@@ -1,4 +1,4 @@
-class_name Memory
+#class_name Memory
 extends Node
 #this is a script dedicated to the MEMORY of the character
 #MEMORY

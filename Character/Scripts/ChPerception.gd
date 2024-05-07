@@ -1,4 +1,4 @@
-class_name Perception
+#class_name Perception
 extends Node
 #this is a script dedicated to the PERCEPTION of the character
 #PERCEPTION

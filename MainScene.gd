@@ -7,7 +7,6 @@ var lookAngles
 func _ready():
 	pass
 
-
 func _process(delta):
 	pass
 #to avoid new terrain generation cliping through and falling

@@ -1,4 +1,4 @@
-class_name Interaction
+#class_name Interaction
 extends Node
 #this is a script dedicated to the world INTERACTION of the character
 #INTERACTION

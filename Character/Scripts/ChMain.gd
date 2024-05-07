@@ -1,4 +1,4 @@
-class_name MainChar
+#class_name MainChar
 extends CharacterBody3D
 #this is the MAIN character script
 #MAIN
