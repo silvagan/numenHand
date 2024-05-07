@@ -157,7 +157,7 @@ func find_food():
 			go_to(destination, "destination")
 			navigating = true
 		else:
-			ch.objective = "urgent explore"
+			ch.objective = "urgent explore food"
 			
 			
 func find_water():
@@ -166,15 +166,15 @@ func find_water():
 	if(navigating):
 		go_to(destination, "destination")
 	elif(mem.has_type("water")):
-		go_to(mem.get_closest_memory_item("water").position,"destination")
+		go_to(mem.get_closest_memory_item("water").get_parent().position,"destination")
 	else:
 		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
 		if(per.contains_type(visible_ob, "water")):
-			destination = per.get_closest_obj(visible_ob, "water").position
+			destination = per.get_closest_obj(visible_ob, "water").get_parent().position
 			go_to(destination, "destination")
 			navigating = true
 		else:
-			ch.objective = "urgent explore"
+			ch.objective = "urgent explore water"
 			
 			
 
@@ -192,26 +192,17 @@ func go_rest():
 			go_to(destination, "destination")
 			navigating = true
 		else:
-			ch.objective = "urgent explore"
+			#ch.objective = "urgent explore"
+			pass
 		
 
 #behaviour that is accessed when no food is in the area // similar to explore
-func urgent_explore():
+func urgent_explore_food():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-				
-	#NOTE added "&& ch.hunger < 50" 
+	
 	if(per.contains_type(visible_ob, "berry_bush") && ch.hunger < 50):
 		ch.objective = "find food"
 		#movement_speed = 9 * ch.speed_stat
-		destination = Vector3(0,0,0)
-		return
-	if(per.contains_type(visible_ob, "water")):
-		ch.objective = "find water"
-		#movement_speed = 9 * ch.speed_stat
-		destination = Vector3(0,0,0)
-		return
-	if(per.contains_type(visible_ob,"Campfire") && ch.exhaustion < 50):
-		ch.objective = "go_rest"
 		destination = Vector3(0,0,0)
 		return
 	if (destination != Vector3(0,0,0)):
@@ -222,7 +213,23 @@ func urgent_explore():
 		per.bonus = 5
 		go_to(destination, "default")
 		
-		
+#behaviour that is accessed when no food is in the area // similar to explore
+func urgent_explore_water():
+	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
+	
+	if(per.contains_type(visible_ob, "water")):
+		ch.objective = "find water"
+		#movement_speed = 9 * ch.speed_stat
+		destination = Vector3(0,0,0)
+		return
+	if (destination != Vector3(0,0,0)):
+		go_to(destination, "default")
+	else:
+		destination = get_random_location(15) # (5,10)
+		per.syncing_head_body = true
+		per.bonus = 5
+		go_to(destination, "default")
+
 #behaviour that is responsible for the objects navigaion to the ground
 func fall():
 	if(navigating):

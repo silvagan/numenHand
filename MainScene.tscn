@@ -100,8 +100,18 @@ tween_on_load = false
 inactive_update_mode = 0
 camera_3D_resource = null
 
+[node name="GameStateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="ScoreTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="get_mouse_location" from="Terrain" to="FreeCam" method="_on_terrain_get_mouse_location"]
 [connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]
 [connection signal="place_object_from_card" from="UI" to="Terrain" method="_on_ui_place_object_from_card"]
 [connection signal="spawn_item" from="UI" to="Terrain" method="_on_ui_spawn_item"]
+[connection signal="update_score" from="UI" to="." method="_on_ui_update_score"]
 [connection signal="spawn_coords" from="FreeCam" to="Terrain" method="_on_free_cam_spawn_coords"]
+[connection signal="timeout" from="GameStateTimer" to="UI" method="_on_game_state_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="UI" method="_on_score_timer_timeout"]

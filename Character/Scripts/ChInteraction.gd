@@ -33,7 +33,7 @@ func eat():
 func drink():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):
-		lookat = per.get_first_obj(ir.get_overlapping_bodies(), "water").position
+		lookat = per.get_first_obj(ir.get_overlapping_bodies(), "water").get_parent().position
 		per.look_towards($"../../Head", lookat)
 	else:
 		per.look_towards($"../../Head", lookat)
@@ -84,12 +84,17 @@ func _on_interact_timer_timeout():
 			ch.nav.navigating = false
 		elif (c.is_in_group("water")):
 			
+			if(c.update()):
+				await get_tree().create_timer(0.01).timeout
+				ch.mem.update()
+			
 			if (ch.thirst < 80):
 				ch.thirst += 30
 			else: 
 				ch.thirst = 100
 			ch.nav.destination = Vector3(0,0,0)
 			ch.nav.navigating = false
+			
 		elif (c.is_in_group("Campfire")):
 			if(ch.exhaustion < 80):
 				ch.exhaustion += 20

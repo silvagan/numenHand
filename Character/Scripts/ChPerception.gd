@@ -164,6 +164,7 @@ func rotate_head_vertical(angle):
 #check if contains type
 func contains_type(all, type):
 	for c in all:
+		#print(c.get_groups())
 		if(c.is_in_group(type) && is_visible_from_view(c.global_transform.origin)):
 			return true
 

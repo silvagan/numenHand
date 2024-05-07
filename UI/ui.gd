@@ -1,10 +1,12 @@
 extends CanvasLayer
 
 @onready var item = preload("res://Ball/Ball.tscn")
-var toggled := false
 
+var toggled := false
+var game_started := false
 var minutes = 0
 var second = 0
+var score = 0
 
 signal spawn_item(item:String, state:bool)
 var prev_item
@@ -134,3 +136,19 @@ func _on_rest_pressed():
 signal place_object_from_card(item:String)
 func _on_card_ui_spawn_item(item):
 	place_object_from_card.emit(item)
+
+signal update_score(score:int)
+func _on_game_state_timer_timeout():
+	if (get_parent().get_node("Characters").get_children().size() > 0):
+		game_started = true
+	if (game_started == true and get_parent().get_node("Characters").get_children().size() == 0):
+		game_started = false
+		$GameOver.visible = true
+		$".".visible = false
+		$DropUI.visible = false
+		$GameOver/MarginContainer/VBoxContainer/score.text = "Score: "+ str(score)
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _on_score_timer_timeout():
+	score += get_parent().get_node("Characters").get_children().size()
+	$Control2/Label.text = "Score: "+ str(score)

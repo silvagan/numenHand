@@ -23,7 +23,7 @@ func _on_draw_card_button_down():
 	#new_card_ui.parent = self
 
 func get_random_card(card, icon):
-	var n = randi() % (3) + 1
+	var n = randi() % (4) + 1
 	match n:
 		1:
 			res = preload("res://cards/berry_bush.tres")

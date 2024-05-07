@@ -100,8 +100,10 @@ func _physics_process(delta):
 			pass
 		"explore":
 			nav.explore()
-		"urgent explore":
-			nav.urgent_explore()
+		"urgent explore food":
+			nav.urgent_explore_food()
+		"urgent explore water":
+			nav.urgent_explore_water()
 
 #called on timer timeout
 func _on_tick_timeout():
@@ -129,14 +131,13 @@ func update_objective():
 	if(objective == "rest"):
 		return "rest"
 	
-	if(objective == "urgent explore" && hunger < 50):
-		return "urgent explore"
-	
-	if(objective == "urgent explore" && thirst < 50):
-		return "urgent explore"
-	elif(hunger < 50):
+	if(objective == "urgent explore food" && hunger < 50):
+		return "urgent explore food"
+	if(objective == "urgent explore water" && thirst < 50):
+		return "urgent explore water"
+	elif(hunger < 50 && objective != "urgent explore water"):
 		return "find food"
-	elif(thirst < 50 && objective != "find food"):
+	elif(thirst < 50 && objective != "urgent explore food"):
 		return "find water"
 	elif(exhaustion < 50 and mem.has_type("Campfire")):
 		return "go_rest"

@@ -41,5 +41,3 @@ func _input(event):
 				var rot = Vector3(lookAngles.y, lookAngles.x, 0)
 				cam_rotation += rot
 				orbital_view.set_third_person_rotation(cam_rotation)
-
-
