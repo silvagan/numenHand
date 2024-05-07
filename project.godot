@@ -22,6 +22,10 @@ config/icon="res://icon.svg"
 MainMenu="res://MainMenu/main_menu.gd"
 Globals="*res://Globals.gd"
 
+[debug]
+
+shapes/collision/shape_color=Color(0, 0, 0, 1)
+
 [dotnet]
 
 project/assembly_name="test project"

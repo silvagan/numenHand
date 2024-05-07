@@ -1,4 +1,4 @@
-class_name Navigation
+#class_name Navigation
 extends Node
 #this is a script dedicated to the NAVIGATION of the character
 #NAVIGATION

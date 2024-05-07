@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://byeapy1i6q38r"]
+[gd_scene load_steps=7 format=3 uid="uid://byeapy1i6q38r"]
 
 [ext_resource type="Script" path="res://Procedural Generation/Objects/Berry bush/Resource.gd" id="1_ci4ti"]
 
@@ -13,6 +13,14 @@ height = 3.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_tvbxe"]
 radius = 1.6
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bwb8f"]
+height = 4.0
+radius = 3.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6bvr7"]
+height = 4.0
+radius = 0.1
+
 [node name="BerryBush" type="StaticBody3D" groups=["berry_bush"]]
 script = ExtResource("1_ci4ti")
 
@@ -24,3 +32,17 @@ shape = SubResource("SphereShape3D_tvbxe")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13019, 0)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="spawnRadius" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="spawnRadius"]
+shape = SubResource("CylinderShape3D_bwb8f")
+
+[node name="marker" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="marker"]
+shape = SubResource("CylinderShape3D_6bvr7")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
