@@ -4,6 +4,9 @@ extends Node3D
 @onready var orbital_cam = get_node("%OrbitalCam")
 var cam_rotation = Vector3(0,0,0)
 var lookAngles
+var arrayMesh
+var mdt = MeshDataTool.new();
+
 func _ready():
 	pass
 

@@ -15,6 +15,7 @@ run/main_scene="res://MainMenu/main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SaveSystem"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=30
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,6 +26,10 @@ Globals="*res://Globals.gd"
 [debug]
 
 shapes/collision/shape_color=Color(0, 0, 0, 1)
+
+[display]
+
+window/vsync/vsync_mode=2
 
 [dotnet]
 

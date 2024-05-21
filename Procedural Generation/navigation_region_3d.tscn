@@ -22,9 +22,9 @@ shader_parameter/terrain_sand = ExtResource("5_3k3m4")
 [node name="NavigationRegion3D" type="NavigationRegion3D"]
 script = ExtResource("1_lpssh")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="terrainBody" type="StaticBody3D" parent="." groups=["terrainBody"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="terrainBody"]
 shape = SubResource("BoxShape3D_ityis")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

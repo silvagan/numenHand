@@ -10,6 +10,7 @@ extends NavigationRegion3D
 @export var min_height : float = 0
 @export var max_height : float = 0
 
+var MDT = MeshDataTool.new()
 var seed
 
 var bush_spawn_locations : PackedVector3Array
@@ -31,7 +32,6 @@ func _input(event):
 				bush.position.y = bush_spawn_locations[i].y
 				bush.position.z = bush_spawn_locations[i].z
 				bush.rotation.y = randi_range(0,180)
-				bush.scale.x = randf_range(1,2)
 				add_child(bush)
 
 func _ready():
@@ -94,9 +94,10 @@ func generating_nav_mesh():
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,data)
 	
 	surface_tool.create_from(array_mesh,0)
+	MDT.create_from_surface(array_mesh,0)
 	surface_tool.generate_normals()
 	$MeshInstance3D.mesh = surface_tool.commit()
-	$StaticBody3D/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
+	$terrainBody/CollisionShape3D.shape = array_mesh.create_trimesh_shape()
 	$".".navigation_mesh.cell_height = 0.05
 	$".".bake_navigation_mesh()
 

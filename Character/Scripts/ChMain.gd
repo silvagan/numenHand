@@ -158,16 +158,16 @@ func _on_interaction_rebake_mesh(location):
 	$"../NavigationRegion3D".rebakeMesh(location)
 
 
-func _on_alive_time_timeout():
-	if(seconds == 59):
-		seconds = 0
-		minutes += 1
-	else:
-		seconds += 1
-	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
-	textmesh.font_size = 80
-	textmesh
-	$AliveTime.mesh = textmesh
+#func _on_alive_time_timeout():
+	#if(seconds == 59):
+		#seconds = 0
+		#minutes += 1
+	#else:
+		#seconds += 1
+	#textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
+	#textmesh.font_size = 80
+	#textmesh
+	#$AliveTime.mesh = textmesh
 
 
 #
