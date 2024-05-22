@@ -4,12 +4,21 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b7ghsv6w2gvxy"
+<<<<<<< HEAD
 path="res://.godot/imported/axe_2handed.gltf-7cf5743a5682b3568b56d74647943a4d.scn"
 
 [deps]
 
 source_file="res://character/Char model/KayKit_Adventurers_1.0_FREE/Assets/gltf/axe_2handed.gltf"
 dest_files=["res://.godot/imported/axe_2handed.gltf-7cf5743a5682b3568b56d74647943a4d.scn"]
+=======
+path="res://.godot/imported/axe_2handed.gltf-0b575ce6df754a643be3ec42ce3b0f1f.scn"
+
+[deps]
+
+source_file="res://Character/Char model/KayKit_Adventurers_1.0_FREE/Assets/gltf/axe_2handed.gltf"
+dest_files=["res://.godot/imported/axe_2handed.gltf-0b575ce6df754a643be3ec42ce3b0f1f.scn"]
+>>>>>>> animation
 
 [params]
 

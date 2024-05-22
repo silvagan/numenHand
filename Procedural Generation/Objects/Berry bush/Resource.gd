@@ -26,6 +26,7 @@ func _ready():
 	
 	$Timer.start(10)
 
+
 func update() -> bool:
 	amount -= 1
 	if amount == 0:

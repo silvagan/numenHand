@@ -68,6 +68,7 @@ func rest():
 		ch.objective = "go_rest"
 		lookat = Vector3(0,0,0)
 
+
 func cut():
 	ch.nav.destination = ch.global_position
 	if(lookat == Vector3(0,0,0)):

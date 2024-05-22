@@ -31,6 +31,7 @@ func draw_card():
 	new_card_ui.card = res
 	#new_card_ui.parent = self
 
+
 func get_random_card(card, icon):
 	var n = randi() % (4) + 1
 	match n:

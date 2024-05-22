@@ -184,5 +184,3 @@ func _on_free_cam_spawn_coords(coords):
 			add_child(item)
 		$Timer.stop()
 		$Timer.start(1)
-
-

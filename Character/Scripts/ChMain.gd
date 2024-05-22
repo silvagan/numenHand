@@ -21,6 +21,11 @@ var _BASE_SPEED = 7
 var movement_speed
 var speed_stat 
 
+var death = "Death_B"
+var dead = "Death_B_Pose"
+var isAlive = true
+
+
 #character objective
 @export var objective := "idle"
 var prev_objective : String
@@ -39,9 +44,19 @@ var prev_objective : String
 @onready var mem = $Scripts/Memory
 @onready var itr = $Scripts/Interaction
 
+
+@onready var model = $Rig
+@onready var anim_tree = $AnimationTree
+@onready var anim_state = $AnimationTree.get("parameters/playback")
+
 var textmesh = TextMesh.new()
 var minutes = 0
 var seconds = 0
+
+
+#var last_floor = true
+#var jumping = false
+#var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	
@@ -62,7 +77,22 @@ func calc_speed(speed_stat):
 	
 
 func _physics_process(delta):
-	
+
+	#velocity.y += -gravity * delta
+	#if is_on_floor() and not last_floor:
+		#jumping = false
+		#anim_tree.set("parameters/conditions/grounded", true)
+	## We're in the air, but we didn't jump
+	#if not is_on_floor() and not jumping:
+		#anim_state.travel("Jump_Idle")
+		#anim_tree.set("parameters/conditions/grounded", false)
+	#last_floor = is_on_floor()
+	$Rig/Skeleton3D/Barbarian_Head.rotation=$Head.rotation
+	$Rig/Skeleton3D/Barbarian_Head.position=$Head.position
+	$Rig/Skeleton3D/Barbarian_Head.position.y -= 2.457
+	if !isAlive:
+		return
+
 	if(exhaustion > 20):
 		if(thirst < 50 or hunger < 50):
 			movement_speed = _BASE_SPEED * speed_stat * 1.3
@@ -122,10 +152,18 @@ func _on_tick_timeout():
 	if(exhaustion > 0):
 		exhaustion -= 0.5
 	if(health <= 0):
+		isAlive =false
+		anim_state.travel(death)
+		anim_state.travel(dead)
+		await get_tree().create_timer(4).timeout
 		queue_free()
 
 #updates the objective based on criteria
 func update_objective():
+
+	if !isAlive:
+		return
+
 	if(objective == "eat"):
 		return "eat"
 
@@ -134,7 +172,7 @@ func update_objective():
 	
 	if(objective == "rest"):
 		return "rest"
-		
+	
 	if(objective == "cut"):
 		return "cut"
 		
@@ -150,6 +188,7 @@ func update_objective():
 		return "go_rest"
 	elif($Temp.get_time_left() > 0):
 		return "idle"
+
 	elif(objective == "cut tree"):
 		return "cut tree"
 	else:

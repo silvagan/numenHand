@@ -1,6 +1,8 @@
 extends StaticBody3D
 
+
 @onready var amount : int = 5
+
 var distance = 15
 var angle = 0
 var newCordsX
@@ -8,16 +10,20 @@ var newCordsZ
 var collision
 var spawnCoords :Vector3
 
+
 var textmesh = TextMesh.new()
+
 
 @onready var marker = $marker
 @onready var spawn_radius = $spawnRadius
 
 var newTree = preload("res://Procedural Generation/Objects/Tree/tree.tscn")
+
 signal felltree
 func _ready():
 	$".".rotation.y = randf_range(0,360)	
 	self.connect("felltree", $".."._draw_card)
+
 	#angle = randi_range(0,360)
 	
 	#newCordsX = distance*cos(deg_to_rad(angle)) + global_position.x
@@ -38,6 +44,7 @@ func _ready():
 	#print(marker.position)
 	#print(marker.global_position)
 	
+
 	textmesh.text = "health: %s" % [amount]
 	textmesh.font_size = 50
 	textmesh
@@ -56,6 +63,11 @@ func update() -> bool:
 		textmesh.font_size = 50
 		$treehealth.mesh = textmesh
 		return false
+
+	
+	
+	$Timer.start(1)
+	
 
 func _process(delta):
 	pass
@@ -98,3 +110,5 @@ func _on_timer_timeout():
 		tree.position = spawnCoords
 		get_parent().add_child(tree)
 	
+
+

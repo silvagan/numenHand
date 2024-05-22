@@ -10,6 +10,8 @@ var navigating = false
 #character movement speed
 
 @onready var seed = $"../..".seed
+@onready var anim_tree = $AnimationTree
+@onready var model = $"../../Rig"
 
 
 
@@ -35,6 +37,12 @@ func go_to(location, head_movement_mode):
 	var next_position = ch.nav_agent.get_next_path_position()
 	var new_velocity = (next_position - current_location).normalized() * ch.movement_speed
 	ch.velocity = new_velocity
+
+	
+	var vl = ch.velocity * model.transform.basis
+	ch.anim_tree.set("parameters/IdleRun/blend_position", Vector2(vl.x, -vl.z) / ch.movement_speed)
+	
+
 	ch.move_and_slide()
 		
 	match head_movement_mode:
@@ -90,7 +98,7 @@ func get_random_location(distance):
 #behaviour for roaming and updating memory
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
-	
+
 	if(per.contains_type(visible_ob, "Campfire")):
 		if !mem.has_type("Campfire"):
 			if(mem.memory.size() == mem.size):
@@ -139,7 +147,6 @@ func explore():
 		var tree_in_vision = per.get_closest_obj(visible_ob, "tree")
 		destination = tree_in_vision.position
 		ch.objective = "cut tree"
-		
 		
 		
 	if(destination != Vector3(0,0,0)):
@@ -259,6 +266,8 @@ func _on_navigation_navigation_finished():
 func update_body_rotation():
 	var lookdir = atan2(-ch.velocity.x, -ch.velocity.z)
 	$"../../Body".rotation.y = lookdir
+	#$"../../Body"
+	$"../../Rig/Skeleton3D".rotation.y = lookdir
 
 func cut_tree():
 	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "tree")):

@@ -4,12 +4,21 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://baemm3yent7g3"
+<<<<<<< HEAD
 path="res://.godot/imported/Barbarian.glb-742f38dd9fa528372f2ac55a8cd2fdd9.scn"
 
 [deps]
 
 source_file="res://character/Char model/KayKit_Adventurers_1.0_FREE/Characters/gltf/Barbarian.glb"
 dest_files=["res://.godot/imported/Barbarian.glb-742f38dd9fa528372f2ac55a8cd2fdd9.scn"]
+=======
+path="res://.godot/imported/Barbarian.glb-18bd83d22c8334f932c24834f13feda6.scn"
+
+[deps]
+
+source_file="res://Character/Char model/KayKit_Adventurers_1.0_FREE/Characters/gltf/Barbarian.glb"
+dest_files=["res://.godot/imported/Barbarian.glb-18bd83d22c8334f932c24834f13feda6.scn"]
+>>>>>>> animation
 
 [params]
 

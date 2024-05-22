@@ -67,7 +67,6 @@ func is_visible_from_view(target):
 		elif collider.is_in_group("tree"):
 			vsray.debug_shape_custom_color = Color(21,110,212)
 			return true
-			
 		else:
 			vsray.debug_shape_custom_color = Color(174, 0, 0)
 			#print("I dont see food")
@@ -178,6 +177,7 @@ func get_first_obj(all, type):
 		if (c.is_in_group(type) && is_visible_from_view(c.global_transform.origin)):
 			return c
 	return null
+
 
 #get closest object of type
 func get_closest_obj(all, type):
