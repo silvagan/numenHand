@@ -35,17 +35,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.13019, 0)
 
 [node name="Timer" type="Timer" parent="."]
 
-wait_time = 100.0
-
-
 [node name="spawnRadius" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="spawnRadius"]
 shape = SubResource("CylinderShape3D_bwb8f")
 
 [node name="marker" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29115, 1.5082, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="marker"]
 shape = SubResource("CylinderShape3D_6bvr7")
 
+[node name="RayCast3D" type="RayCast3D" parent="marker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.70464, 0)
+
+[connection signal="reproduce" from="." to="." method="_on_reproduce"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

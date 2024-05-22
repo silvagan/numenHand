@@ -6,12 +6,17 @@ var weight : int
 
 var textmesh = TextMesh.new()
 
+
 var distance = 5
 var angle = 0
 var newCordsX
 var newCordsZ
 var collision
 var spawnCoords :Vector3
+
+var adult = true
+
+@onready var ray = $marker/RayCast3D
 
 @onready var marker = $marker
 @onready var spawn_radius = $spawnRadius
@@ -24,8 +29,8 @@ func _ready():
 	textmesh
 	$MeshInstance3D2.mesh = textmesh
 	
-	$Timer.start(10)
-
+	if adult:
+		$Timer.start(1)
 
 func update() -> bool:
 	amount -= 1
@@ -40,7 +45,14 @@ func update() -> bool:
 	
 
 
+func _process(delta):
+	if not adult:
+		scale += Vector3(.005,.005,.005)
+	if scale.is_equal_approx(Vector3(1,1,1)) and not adult:
+		adult = true
+		reproduce.emit()
 
+signal reproduce
 
 
 func _on_timer_timeout():
@@ -63,7 +75,7 @@ func _on_timer_timeout():
 	while(marker.get_overlapping_areas() != [] || OoB == true):
 		OoB = false
 		print(marker.get_overlapping_areas())
-		if counter == 360:
+		if counter == 100:
 			spawn = false
 			break
 		angle = randi_range(1,360)
@@ -77,6 +89,19 @@ func _on_timer_timeout():
 		counter +=1
 	
 	if spawn:
-		var tree = newBeryBush.instantiate()
-		tree.position = spawnCoords
-		get_parent().add_child(tree)
+		var berryBush = newBeryBush.instantiate()
+		berryBush.position = spawnCoords
+		ray.position = spawnCoords
+		await get_tree().create_timer(.1).timeout
+		ray.force_raycast_update()
+		print(ray.get_collision_point().y)
+		berryBush.position.y = ray.get_collision_point().y
+		berryBush.adult = false
+		berryBush.scale *= 0.1
+		get_parent().add_child(berryBush)
+
+
+
+
+func _on_reproduce():
+	$Timer.start(10)
