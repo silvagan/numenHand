@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://yn06m2wwppup"]
+
+[ext_resource type="Texture2D" uid="uid://dt8akvyn2c8ay" path="res://cards/visuals/tree.png" id="1_dvp0b"]
+[ext_resource type="Script" path="res://custom_resources/card.gd" id="1_m6gbd"]
+
+[resource]
+script = ExtResource("1_m6gbd")
+id = "tree"
+type = 0
+icon = ExtResource("1_dvp0b")
+tooltip_text = ""

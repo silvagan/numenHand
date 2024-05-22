@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://ohnc23h86fm7"]
+
+[ext_resource type="Script" path="res://MainScene.gd" id="1_r5ocb"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5_a8gus"]
+[ext_resource type="PackedScene" uid="uid://bab84aiqartcu" path="res://Camera/camera_3d.tscn" id="5_mcpj8"]
+[ext_resource type="Script" path="res://loadChars.gd" id="6_54pum"]
+[ext_resource type="PackedScene" uid="uid://cpggs1af067qh" path="res://UI/ui.tscn" id="6_jdr17"]
+[ext_resource type="PackedScene" uid="uid://bhqtahcree8ju" path="res://Camera/spawner.tscn" id="6_p2lvb"]
+[ext_resource type="PackedScene" uid="uid://dlethjugcp3lm" path="res://Procedural Generation/navigation_region_3d.tscn" id="8_8mkv1"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="8_853wk"]
+
+[sub_resource type="Environment" id="Environment_4vcr7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uorvg"]
+noise_type = 3
+frequency = 0.0076
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6tsky"]
+noise_type = 0
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_62x2c"]
+
+[node name="MainScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.0271511, -0.026598)
+script = ExtResource("1_r5ocb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4vcr7")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.757929, -3.49769e-07, 0.652337, 0.580397, -0.456508, 0.674344, 0.297797, 0.889719, 0.346001, 27.5828, 16.8026, -23.3874)
+shadow_enabled = true
+directional_shadow_max_distance = 150.0
+
+[node name="Terrain" parent="." instance=ExtResource("8_8mkv1")]
+size = 100
+subdivide = 20
+amplitude = 20
+noise = SubResource("FastNoiseLite_uorvg")
+bush_noise = SubResource("FastNoiseLite_6tsky")
+
+[node name="FoodSpawnTimer" type="Timer" parent="."]
+process_callback = 0
+
+[node name="Spawner" parent="." instance=ExtResource("6_p2lvb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.8402, 0)
+
+[node name="UI" parent="." instance=ExtResource("6_jdr17")]
+
+[node name="Characters" type="Node3D" parent="."]
+script = ExtResource("6_54pum")
+
+[node name="OrbitalView" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.999994, 0, 0, 0, 0.819144, 0.573571, 0, -0.573571, 0.819145, 0, 0, 0)
+script = ExtResource("8_853wk")
+priority_override = false
+priority = 0
+follow_mode = 6
+follow_target = NodePath("")
+follow_parameters/spring_arm/spring_length = 5.0
+follow_parameters/spring_arm/collision_mask = 1
+follow_parameters/spring_arm/shape = SubResource("SphereShape3D_62x2c")
+follow_parameters/spring_arm/margin = 1.0
+follow_parameters/target_offset = Vector3(0, 5, 0)
+follow_parameters/damping = false
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = null
+
+[node name="OrbitalCam" parent="." instance=ExtResource("5_mcpj8")]
+unique_name_in_owner = true
+transform = Transform3D(0.999994, 0, 0, 0, 0.819144, 0.573571, 0, -0.573571, 0.819145, 0, 0, 0)
+current = false
+fov = 75.0
+moveSpeed = 25.0
+mouseSpeed = 350.0
+
+[node name="PhantomCameraHost" type="Node" parent="OrbitalCam"]
+script = ExtResource("5_a8gus")
+
+[node name="FreeCam" parent="." instance=ExtResource("5_mcpj8")]
+moveSpeed = 25.0
+
+[node name="FreeView" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0428782, 15.0133, -4.9689)
+script = ExtResource("8_853wk")
+priority_override = false
+priority = 0
+follow_mode = 1
+follow_target = NodePath("../FreeCam")
+follow_parameters/damping = false
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = null
+
+[node name="GameStateTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="get_mouse_location" from="Terrain" to="FreeCam" method="_on_terrain_get_mouse_location"]
+[connection signal="timeout" from="FoodSpawnTimer" to="Spawner" method="_on_food_spawn_timer_timeout"]
+[connection signal="place_object_from_card" from="UI" to="Terrain" method="_on_ui_place_object_from_card"]
+[connection signal="spawn_item" from="UI" to="Terrain" method="_on_ui_spawn_item"]
+[connection signal="spawn_coords" from="FreeCam" to="Terrain" method="_on_free_cam_spawn_coords"]
+[connection signal="timeout" from="GameStateTimer" to="UI" method="_on_game_state_timer_timeout"]

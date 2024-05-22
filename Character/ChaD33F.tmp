@@ -1,0 +1,130 @@
+[gd_scene load_steps=15 format=3 uid="uid://l5hjt2l7cdv6"]
+
+[ext_resource type="Script" path="res://character/Scripts/ChMain.gd" id="1_0dk3m"]
+[ext_resource type="Script" path="res://character/Scripts/ChPerception.gd" id="2_1k4p7"]
+[ext_resource type="Script" path="res://character/Scripts/ChNavigation.gd" id="3_e24q4"]
+[ext_resource type="Script" path="res://character/Scripts/ChMemory.gd" id="4_eph2i"]
+[ext_resource type="Script" path="res://character/Scripts/ChInteraction.gd" id="5_ycbv7"]
+[ext_resource type="Material" uid="uid://bad0m40hr2het" path="res://Character/body.tres" id="6_n1qj6"]
+[ext_resource type="PackedScene" uid="uid://c5dwbs10n2cft" path="res://Character/Health&Hunger/HealthBar3D.tscn" id="7_c6em3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nygyd"]
+material = ExtResource("6_n1qj6")
+
+[sub_resource type="SphereMesh" id="SphereMesh_a1ldo"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_pim0u"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ut46h"]
+points = PackedVector3Array(-0.000195742, 1, -0.000195742, 0.194988, -1, -0.980814, -0.000195742, -1, -1, -0.195184, -1, -0.980814, -0.382733, -1, -0.924041, -0.555599, -1, -0.831637, -0.707126, -1, -0.707126, -0.831637, -1, -0.555599, -0.924041, -1, -0.382733, -0.980814, -1, -0.195184, -1, -1, -0.000195742, -0.980814, -1, 0.194988, -0.924041, -1, 0.382537, -0.831637, -1, 0.555403, -0.707126, -1, 0.70693, -0.555599, -1, 0.831441, -0.382733, -1, 0.923845, -0.195184, -1, 0.980619, -0.000195742, -1, 1, 0.194988, -1, 0.980619, 0.382537, -1, 0.923845, 0.555403, -1, 0.831441, 0.70693, -1, 0.70693, 0.831441, -1, 0.555403, 0.923845, -1, 0.382537, 0.980619, -1, 0.194988, 1, -1, -0.000195742, 0.980619, -1, -0.195184, 0.923845, -1, -0.382733, 0.831441, -1, -0.555599, 0.70693, -1, -0.707126, 0.555403, -1, -0.831637, 0.382537, -1, -0.924041)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jxpkx"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cstso"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uq0eh"]
+
+[node name="CharacterMain" type="CharacterBody3D" groups=["characters", "game_events"]]
+script = ExtResource("1_0dk3m")
+
+[node name="Scripts" type="Node" parent="."]
+
+[node name="Perception" type="Node" parent="Scripts"]
+script = ExtResource("2_1k4p7")
+
+[node name="Navigation" type="Node" parent="Scripts"]
+script = ExtResource("3_e24q4")
+
+[node name="Memory" type="Node" parent="Scripts"]
+script = ExtResource("4_eph2i")
+
+[node name="Interaction" type="Node" parent="Scripts"]
+script = ExtResource("5_ycbv7")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_nygyd")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 2.4569, 0)
+mesh = SubResource("SphereMesh_a1ldo")
+surface_material_override/0 = ExtResource("6_n1qj6")
+
+[node name="Eye" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.0214536, -0.447706)
+mesh = SubResource("SphereMesh_pim0u")
+
+[node name="Vision" type="Area3D" parent="Head"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, -3.07112, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="Head/Vision"]
+transform = Transform3D(20, 0, 0, 0, -8.74228e-07, -20, 0, 20, -8.74228e-07, 0, 2.47603, -20.1639)
+shape = SubResource("ConvexPolygonShape3D_ut46h")
+
+[node name="VisionRayCast" type="RayCast3D" parent="Head"]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0.0222375, -0.497046)
+target_position = Vector3(0, -1, -50)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="Navigation" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jxpkx")
+
+[node name="InRangenot" type="ShapeCast3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 2.51194, 0)
+visible = false
+shape = SubResource("CylinderShape3D_cstso")
+
+[node name="Health" parent="." instance=ExtResource("7_c6em3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.19972, 0)
+modulate = Color(0.678431, 0.678431, 0.678431, 1)
+
+[node name="Hunger" parent="." instance=ExtResource("7_c6em3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.49954, 0)
+modulate = Color(1, 0.764706, 0.717647, 1)
+
+[node name="Thirst" parent="." instance=ExtResource("7_c6em3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.79893, 0)
+modulate = Color(0.698039, 0.705882, 1, 1)
+
+[node name="Exaustion" parent="." instance=ExtResource("7_c6em3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07845, 0)
+modulate = Color(0, 0.633333, 1, 1)
+
+[node name="Tick" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="VisionTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="InteractTimer" type="Timer" parent="."]
+wait_time = 0.663
+
+[node name="Temp" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="InRange" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1.5, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="InRange"]
+shape = SubResource("CylinderShape3D_uq0eh")
+
+[node name="AliveTime" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2277, 0)
+
+[node name="aliveTime" type="Timer" parent="."]
+autostart = true
+
+[connection signal="navigation_finished" from="Navigation" to="Scripts/Navigation" method="_on_navigation_navigation_finished"]
+[connection signal="timeout" from="Tick" to="." method="_on_tick_timeout"]
+[connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
+[connection signal="timeout" from="InteractTimer" to="Scripts/Interaction" method="_on_interact_timer_timeout"]
+[connection signal="input_event" from="InRange" to="." method="_on_in_range_input_event"]
+[connection signal="timeout" from="aliveTime" to="." method="_on_alive_time_timeout"]

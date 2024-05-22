@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bab84aiqartcu"]
+
+[ext_resource type="Script" path="res://Camera/FreeView.gd" id="1_22nou"]
+[ext_resource type="Shader" path="res://Camera/CameraPanel.gdshader" id="2_5128f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i6e3"]
+render_priority = 1
+shader = ExtResource("2_5128f")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wknp5"]
+material = SubResource("ShaderMaterial_0i6e3")
+
+[node name="Camera3D" type="Camera3D"]
+transform = Transform3D(-1, -7.7118e-08, 4.11772e-08, 0, 0.471012, 0.882127, -8.74228e-08, 0.882127, -0.471012, -0.0428782, 15.0133, -4.9689)
+current = true
+fov = 92.058
+size = 5.72178
+far = 90.66
+script = ExtResource("1_22nou")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.08458, -1.74623e-10, 6.51926e-09, 1.01281e-08, 0, -2.88987, -1.16415e-10, 1.61877, 0, -0.0573657, 0.128642, -0.855041)
+visible = false
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_wknp5")

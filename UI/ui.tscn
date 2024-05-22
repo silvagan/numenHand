@@ -1,0 +1,272 @@
+[gd_scene load_steps=16 format=3 uid="uid://cpggs1af067qh"]
+
+[ext_resource type="Script" path="res://UI/ui.gd" id="1_8bw7v"]
+[ext_resource type="Script" path="res://UI/hand.gd" id="2_4n6q8"]
+[ext_resource type="PackedScene" uid="uid://nuyg0ddc1j3g" path="res://card_UI/card_ui.tscn" id="2_o4rmt"]
+[ext_resource type="Resource" uid="uid://drv2lmguwysj0" path="res://cards/lone_hand.tres" id="4_xb3yo"]
+[ext_resource type="Resource" uid="uid://dowrqduer3slv" path="res://cards/berry_bush.tres" id="5_pmwim"]
+[ext_resource type="Resource" uid="uid://kwoapbgu5xfp" path="res://cards/water_pond.tres" id="6_iit37"]
+[ext_resource type="Resource" uid="uid://cbopatlsp2v25" path="res://cards/campfire.tres" id="7_1c6bp"]
+[ext_resource type="Resource" uid="uid://yn06m2wwppup" path="res://cards/tree.tres" id="7_7xdap"]
+[ext_resource type="Script" path="res://UI/GameOver.gd" id="9_cu778"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kselr"]
+size = Vector2(1172.16, 513.507)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lggvg"]
+font_size = 90
+
+[sub_resource type="LabelSettings" id="LabelSettings_ckrin"]
+font_size = 56
+
+[sub_resource type="Theme" id="Theme_btrhb"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_4hnsc"]
+default_font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_wkadm"]
+font_size = 20
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_8bw7v")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -119.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="BerryBush" type="CheckButton" parent="Control"]
+visible = false
+layout_mode = 0
+offset_right = 133.0
+offset_bottom = 31.0
+focus_mode = 0
+text = "Berry Bush"
+
+[node name="WaterPond" type="CheckButton" parent="Control"]
+visible = false
+layout_mode = 0
+offset_top = -42.0
+offset_right = 139.0
+offset_bottom = -11.0
+focus_mode = 0
+text = "Water Pond"
+
+[node name="Tree" type="CheckButton" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_right = 83.0
+offset_bottom = 15.5
+grow_vertical = 2
+focus_mode = 0
+text = "Tree
+"
+
+[node name="Rock" type="CheckButton" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 86.0
+grow_vertical = 0
+focus_mode = 0
+text = "Rock
+"
+
+[node name="Character" type="CheckButton" parent="Control"]
+visible = false
+layout_mode = 1
+offset_left = 1.0
+offset_top = -81.0
+offset_right = 126.0
+offset_bottom = -50.0
+focus_mode = 0
+text = "Character
+"
+
+[node name="Campfire" type="Button" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Campfire"
+
+[node name="Rest" type="Button" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Rest"
+
+[node name="DrawCard" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 1105.0
+offset_top = 75.0
+offset_right = 1144.0
+offset_bottom = 111.0
+focus_mode = 0
+
+[node name="CardDropArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea"]
+position = Vector2(576, 247)
+scale = Vector2(0.982808, 0.962012)
+shape = SubResource("RectangleShape2D_kselr")
+
+[node name="DropUI" type="CanvasLayer" parent="." groups=["ui_layer"]]
+
+[node name="Hand" type="HBoxContainer" parent="DropUI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -110.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("2_4n6q8")
+
+[node name="CardUI" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("4_xb3yo")
+
+[node name="CardUI2" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("5_pmwim")
+
+[node name="CardUI3" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("6_iit37")
+
+[node name="CardUI4" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("7_1c6bp")
+
+[node name="CardUI5" parent="DropUI/Hand" instance=ExtResource("2_o4rmt")]
+layout_mode = 2
+card = ExtResource("7_7xdap")
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("9_cu778")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -156.5
+offset_right = 258.0
+offset_bottom = 156.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="name" type="Label" parent="GameOver/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_lggvg")
+
+[node name="score" type="Label" parent="GameOver/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "score: "
+label_settings = SubResource("LabelSettings_ckrin")
+
+[node name="New Game" type="Button" parent="GameOver/MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_btrhb")
+text = "New Game
+"
+
+[node name="Quit" type="Button" parent="GameOver/MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_4hnsc")
+text = "Quit"
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 48.0
+offset_bottom = 50.0
+
+[node name="Label" type="Label" parent="Control2"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -7.0
+offset_right = 78.0
+offset_bottom = 21.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_wkadm")
+
+[connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
+[connection signal="mouse_entered" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_entered"]
+[connection signal="mouse_exited" from="Control/BerryBush" to="." method="_on_berry_bush_mouse_exited"]
+[connection signal="toggled" from="Control/BerryBush" to="." method="_on_berry_bush_toggled"]
+[connection signal="mouse_entered" from="Control/WaterPond" to="." method="_on_water_pond_mouse_entered"]
+[connection signal="mouse_exited" from="Control/WaterPond" to="." method="_on_water_pond_mouse_exited"]
+[connection signal="toggled" from="Control/WaterPond" to="." method="_on_water_pond_toggled"]
+[connection signal="mouse_entered" from="Control/Tree" to="." method="_on_tree_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Tree" to="." method="_on_tree_mouse_exited"]
+[connection signal="toggled" from="Control/Tree" to="." method="_on_tree_toggled"]
+[connection signal="mouse_entered" from="Control/Rock" to="." method="_on_rock_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Rock" to="." method="_on_rock_mouse_exited"]
+[connection signal="toggled" from="Control/Rock" to="." method="_on_rock_toggled"]
+[connection signal="mouse_entered" from="Control/Character" to="." method="_on_character_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Character" to="." method="_on_character_mouse_exited"]
+[connection signal="toggled" from="Control/Character" to="." method="_on_character_toggled"]
+[connection signal="pressed" from="Control/Campfire" to="." method="_on_campfire_pressed"]
+[connection signal="pressed" from="Control/Rest" to="." method="_on_rest_pressed"]
+[connection signal="button_down" from="Control/DrawCard" to="." method="_on_draw_card_button_down"]
+[connection signal="button_down" from="Control/DrawCard" to="DropUI/Hand" method="_on_draw_card_button_down"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI" to="." method="_on_card_ui_spawn_item"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI2" to="." method="_on_card_ui_spawn_item"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI3" to="." method="_on_card_ui_spawn_item"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI4" to="." method="_on_card_ui_spawn_item"]
+[connection signal="spawn_item" from="DropUI/Hand/CardUI5" to="." method="_on_card_ui_spawn_item"]
+[connection signal="pressed" from="GameOver/MarginContainer/VBoxContainer/New Game" to="GameOver" method="_on_new_game_pressed"]
+[connection signal="pressed" from="GameOver/MarginContainer/VBoxContainer/Quit" to="GameOver" method="_on_quit_pressed"]

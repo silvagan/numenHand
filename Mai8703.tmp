@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://ohnc23h86fm7"]
+
+[ext_resource type="Script" path="res://Ball/BallSpawner.gd" id="2_1eux4"]
+[ext_resource type="Script" path="res://Camera/FreeView.gd" id="3_mqhs8"]
+[ext_resource type="Shader" path="res://Camera/CameraPanel.gdshader" id="4_cm7un"]
+[ext_resource type="PackedScene" uid="uid://l5hjt2l7cdv6" path="res://Character/CharacterMain.tscn" id="5_64jpk"]
+
+[sub_resource type="GDScript" id="GDScript_fe0ca"]
+script/source = "extends Node3D
+
+@onready var spawner = $spawner
+
+func _physics_process(delta):
+	pass
+
+
+func _on_timer_timeout():
+	#get_tree().call_group(\"characters\", \"update_target_location\", spawner.get_random_child_location())
+	pass
+
+"
+
+[sub_resource type="Environment" id="Environment_4vcr7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ai6am"]
+size = Vector3(29.918, 1, 29.9236)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6rvve"]
+size = Vector3(1, 1.96777, 1)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_acylx"]
+vertices = PackedVector3Array(-14.5, 0.75, -14.5, -14.5, 0.75, 14.5, 14.5, 0.75, 14.5, 14.5, 0.75, -14.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cxcsv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i6e3"]
+render_priority = 1
+shader = ExtResource("4_cm7un")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wknp5"]
+material = SubResource("ShaderMaterial_0i6e3")
+
+[node name="MainScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.0271511, -0.026598)
+script = SubResource("GDScript_fe0ca")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4vcr7")
+
+[node name="Environment" type="StaticBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.0271511, -0.026598)
+
+[node name="Ground" type="CollisionShape3D" parent="WorldEnvironment/Environment"]
+shape = SubResource("BoxShape3D_ai6am")
+
+[node name="Wall1" type="CollisionShape3D" parent="WorldEnvironment/Environment"]
+transform = Transform3D(1, 0, 0, 0, 4.72956, 0, 0, 0, 29.6608, 15.446, 4.53442, 0)
+shape = SubResource("BoxShape3D_6rvve")
+
+[node name="Wall2" type="CollisionShape3D" parent="WorldEnvironment/Environment"]
+transform = Transform3D(1, 0, 0, 0, 4.72956, 0, 0, 0, 29.6608, -15.5741, 4.53442, 0)
+shape = SubResource("BoxShape3D_6rvve")
+
+[node name="Wall3" type="CollisionShape3D" parent="WorldEnvironment/Environment"]
+transform = Transform3D(-4.37114e-08, 0, 29.6608, 0, 4.72956, 0, -1, 0, -1.29652e-06, -6.81262e-07, 4.534, -15.5864)
+shape = SubResource("BoxShape3D_6rvve")
+
+[node name="Wall4" type="CollisionShape3D" parent="WorldEnvironment/Environment"]
+transform = Transform3D(-4.37114e-08, 0, 29.6608, 0, 4.72956, 0, -1, 0, -1.29652e-06, 6.74976e-07, 4.534, 15.4435)
+shape = SubResource("BoxShape3D_6rvve")
+
+[node name="Spawner" type="Node3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 22.3096, -0.026598)
+script = ExtResource("2_1eux4")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.757929, -4.17533e-07, 0.652337, 0.580397, -0.456508, 0.674344, 0.297797, 0.889719, 0.346001, 27.5828, 16.8026, -23.3874)
+shadow_enabled = true
+directional_shadow_max_distance = 34.6
+
+[node name="NavigationRegion" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_acylx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion"]
+transform = Transform3D(30, 0, 0, 0, 0.5, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_cxcsv")
+skeleton = NodePath("../../WorldEnvironment/Environment")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, -7.7118e-08, 4.11772e-08, 0, 0.471012, 0.882127, -8.74228e-08, 0.882127, -0.471012, -0.0428782, 15.0133, -4.9689)
+current = true
+fov = 92.058
+size = 5.72178
+far = 90.66
+script = ExtResource("3_mqhs8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(5.08458, -1.74623e-10, 6.51926e-09, 1.01281e-08, 0, -2.88987, -1.16415e-10, 1.61877, 0, -0.0573657, 0.128642, -0.855041)
+visible = false
+cast_shadow = 0
+gi_mode = 2
+mesh = SubResource("PlaneMesh_wknp5")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+autostart = true
+
+[node name="MCharacter" parent="." instance=ExtResource("5_64jpk")]
+
+[connection signal="timeout" from="Timer" to="WorldEnvironment/Spawner" method="_on_timer_timeout"]

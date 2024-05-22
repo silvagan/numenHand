@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqt2p373hlwys"]
+
+[ext_resource type="PackedScene" uid="uid://o1rwgml505c4" path="res://Procedural Generation/Objects/Water pond/water.glb" id="1_pp4r3"]
+[ext_resource type="Script" path="res://Procedural Generation/Objects/Water pond/handle.gd" id="2_c5rwu"]
+
+[node name="water" instance=ExtResource("1_pp4r3")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="col" parent="." index="1" groups=["water"]]
+script = ExtResource("2_c5rwu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56426, 0)

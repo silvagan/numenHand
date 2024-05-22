@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5dwbs10n2cft"]
+
+[ext_resource type="Texture2D" uid="uid://onx51ivfxp8t" path="res://character/Health&Hunger/barHorizontal_green_mid 200.png" id="1_i0u3j"]
+[ext_resource type="Script" path="res://character/Health&Hunger/HealthBar3D.gd" id="2_mx6n1"]
+[ext_resource type="PackedScene" uid="uid://djx70pjj47nn3" path="res://character/Health&Hunger/HealthBar2D.tscn" id="3_i6wh8"]
+
+[node name="HealthBar3D" type="Sprite3D"]
+billboard = 2
+texture = ExtResource("1_i0u3j")
+script = ExtResource("2_mx6n1")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+debug_draw = 1
+size = Vector2i(204, 30)
+
+[node name="HealthBar2D" parent="SubViewport" instance=ExtResource("3_i6wh8")]
