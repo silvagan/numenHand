@@ -90,6 +90,7 @@ func get_random_location(distance):
 #behaviour for roaming and updating memory
 func explore():
 	var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
+	
 	if(per.contains_type(visible_ob, "Campfire")):
 		if !mem.has_type("Campfire"):
 			if(mem.memory.size() == mem.size):
@@ -133,7 +134,14 @@ func explore():
 					mem.memory.erase(mem.get_closest_memory_item("water"))
 					mem.memory.append(water_in_vision)
 					print("swaped water source")
-
+					
+	if(per.contains_type(visible_ob, "tree")):
+		var tree_in_vision = per.get_closest_obj(visible_ob, "tree")
+		destination = tree_in_vision.position
+		ch.objective = "cut tree"
+		
+		
+		
 	if(destination != Vector3(0,0,0)):
 		go_to(destination, "default")
 	else:
@@ -177,7 +185,6 @@ func find_water():
 			ch.objective = "urgent explore water"
 			
 			
-
 func go_rest():	
 	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "Campfire")):
 		ch.objective = "rest"
@@ -252,3 +259,17 @@ func _on_navigation_navigation_finished():
 func update_body_rotation():
 	var lookdir = atan2(-ch.velocity.x, -ch.velocity.z)
 	$"../../Body".rotation.y = lookdir
+
+func cut_tree():
+	if(per.contains_type($"../../InRange".get_overlapping_bodies(), "tree")):
+		ch.objective = "cut"
+	if(navigating):
+		go_to(destination, "destination")
+	else:
+		var visible_ob = $"../../Head/Vision".get_overlapping_bodies()
+		if(per.contains_type(visible_ob, "tree")):
+			destination = per.get_closest_obj(visible_ob, "tree").position
+			go_to(destination, "destination")
+			navigating = true
+		else:
+			pass

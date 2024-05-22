@@ -162,6 +162,9 @@ func _on_ui_place_object_from_card(item):
 			item_to_spawn = preload("res://Objects/Campfire/Campfire.tscn")
 	get_mouse_location.emit()
 
+func _draw_card():
+	print("tree cutted")
+	$"../UI".draw()
 
 func _on_timer_timeout():
 	$".".bake_navigation_mesh()
@@ -181,3 +184,5 @@ func _on_free_cam_spawn_coords(coords):
 			add_child(item)
 		$Timer.stop()
 		$Timer.start(1)
+
+

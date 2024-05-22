@@ -1,6 +1,6 @@
 extends Control
 
-func _on_new_game_pressed():
+func _on_New_game_pressed():
 	Globals.LOADED = false
 	get_tree().change_scene_to_file("res://MainScene.tscn")
 

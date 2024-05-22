@@ -142,6 +142,7 @@ collision_layer = 2
 position = Vector2(576, 247)
 scale = Vector2(0.982808, 0.962012)
 shape = SubResource("RectangleShape2D_kselr")
+debug_color = Color(0, 0, 0, 0.0509804)
 
 [node name="DropUI" type="CanvasLayer" parent="." groups=["ui_layer"]]
 

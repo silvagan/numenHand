@@ -67,6 +67,23 @@ func rest():
 		timer.stop()
 		ch.objective = "go_rest"
 		lookat = Vector3(0,0,0)
+
+func cut():
+	ch.nav.destination = ch.global_position
+	if(lookat == Vector3(0,0,0)):
+		var frst = per.get_first_obj(ir.get_overlapping_bodies(), "tree")
+		if (frst != null):
+			lookat = frst.position
+			per.look_towards($"../../Head", lookat)
+	else:
+		per.look_towards($"../../Head", lookat) 	
+	if(per.contains_type(ir.get_overlapping_bodies(), "tree")):
+		if(timer.is_stopped()):
+			timer.start()
+	else:
+		timer.stop()
+		ch.objective = "explore"
+
 #test
 func _on_interact_timer_timeout():
 	for c in ir.get_overlapping_bodies():
@@ -100,5 +117,11 @@ func _on_interact_timer_timeout():
 				ch.exhaustion += 20
 			else:
 				ch.exhaustion = 100
+			ch.nav.destination = Vector3(0,0,0)
+			ch.nav.navigating = false
+			
+		elif (c.is_in_group("tree")):
+			if(c.update()):
+				await get_tree().create_timer(0.01).timeout
 			ch.nav.destination = Vector3(0,0,0)
 			ch.nav.navigating = false

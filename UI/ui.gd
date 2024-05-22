@@ -152,3 +152,6 @@ func _on_game_state_timer_timeout():
 func _on_score_timer_timeout():
 	score += get_parent().get_node("Characters").get_children().size()
 	$Control2/Label.text = "Score: "+ str(score)
+
+func draw():
+	$DropUI/Hand.draw_card()

@@ -6,7 +6,6 @@ var weight : int
 
 var textmesh = TextMesh.new()
 
-
 var distance = 5
 var angle = 0
 var newCordsX
@@ -25,7 +24,7 @@ func _ready():
 	textmesh
 	$MeshInstance3D2.mesh = textmesh
 	
-	$Timer.start(1)
+	$Timer.start(10)
 
 func update() -> bool:
 	amount -= 1

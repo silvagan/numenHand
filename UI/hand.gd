@@ -21,6 +21,15 @@ func _on_draw_card_button_down():
 	new_card_ui.reparent_requested.connect(_on_card_ui_reparent_requested)
 	new_card_ui.card = res
 	#new_card_ui.parent = self
+	
+func draw_card():
+	var new_card_ui := card_ui.instantiate()
+	new_card_ui.connect("spawn_item", $"../.."._on_card_ui_spawn_item)
+	add_child(new_card_ui)
+	get_random_card(new_card_ui.card, new_card_ui.icon)
+	new_card_ui.reparent_requested.connect(_on_card_ui_reparent_requested)
+	new_card_ui.card = res
+	#new_card_ui.parent = self
 
 func get_random_card(card, icon):
 	var n = randi() % (4) + 1

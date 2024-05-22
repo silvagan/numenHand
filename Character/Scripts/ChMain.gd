@@ -86,6 +86,8 @@ func _physics_process(delta):
 			nav.find_food()
 		"eat":
 			itr.eat()
+		"cut":
+			itr.cut()
 		"find water":
 			nav.find_water()
 		"drink":
@@ -104,6 +106,8 @@ func _physics_process(delta):
 			nav.urgent_explore_food()
 		"urgent explore water":
 			nav.urgent_explore_water()
+		"cut tree":
+			nav.cut_tree()
 
 #called on timer timeout
 func _on_tick_timeout():
@@ -130,7 +134,10 @@ func update_objective():
 	
 	if(objective == "rest"):
 		return "rest"
-	
+		
+	if(objective == "cut"):
+		return "cut"
+		
 	if(objective == "urgent explore food" && hunger < 50):
 		return "urgent explore food"
 	if(objective == "urgent explore water" && thirst < 50):
@@ -143,6 +150,8 @@ func update_objective():
 		return "go_rest"
 	elif($Temp.get_time_left() > 0):
 		return "idle"
+	elif(objective == "cut tree"):
+		return "cut tree"
 	else:
 		return "explore"
 
