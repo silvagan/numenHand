@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b5y0q5dw3q8ak"]
+[gd_scene load_steps=20 format=3 uid="uid://b5y0q5dw3q8ak"]
 
 [ext_resource type="Script" path="res://Procedural Generation/Objects/Tree/tree.gd" id="1_a6kii"]
 
@@ -63,6 +63,8 @@ radius = 2.5
 height = 2.196
 radius = 0.1
 
+[sub_resource type="ArrayMesh" id="ArrayMesh_0d2xc"]
+
 [node name="StaticBody3D" type="StaticBody3D" groups=["tree"]]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_a6kii")
@@ -126,6 +128,8 @@ shape = SubResource("CylinderShape3D_fp3cc")
 
 [node name="treehealth" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0468, 0)
+visible = false
+mesh = SubResource("ArrayMesh_0d2xc")
 
 [connection signal="reproduce" from="." to="." method="_on_reproduce"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

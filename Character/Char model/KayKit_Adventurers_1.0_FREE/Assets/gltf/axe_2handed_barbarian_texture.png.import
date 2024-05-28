@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3m0v36ivvugk"
-path.s3tc="res://.godot/imported/axe_2handed_barbarian_texture.png-cf361394294d4dc994fac32ea764bc0d.s3tc.ctex"
+path.s3tc="res://.godot/imported/axe_2handed_barbarian_texture.png-4eeefa9636d3a9d7c811c2e12283162f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ generator_parameters={}
 
 [deps]
 
-source_file="res://character/Char model/KayKit_Adventurers_1.0_FREE/Assets/gltf/axe_2handed_barbarian_texture.png"
-dest_files=["res://.godot/imported/axe_2handed_barbarian_texture.png-cf361394294d4dc994fac32ea764bc0d.s3tc.ctex"]
+source_file="res://Character/Char model/KayKit_Adventurers_1.0_FREE/Assets/gltf/axe_2handed_barbarian_texture.png"
+dest_files=["res://.godot/imported/axe_2handed_barbarian_texture.png-4eeefa9636d3a9d7c811c2e12283162f.s3tc.ctex"]
 
 [params]
 

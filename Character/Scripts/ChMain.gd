@@ -57,7 +57,7 @@ var seconds = 0
 #var last_floor = true
 #var jumping = false
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
+var counter1 = 0
 func _ready():
 	
 	var randSpeed = RandomNumberGenerator.new()
@@ -65,11 +65,11 @@ func _ready():
 	speed_stat = snapped(randSpeed.randf_range(0.8,1.2),.1)
 	
 	calc_speed(speed_stat)
-	
-	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
-	textmesh.font_size = 80
-	textmesh
-	$AliveTime.mesh = textmesh
+	#===================================
+	#textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
+	#textmesh.font_size = 80
+	#$AliveTime.mesh = textmesh
+	#===================================
 
 func calc_speed(speed_stat):
 		
@@ -77,7 +77,7 @@ func calc_speed(speed_stat):
 	
 
 func _physics_process(delta):
-
+	
 	#velocity.y += -gravity * delta
 	#if is_on_floor() and not last_floor:
 		#jumping = false
@@ -101,11 +101,14 @@ func _physics_process(delta):
 	else:
 		movement_speed = _BASE_SPEED * speed_stat * 0.8
 	#update objective, visuals and body rotation
-	objective = update_objective()
-	update_needs_visuals()
-	nav.update_body_rotation()
 	
-	print(objective)
+	counter1+=1
+	objective = update_objective()
+	nav.update_body_rotation()
+	if counter1 % 60 == 0:
+		update_needs_visuals()
+	
+	#print(objective)
 	#print(thirst)
 	#print(hunger)
 	#act upon current objective
@@ -207,16 +210,16 @@ func _on_interaction_rebake_mesh(location):
 	$"../NavigationRegion3D".rebakeMesh(location)
 
 
-func _on_alive_time_timeout():
-	if(seconds == 59):
-		seconds = 0
-		minutes += 1
-	else:
-		seconds += 1
-	textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
-	textmesh.font_size = 80
-	textmesh
-	$AliveTime.mesh = textmesh
+#func _on_alive_time_timeout():
+	#if(seconds == 59):
+		#seconds = 0
+		#minutes += 1
+	#else:
+		#seconds += 1
+	#textmesh.text = "%s \n %s \n %s : %s" % [objective,movement_speed,minutes, seconds]
+	#textmesh.font_size = 80
+	#textmesh
+	#$AliveTime.mesh = textmesh
 
 
 #

@@ -21,36 +21,13 @@ var newTree = preload("res://Procedural Generation/Objects/Tree/tree.tscn")
 signal felltree
 func _ready():
 	$".".rotation.y = randf_range(0,360)	
-	self.connect("felltree", $".."._draw_card)
-
-	
-	#angle = randi_range(0,360)
-	
-	#newCordsX = distance*cos(deg_to_rad(angle)) + global_position.x
-	#newCordsZ = distance*sin(deg_to_rad(angle)) + global_position.z
-	#spawnCoords = Vector3(newCordsX,position.y,newCordsZ)
-	#newCordsX = distance*cos(angle) + position.x
-	#newCordsZ = distance*sin(angle) + position.z
-	
-	#spawnCoords = Vector3(newCordsX,position.y,newCordsZ)
-	
-	
-	#marker.position = position
-	#marker.global_position = Vector3.ZERO
-	
-	#print(position)	
-	#print(global_position)	
-	#print(spawnCoords)
-	#print(marker.position)
-	#print(marker.global_position)
-	
+	#self.connect("felltree", $".."._draw_card)
 
 	textmesh.text = "health: %s" % [amount]
 	textmesh.font_size = 50
-	textmesh
 	$treehealth.mesh = textmesh
-	if adult:
-		$Timer.start(10)
+	#if adult:
+		#$Timer.start(1)
 		
 func _process(delta):
 	if not adult:
@@ -68,9 +45,9 @@ func update() -> bool:
 		felltree.emit()
 		return true
 	else:
-		textmesh.text = "health: %s" % [amount]
-		textmesh.font_size = 50
-		$treehealth.mesh = textmesh
+		#textmesh.text = "health: %s" % [amount]
+		#textmesh.font_size = 50
+		#$treehealth.mesh = textmesh
 		return false
 
 	
@@ -125,5 +102,5 @@ func _on_timer_timeout():
 		get_parent().add_child(tree)
 	
 func _on_reproduce():
-	$Timer.start(10)
+	$Timer.start(1)
 

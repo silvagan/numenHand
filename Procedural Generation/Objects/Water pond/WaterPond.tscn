@@ -11,3 +11,4 @@ script = ExtResource("2_c5rwu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56426, 0)
+visible = false

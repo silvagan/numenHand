@@ -24,13 +24,14 @@ var adult = true
 var newBeryBush = preload("res://Procedural Generation/Objects/Berry bush/Berry_bush.tscn")
 
 func _ready():
-	textmesh.text = "berries: %s" % [amount]
-	textmesh.font_size = 80
-	textmesh
-	$MeshInstance3D2.mesh = textmesh
+	#textmesh.text = "berries: %s" % [amount]
+	#textmesh.font_size = 80
+	#textmesh
+	#$MeshInstance3D2.mesh = textmesh
 	
 	if adult:
-		$Timer.start(1)
+		pass
+		#$Timer.start(1)
 
 func update() -> bool:
 	amount -= 1
@@ -38,9 +39,9 @@ func update() -> bool:
 		queue_free()
 		return true
 	else:
-		textmesh.text = "berries: %s" % [amount]
-		textmesh.font_size = 80
-		$MeshInstance3D2.mesh = textmesh
+		#textmesh.text = "berries: %s" % [amount]
+		#textmesh.font_size = 80
+		#$MeshInstance3D2.mesh = textmesh
 		return false
 	
 
@@ -50,7 +51,7 @@ func _process(delta):
 		scale += Vector3(.005,.005,.005)
 	if scale.is_equal_approx(Vector3(1,1,1)) and not adult:
 		adult = true
-		reproduce.emit()
+		#reproduce.emit()
 
 signal reproduce
 
@@ -103,5 +104,5 @@ func _on_timer_timeout():
 
 
 
-func _on_reproduce():
-	$Timer.start(10)
+#func _on_reproduce():
+	#$Timer.start(10)

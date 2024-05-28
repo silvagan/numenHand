@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0aqnycs2n22p"
-path="res://.godot/imported/barHorizontal_red_mid 200.png-3b8606eebf34c4d8dd8112f3cec21549.ctex"
+path="res://.godot/imported/barHorizontal_red_mid 200.png-3de249572ba9dfc58f962d1b3bc63380.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://character/Health&Hunger/barHorizontal_red_mid 200.png"
-dest_files=["res://.godot/imported/barHorizontal_red_mid 200.png-3b8606eebf34c4d8dd8112f3cec21549.ctex"]
+source_file="res://Character/Health&Hunger/barHorizontal_red_mid 200.png"
+dest_files=["res://.godot/imported/barHorizontal_red_mid 200.png-3de249572ba9dfc58f962d1b3bc63380.ctex"]
 
 [params]
 

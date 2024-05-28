@@ -11,6 +11,9 @@ var score = 0
 signal spawn_item(item:String, state:bool)
 var prev_item
 
+func _process(delta):
+	$Control/Label.text = str(Engine.get_frames_per_second())
+
 func _on_berry_bush_toggled(toggled_on):
 	if $Control/Tree.button_pressed == true:
 		$Control/Tree.button_pressed = !toggled_on

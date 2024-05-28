@@ -97,6 +97,28 @@ func test_testing():
 	#await(_sender.idle)
 	#assert_true(_sender.is_key_pressed(KEY_ESCAPE))
 	#assert_true(Input.is_key_pressed(KEY_ESCAPE))
+	#=====================================================
+func test_go_to_water():
+
+	var water_item = preload("res://Procedural Generation/Objects/Water pond/WaterPond.tscn").instantiate()
+	water_item.position = Vector3(-5,0,-18)
+	_char.mem.memory.append(water_item)
+	_char.thirst = 49
+	await wait_seconds(6)
+	assert_eq(snapped(_char.position,Vector3(1,1,1)),Vector3(-5,1,-18))
+
+func test_character_needs_depletion():
+  # Set initial hunger and thirst values
+	_char.hunger = 80
+	_char.thirst = 70
+	await wait_seconds(5) 
+	assert_true(_char.hunger < 80, "Hunger not decreasing")
+	assert_true(_char.thirst < 70, "Thirst not decreasing")
+
+func test_character_interaction_eat():
+	assert_eq(snapped(_char.position,Vector3(1,1,1)),Vector3(50,1,25))
+	await wait_seconds(2)  # Allow time for interaction and hunger update
+	assert_true(_char.hunger > 50, "Character hunger not updated after eating")
 	
 	
 	
